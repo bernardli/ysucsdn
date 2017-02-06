@@ -1,0 +1,6 @@
+.post-content-pre {
+    max-height: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

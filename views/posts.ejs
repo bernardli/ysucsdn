@@ -1,0 +1,9 @@
+<%- include('header') %>
+
+<link rel="stylesheet" href="css/posts.css">
+
+<% posts.forEach(function (post) { %>
+  <%- include('components/post-content', { post: post }) %>
+<% }) %>
+
+<%- include('footer') %>
