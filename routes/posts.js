@@ -107,8 +107,11 @@ router.get('/:postId/edit', checkLogin, function(req, res, next) {
 
 // POST /posts/:postId/edit 更新一篇文章
 router.post('/:postId/edit', checkLogin, function(req, res, next) {
+    //通过占位符获取文章ID
     var postId = req.params.postId;
+    //从session中获取用户ID
     var author = req.session.user._id;
+    //获取修改页面表格传来的 title,content 的数据
     var title = req.fields.title;
     var content = req.fields.content;
 
