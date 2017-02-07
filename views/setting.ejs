@@ -6,9 +6,12 @@
         <div class="eight wide column">
             <div class="ui segment">
                 <div class="user-avatar">
-                    <img class="" src="/img/users_avatar/<%= user.avatar %>">
-                    <label>更换头像</label>
-                    <input type="file" name="avatar">
+                    <form class="ui form segment" method="post" action="/setting/avatar?avatarId=<%= user.avatar %>" enctype="multipart/form-data">
+                        <img class="" src="/img/users_avatar/<%= user.avatar %>">
+                        <label>更换头像</label>
+                        <input type="file" name="avatar">
+                        <input type="submit" class="ui button" value="更改">
+                    </form>
                 </div>
                 <div class="user-name">
                     <label>用户昵称/账号</label>

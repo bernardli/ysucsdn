@@ -17,5 +17,10 @@ module.exports = {
     //通过用户 ID 和用户 name 更新 用户 bio
     updateBioById: function updateBioById(userId, userName, data) {
         return User.update({ _id: userId, name: userName }, { $set: data }).exec();
+    },
+
+    //通过用户 ID 和用户 name 更新 用户 avatar
+    updateAvatarById: function updateBioById(userId, userName, data) {
+        return User.update({ _id: userId, name: userName }, { $set: data }).exec();
     }
 };

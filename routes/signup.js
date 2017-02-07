@@ -29,7 +29,7 @@ router.post('/', checkNotLogin, function(req, res, next) {
         if (['m', 'f', 'x'].indexOf(gender) === -1) {
             throw new Error('性别只能是 m、f 或 x');
         }
-        if (!(bio.length >= 1 && bio.length <= 30)) {
+        if (!(bio.length >= 0 && bio.length <= 30)) {
             throw new Error('个人简介请限制在 1-30 个字符');
         }
         if (!req.files.avatar.name) {
