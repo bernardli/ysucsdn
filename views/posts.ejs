@@ -2,8 +2,14 @@
 
 <link rel="stylesheet" href="css/posts.css">
 
-<% posts.forEach(function (post) { %>
+<!--<% posts.forEach(function (post) { %>
   <%- include('components/post-content', { post: post }) %>
-<% }) %>
+<% }) %>-->
+
+<% for(var i = 0; i < 10; i++) {
+      if(!posts[i])
+        break;      %>
+  <%- include('components/post-content', { post: posts[i] })%>
+<% } %>
 
 <%- include('footer') %>

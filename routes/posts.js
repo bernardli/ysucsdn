@@ -19,6 +19,20 @@ router.get('/', function(req, res, next) {
         .catch(next);
 });
 
+// GET /posts 特定用户的文章页
+//   eg: GET /posts/user?author=xxx
+router.get('/user', function(req, res, next) {
+    var author = req.query.author;
+
+    PostModel.getPosts(author)
+        .then(function(posts) {
+            res.render('user_posts', {
+                posts: posts
+            });
+        })
+        .catch(next);
+});
+
 // GET /posts/create 发表文章页
 router.get('/create', checkLogin, function(req, res, next) {
     res.render('create');
@@ -68,7 +82,7 @@ router.get('/:postId', function(req, res, next) {
     Promise.all([
             PostModel.getPostById(postId), // 获取文章信息
             CommentModel.getComments(postId), // 获取该文章所有留言
-            PostModel.incPv(postId) // pv 加 1
+            PostModel.incPv(postId) // pv 加 1   浏览量
         ])
         .then(function(result) {
             var post = result[0];

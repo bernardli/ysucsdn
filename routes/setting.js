@@ -67,4 +67,8 @@ router.post('/avatar', checkLogin, function(req, res, next) {
         .catch(next);
 });
 
+router.post('/password', checkLogin, function(req, res, next) {
+
+});
+
 module.exports = router;

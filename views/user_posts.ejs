@@ -1,0 +1,36 @@
+<%- include('header') %>
+
+    <link rel="stylesheet" href="css/posts.css">
+
+    <!--<% posts.forEach(function (post) { %>
+  <%- include('components/post-content', { post: post }) %>
+<% }) %>-->
+
+    <div class="user-info">
+        <div class="user-info-box">
+            <div class="user-info-avatar">
+                <img src="/img/users_avatar/<%= posts[0].author.avatar %>" alt="">
+            </div>
+            <div class="user-info-name">
+                <label for=""><%= posts[0].author.name%></label>
+            </div>
+            <div class="user-info-gender">
+                <label for=""><%= posts[0].author.gender%></label>
+            </div>
+        </div>
+        <div class="user-info-box">
+            <div class="user-info-bio">
+                <p>
+                    <%= posts[0].author.bio%>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <% for(var i = 0; i < 10; i++) {
+      if(!posts[i])
+        break;      %>
+	<%- include('components/post-content', { post: posts[i] })%>
+	<% } %>
+
+<%- include('footer') %>

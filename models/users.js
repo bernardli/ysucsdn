@@ -6,7 +6,7 @@ module.exports = {
         return User.create(user).exec();
     },
 
-    // 通过用户名获取用户信息
+    // 通过 用户名 获取用户信息
     getUserByName: function getUserByName(name) {
         return User
             .findOne({ name: name })
@@ -21,6 +21,11 @@ module.exports = {
 
     //通过用户 ID 和用户 name 更新 用户 avatar
     updateAvatarById: function updateBioById(userId, userName, data) {
+        return User.update({ _id: userId, name: userName }, { $set: data }).exec();
+    },
+
+    //通过用户 ID 和用户 name 更新 用户 password
+    updatePasswordById: function updateBioById(userId, userName, data) {
         return User.update({ _id: userId, name: userName }, { $set: data }).exec();
     }
 };
