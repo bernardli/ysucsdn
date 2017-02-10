@@ -5,13 +5,13 @@
 <!--<% posts.forEach(function (post) { %>
   <%- include('components/post-content', { post: post }) %>
 <% }) %>-->
-
-<% 
-	for(var i = 0; i < 10; i++) {
+<div><%= page%></div>
+<% 	
+	for(var i = (page - 1) * 2; i < (page -1 ) * 2 + 2; i++) {
 		if(!posts[i])
 			break;     
 %>
-  <%- include('components/post-content', { post: posts[i] })%>
+  	<%- include('components/post-content', { post: posts[i] })%>
 <% } %>
 <%- include('components/paging')%>
 

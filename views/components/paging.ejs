@@ -1,4 +1,30 @@
 <div class="posts-paging">
-    <% var pageCout = Math.floor(posts.length/10) + 1 %>
-    <p><%= page%></p>
+    <%  var pageCout = Math.round(posts.length/2); 
+        var frontPage = parseInt(page) - 1;
+        var nextPage = parseInt(page) + 1;    
+        var pageNum = parseInt(page) %>
+    <p><%= frontPage%></p>
+    <p><%= nextPage%></p>
+    <p>总共<%= pageCout%>页</p>
+    <%  if(page != 1) { %>
+        <a href="/posts?page=1">首页</a>
+        <a href="/posts?page=<%= frontPage%>">上一页</a>
+    <%  } %>
+    <% if(pageNum <= 3) {
+        for(var i = 1; i <= 5 && i <= pageCout; i++) { %>
+            <a href="/posts?page=<%= i%>"><%= i%></a>
+    <% }} else if(pageCout == 4) {
+        for(var i =1; i <= 4; i++) { %>
+            <a href="/posts?page=<%= i%>"><%= i%></a>
+    <% }} else if(pageNum >= pageCout - 2) {
+        for(var i = pageCout - 4; i <= pageCout; i++) { %>
+            <a href="/posts?page=<%= i%>"><%= i%></a>
+    <% }} else { 
+        for(var i = pageNum - 2; i <= pageNum + 2; i++) { %>
+            <a href="/posts?page=<%= i%>"><%= i%></a>
+    <% }} %>
+    <%  if(page != pageCout) { %>
+        <a href="/posts?page=<%= nextPage%>">下一页</a>
+        <a href="/posts?page=<%= pageCout%>">尾页</a>
+    <%  } %>
 </div>
