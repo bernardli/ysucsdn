@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var PostModel = require('../models/posts');
-var UserModel = require('../models/Users');
+var UserModel = require('../models/users');
 var CommentModel = require('../models/comments');
 var checkLogin = require('../middlewares/check').checkLogin;
 
