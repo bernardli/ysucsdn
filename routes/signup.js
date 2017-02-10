@@ -32,9 +32,9 @@ router.post('/', checkNotLogin, function(req, res, next) {
         if (!(bio.length >= 0 && bio.length <= 30)) {
             throw new Error('个人简介请限制在 1-30 个字符');
         }
-        if (!req.files.avatar.name) {
-            throw new Error('缺少头像');
-        }
+        // if (!req.files.avatar.name) {
+        //     throw new Error('缺少头像');
+        // }
         if (password.length < 6) {
             throw new Error('密码至少 6 个字符');
         }
@@ -50,6 +50,13 @@ router.post('/', checkNotLogin, function(req, res, next) {
 
     // 明文密码加密
     password = sha1(password);
+    //分配默认头像
+    if (!req.files.avatar.name) {
+        //异步删除上传的头像
+        fs.unlink(req.files.avatar.path);
+        //设置默认头像
+        avatar = "../local/defaultAvatar.png";
+    }
 
     // 待写入数据库的用户信息
     var user = {

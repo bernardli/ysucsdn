@@ -5,15 +5,17 @@ var PostModel = require('../models/posts');
 var CommentModel = require('../models/comments');
 var checkLogin = require('../middlewares/check').checkLogin;
 
-// GET /posts 所有用户或者特定用户的文章页
+// GET /posts 所有用户的文章页
 //   eg: GET /posts?author=xxx
 router.get('/', function(req, res, next) {
     var author = req.query.author;
+    var page = 2;
 
     PostModel.getPosts(author)
         .then(function(posts) {
             res.render('posts', {
-                posts: posts
+                posts: posts,
+                page: page
             });
         })
         .catch(next);
@@ -22,16 +24,19 @@ router.get('/', function(req, res, next) {
 // GET /posts 特定用户的文章页
 //   eg: GET /posts/user?author=xxx
 router.get('/user', function(req, res, next) {
-    var author = req.query.author;
+    var author = req.query.user;
+    var page = req.query.page;
 
     PostModel.getPosts(author)
         .then(function(posts) {
             res.render('user_posts', {
-                posts: posts
+                posts: posts,
+                page: page
             });
         })
         .catch(next);
 });
+
 
 // GET /posts/create 发表文章页
 router.get('/create', checkLogin, function(req, res, next) {

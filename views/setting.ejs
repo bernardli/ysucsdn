@@ -20,11 +20,13 @@
                     </p>
                 </div>
                 <div class="user-password">
-                    <label>更改密码</label>
-                    <input class="user-password-input" type="password">
-                    <input class="user-password-input" type="password">
-                    <input class="user-password-input" type="password">
-                    <button>确认修改</button>
+                    <form class="ui form segment" method="post" action="/setting/password">
+                        <label>更改密码</label>
+                        <input class="user-password-input" type="password" name="oldpassword">
+                        <input class="user-password-input" type="password" name="newpassword">
+                        <input class="user-password-input" type="password" name="newrepassword">
+                        <input type="submit" class="ui button" value="修改">
+                    </form>
                 </div>
                 <form class="ui form segment" method="post" action="/setting/bio">
                     <div class="field required">
