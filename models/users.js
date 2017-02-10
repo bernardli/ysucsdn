@@ -14,6 +14,14 @@ module.exports = {
             .exec();
     },
 
+    // 通过 用户ID 获取用户信息
+    getUserById: function getUserById(id) {
+        return User
+            .findOne({ _id: id })
+            .addCreatedAt()
+            .exec();
+    },
+
     //通过用户 ID 和用户 name 更新 用户 bio
     updateBioById: function updateBioById(userId, userName, data) {
         return User.update({ _id: userId, name: userName }, { $set: data }).exec();

@@ -8,20 +8,21 @@
 
     <div class="user-info">
         <div class="user-info-box">
+            <% var authorinfo =  JSON.parse(author);%>
             <div class="user-info-avatar">
-                <img src="/img/users_avatar/<%= posts[0].author.avatar %>" alt="">
+                <img src="/img/users_avatar/<%= authorinfo.avatar %>" alt="">
             </div>
             <div class="user-info-name">
-                <label for=""><%= posts[0].author.name%></label>
+                <label for=""><%= authorinfo.name%></label>
             </div>
             <div class="user-info-gender">
-                <label for=""><%= posts[0].author.gender%></label>
+                <label for=""><%= authorinfo.gender%></label>
             </div>
         </div>
         <div class="user-info-box">
             <div class="user-info-bio">
                 <p>
-                    <%= posts[0].author.bio%>
+                    <%= authorinfo.bio%>
                 </p>
             </div>
         </div>
@@ -32,7 +33,13 @@
         break;      %>
 	<%- include('components/post-content', { post: posts[i] })%>
 	<% } %>
-
+    <% if(posts.length == 0) { %>
+        <div class="eight wide column">
+            <div class="ui segment">
+                该用户还毛都没写
+            </div>
+        </div>
+    <% } %>
 <%- include('components/paging')%>
 
 <%- include('footer') %>

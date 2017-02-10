@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var PostModel = require('../models/posts');
+var UserModel = require('../models/Users');
 var CommentModel = require('../models/comments');
 var checkLogin = require('../middlewares/check').checkLogin;
 
@@ -24,15 +25,20 @@ router.get('/', function(req, res, next) {
 // GET /posts 特定用户的文章页
 //   eg: GET /posts/user?author=xxx
 router.get('/user', function(req, res, next) {
-    var author = req.query.user;
+    var author = req.query.author;
     var page = req.query.page;
 
     PostModel.getPosts(author)
         .then(function(posts) {
-            res.render('user_posts', {
-                posts: posts,
-                page: page
-            });
+            UserModel.getUserById(author)
+                .then(function(user) {
+                    res.render('user_posts', {
+                        posts: posts,
+                        page: page,
+                        author: JSON.stringify(user)
+                    });
+                })
+                .catch(next);
         })
         .catch(next);
 });
