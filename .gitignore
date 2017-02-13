@@ -1,8 +1,4 @@
 node_modules
-<<<<<<< HEAD
 config/*
-=======
-/config/*
->>>>>>> b6381572bb70845efe53c5d8dccf2cf30ca2d390
-public/img/users_avatar
+public/img/users_avatar/*
 logs/*
