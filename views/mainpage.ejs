@@ -4,26 +4,21 @@
         <title>CSDN主页</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/index.css" rel="stylesheet">
+        <link href="css/mainpage.css" rel="stylesheet">
     </head>
     <body>
         <div class="box--total">
             <div class="header">
                 <div class="header-logo center">
-                    <img src="img/local/logo.jpg" alt="">
+                    <a href="/mainpage">
+                        <img src="img/local/logo.jpg" alt="">
+                    </a>
                 </div>
-                <!--<div class="header-intro">
-                    
-                </div>-->
-                <div class="header-news">
-                    <strong><a href="">新闻</a></strong>
+                <div class="header-item">
+                    <a href="" class="link-header-item center">新闻</a>
                 </div>
-                <div class="header-blog">
-                    <strong><a href="/posts">文章</a></strong>
-                </div>
-                <div class="header-account">
-                    <button type="">登录</button>
-                    <button type="">注册</button>
+                <div class="header-item">
+                    <a href="/posts" class="link-header-item center">文章</a>
                 </div>
             </div>
             <div class="background center">
@@ -33,103 +28,73 @@
                 <div class="body-introbox center">
                     <div class="body-intro">
                         <div class="body-intro-text center">
-                            <h1>It just work!</h1>
+                            <strong>It just works!</strong>
                         </div>
                         <div class="body-intro-button center">
-                            <a href="" class="a-introbox"><strong>了解更多</strong></a>
+                            <a href="" class="link-intro center">
+                                <span>了解更多</span>
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="body-newsbox">
+                <div class="body-newsbox center">
                     <div class="body-news">
-                        <div class="body-news-header">
-                            <h3>DIY达人赛通知</h3>
+                        <div class="body-news-text center">
+                            <strong class="text-newstext-major">社团新闻</strong>
+                            <span class="text-newstext-minor">社团的大事小事都能在这里发现哦</span>
                         </div>
-                        <div class="body-news-body center">
-                            <img src="/localimg/diy.jpg" alt="">
+                        <div class="body-news-box">
+                            <div class="body-news-header">
+                                <a class="text-newsheader-title" href="/posts/<%= posts[0]._id %>"><%= posts[0].title%></a>
+                                <span class="text-newsheader-detail">阅读(<%= posts[0].pv%>)</span>
+                                <span class="text-newsheader-detail">评论(<%= posts[0].commentsCount%>)</span>
+                                <span class="text-newsheader-detail"><%= posts[0].created_at%></span>
+                            </div>
+                            <div class="body-news-content">
+                                <pre class="text-newscontent">
+                                    <%- posts[0].content%>
+                                </pre>
+                            </div>
+                            <div class="body-news-footer">
+                                <a href="" class="link-morenews center">更多新闻</a>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="body-articlebox">
                     <div class="body-article">
+                    <%  for(var i = 0; i < 3; i++)  {
+                            if(!posts[i])
+                                break;  %>
                         <div class="body-article-item">
                             <div class="article-item-author">
-                                <div class="item-author-avatar center">
-                                    <img src="img/local/avatar.jpg" alt="" class="img-article-avatar center">
+                                <div class="article-item-author-avatar center">
+                                    <img src="/img/users_avatar/<%= posts[i].author.avatar%>" alt="" class="img-author-avatar center">
                                 </div>
-                                <div class="item-author-name">
-                                    <p>刘禹超</p>
+                                <div class="article-item-author-name">
+                                    <span class="text-authorname"><%= posts[i].author.name%></span>
+                                </div>
+                                <div class="article-item-author-bio">
+                                    <p class="text-authorbio"><%= posts[i].author.bio%></p>
                                 </div>
                             </div>
-                            <div class="article-item-text">
-                                <div class="item-text-title">
-                                    <h3>女装经验</h3>
+                            <div class="article-item-content">
+                                <div class="article-item-content-title">
+                                    <a class="text-article-title" href=""><%= posts[i].title%></a>
                                 </div>
-                                <div class="item-text-detail">
-                                    <p>2016年12月7日 阅读：80 评论：80</p>
+                                <div class="article-item-content-text">
+                                    <pre class="text-article-content">
+                                        <%- posts[i].content%>
+                                    </pre>
                                 </div>
-                                <div class="item-text-body">
-                                    <p>第二，样式是可以覆盖的，而且先按照权重，再按照定义
-                                    的先后顺序。也许你花了十分钟设计定义的一个class样式，人家分分钟就
-                                    给你干掉了，这得多恼火；也许这个页面好好的，跑到另一个页面就跟原先
-                                    的样式有了冲突。第二，样式是可以覆盖的，而且先按照权重，再按照定义的
-                                    先后顺序。也许你花了十分钟设计定义的一个class样式，人家分分钟就给你干
-                                    掉了，这得多恼火；也许这个页面好好的，跑到另一个页面就跟原先的样式有了冲突。</p>
+                                <div class="article-item-content-footer">
+                                    <span class="text-article-info"><%= posts[i].created_at%></span>
+                                    <span class="text-article-info">阅读(<%= posts[i].pv%>)</span>
+                                    <span class="text-article-info">阅读(<%= posts[i].commentsCount%>)</span>
                                 </div>
                             </div>
                         </div>
-                        <div class="body-article-item">
-                            <div class="article-item-author">
-                                <div class="item-author-avatar center">
-                                    <img src="img/local/avatar.jpg" alt="" class="img-article-avatar center">
-                                </div>
-                                <div class="item-author-name">
-                                    <p>长者</p>
-                                </div>
-                            </div>
-                            <div class="article-item-text">
-                                <div class="item-text-title">
-                                    <h3>题目</h3>
-                                </div>
-                                <div class="item-text-detail">
-                                    <p>2016年12月7日</p>
-                                </div>
-                                <div class="item-text-body">
-                                    <p>第二，样式是可以覆盖的，而且先按照权重，再按照定义
-                                    的先后顺序。也许你花了十分钟设计定义的一个class样式，人家分分钟就
-                                    给你干掉了，这得多恼火；也许这个页面好好的，跑到另一个页面就跟原先
-                                    的样式有了冲突。第二，样式是可以覆盖的，而且先按照权重，再按照定义的
-                                    先后顺序。也许你花了十分钟设计定义的一个class样式，人家分分钟就给你干
-                                    掉了，这得多恼火；也许这个页面好好的，跑到另一个页面就跟原先的样式有了冲突。</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="body-article-item">
-                            <div class="article-item-author">
-                                <div class="item-author-avatar center">
-                                    <img src="img/local/avatar.jpg" alt="" class="img-article-avatar center">
-                                </div>
-                                <div class="item-author-name">
-                                    <p>长者</p>
-                                </div>
-                            </div>
-                            <div class="article-item-text">
-                                <div class="item-text-title">
-                                    <h3>题目</h3>
-                                </div>
-                                <div class="item-text-detail">
-                                    <p>2016年12月7日</p>
-                                </div>
-                                <div class="item-text-body">
-                                    <p>第二，样式是可以覆盖的，而且先按照权重，再按照定义
-                                    的先后顺序。也许你花了十分钟设计定义的一个class样式，人家分分钟就
-                                    给你干掉了，这得多恼火；也许这个页面好好的，跑到另一个页面就跟原先
-                                    的样式有了冲突。第二，样式是可以覆盖的，而且先按照权重，再按照定义的
-                                    先后顺序。也许你花了十分钟设计定义的一个class样式，人家分分钟就给你干
-                                    掉了，这得多恼火；也许这个页面好好的，跑到另一个页面就跟原先的样式有了冲突。</p>
-                                </div>
-                            </div>
-                        </div>
+                    <%  }   %>
                     </div>
                 </div>
             </div>
