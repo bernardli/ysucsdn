@@ -39,6 +39,9 @@
                 </div>
                 <div class="body-newsbox center">
                     <div class="body-news">
+                        <div class="body-news-icon center">
+                            <img src="img/local/news.png" alt="" class="img-newsicon center">
+                        </div>
                         <div class="body-news-text center">
                             <strong class="text-newstext-major">社团新闻</strong>
                             <span class="text-newstext-minor">社团的大事小事都能在这里发现哦</span>
@@ -63,38 +66,44 @@
                 </div>
                 <div class="body-articlebox">
                     <div class="body-article">
-                    <%  for(var i = 0; i < 3; i++)  {
-                            if(!posts[i])
-                                break;  %>
-                        <div class="body-article-item">
-                            <div class="article-item-author">
-                                <div class="article-item-author-avatar center">
-                                    <img src="/img/users_avatar/<%= posts[i].author.avatar%>" alt="" class="img-author-avatar center">
-                                </div>
-                                <div class="article-item-author-name">
-                                    <span class="text-authorname"><%= posts[i].author.name%></span>
-                                </div>
-                                <div class="article-item-author-bio">
-                                    <p class="text-authorbio"><%= posts[i].author.bio%></p>
-                                </div>
-                            </div>
-                            <div class="article-item-content">
-                                <div class="article-item-content-title">
-                                    <a class="text-article-title" href=""><%= posts[i].title%></a>
-                                </div>
-                                <div class="article-item-content-text">
-                                    <pre class="text-article-content">
-                                        <%- posts[i].content%>
-                                    </pre>
-                                </div>
-                                <div class="article-item-content-footer">
-                                    <span class="text-article-info"><%= posts[i].created_at%></span>
-                                    <span class="text-article-info">阅读(<%= posts[i].pv%>)</span>
-                                    <span class="text-article-info">阅读(<%= posts[i].commentsCount%>)</span>
-                                </div>
-                            </div>
+                        <div class="body-article-header">
+
                         </div>
-                    <%  }   %>
+                        <%  for(var i = 0; i < 3; i++)  {
+                                if(!posts[i])
+                                    break;  %>
+                            <div class="body-article-item">
+                                <div class="article-item-author">
+                                    <div class="article-item-author-avatar center">
+                                        <img src="/img/users_avatar/<%= posts[i].author.avatar%>" alt="" class="img-author-avatar center">
+                                    </div>
+                                    <div class="article-item-author-name">
+                                        <span class="text-authorname"><%= posts[i].author.name%></span>
+                                    </div>
+                                    <div class="article-item-author-bio">
+                                        <p class="text-authorbio"><%= posts[i].author.bio%></p>
+                                    </div>
+                                </div>
+                                <div class="article-item-content">
+                                    <div class="article-item-content-title">
+                                        <a class="text-article-title" href=""><%= posts[i].title%></a>
+                                    </div>
+                                    <div class="article-item-content-text">
+                                        <pre class="text-article-content">
+                                            <%- posts[i].content%>
+                                        </pre>
+                                    </div>
+                                    <div class="article-item-content-footer">
+                                        <span class="text-article-info"><%= posts[i].created_at%></span>
+                                        <span class="text-article-info">阅读(<%= posts[i].pv%>)</span>
+                                        <span class="text-article-info">阅读(<%= posts[i].commentsCount%>)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        <%  }   %>
+                        <div class="body-article-footer">
+                            <a href="" class="link-morearticles center">更多文章</a>
+                        </div>
                     </div>
                 </div>
             </div>

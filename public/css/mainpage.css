@@ -48,7 +48,7 @@
 }
 
 .background {
-    z-index: -1;
+    z-index: -10;
     position: fixed;
     width: 100%;
     height: 600px;
@@ -60,6 +60,8 @@
     padding-top: 80px;
     width: 100%;
     height: auto;
+    position: relative;
+    z-index: 2;
 }
 
 .body-introbox {
@@ -111,13 +113,23 @@
     width: 100%;
     height: auto;
     background-color: white;
+    box-shadow: 0px 2px 6px #505054;
 }
 
 .body-news {
     margin: 50px auto;
     width: 1000px;
     height: auto;
-    border: 2px solid black;
+}
+
+.body-news-icon {
+    width: 100%;
+    height: 120px;
+}
+
+.img-newsicon {
+    width: 120px;
+    height: 120px;
 }
 
 .body-news-text {
@@ -167,7 +179,7 @@
 .text-newsheader-detail {
     color: #999;
     font-size: 13px;
-    margin: 2px 8px;
+    margin: 8px 8px;
     align-self: flex-end;
 }
 
@@ -176,6 +188,9 @@
     width: 900px;
     height: 400px;
     overflow: hidden;
+    /*border-top: 1px solid #505054;
+    border-bottom: 1px solid #505054;*/
+    box-shadow: 0px 0px 20px #c1c1cb;
 }
 
 .text-newscontent {
@@ -221,11 +236,26 @@
     display: flex;
     width: 100%;
     height: auto;
-    /*border: 1px solid black;*/
-    margin: 5px 0px;
-    border-bottom-left-radius: 30px;
-    border-top-right-radius: 50px;
+    min-height: 330px;
+    max-height: 400px;
+    margin: 10px 0px;
     background-color: white;
+    box-shadow: 1px 4px 10px #505054;
+    position: relative;
+    z-index: 10;
+}
+
+.body-article-item::before {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 100px;
+    background-color: #c1c3f6;
+    box-shadow: 4px 6px 10px #505054;
+    z-index: -2;
+    transform: skewY(-15deg);
+    top: -9px;
+    position: absolute;
 }
 
 .article-item-author {
@@ -233,6 +263,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    background-color: white;
     align-items: center;
 }
 
@@ -309,6 +340,23 @@
 
 .text-article-info:first-child {
     margin-right: auto;
+}
+
+.body-article-footer {
+    display: flex;
+    width: 900px;
+    justify-content: flex-end;
+}
+
+.link-morearticles {
+    display: flex;
+    width: 100px;
+    height: 30px;
+    font-size: 15px;
+    background-color: #eccc06;
+    color: white;
+    margin: 10px;
+    text-decoration: none;
 }
 
 .footer {
