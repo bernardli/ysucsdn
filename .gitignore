@@ -1,6 +1,8 @@
 node_modules
 config/*
+!config/nothing.*
 public/img/users_avatar/*
 logs/*
+!logs/nothing.*
 .vscode
 test
