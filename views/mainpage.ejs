@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="css/mainpage.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.1.8/semantic.min.css">
     </head>
     <body>
         <div class="box--total">
@@ -45,6 +46,7 @@
                         <div class="body-news-text center">
                             <strong class="text-newstext-major">社团新闻</strong>
                             <span class="text-newstext-minor">社团的大事小事都能在这里发现哦</span>
+                            <span class="text-newstext-hidden">总想搞个大新闻= =</span>
                         </div>
                         <div class="body-news-box">
                             <div class="body-news-header">
@@ -66,8 +68,13 @@
                 </div>
                 <div class="body-articlebox">
                     <div class="body-article">
-                        <div class="body-article-header">
-
+                        <div class="body-article-icon center">
+                            <img src="img/local/articles.png" alt="" class="img-articleicon center">
+                        </div>
+                        <div class="body-article-text center">
+                            <strong class="text-articletext-major">文章</strong>
+                            <span class="text-articletext-minor">瞎扯淡的地方，水水更健康</span>
+                            <span class="text-articletext-hidden">前方装逼高能 ！</span>
                         </div>
                         <%  for(var i = 0; i < 3; i++)  {
                                 if(!posts[i])
