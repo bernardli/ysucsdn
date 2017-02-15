@@ -1,4 +1,6 @@
 node_modules
 config/*
+!config/default.*
 public/img/users_avatar/*
 logs/*
+.vscode
