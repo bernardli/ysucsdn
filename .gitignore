@@ -4,3 +4,4 @@ config/*
 public/img/users_avatar/*
 logs/*
 .vscode
+test
