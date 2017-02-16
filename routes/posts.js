@@ -10,16 +10,27 @@ var checkLogin = require('../middlewares/check').checkLogin;
 //   eg: GET /posts?author=xxx
 router.get('/', function(req, res, next) {
     var author = req.query.author;
-    var page = req.query.page || 1;
-
-    PostModel.getPosts(author)
+    var page = req.query.page||1;
+    if(parseInt(page)==1)
+    {
+        PostModel.getPostslimit(author,page)
         .then(function(posts) {
             res.render('posts', {
-                posts: posts,
-                page: page
+                posts: posts
             });
         })
         .catch(next);
+    }
+    else
+    {
+        PostModel.getPostslimit(author,page)
+        .then(function(posts) {
+            res.render('components/limit-post-content', {
+                posts: posts
+            });
+        })
+        .catch(next);
+    }
 });
 
 // GET /posts 特定用户的文章页

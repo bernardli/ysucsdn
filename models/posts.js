@@ -86,6 +86,24 @@ module.exports = {
             .contentToHtml()
             .exec();
     },
+    
+    //获取固定数量文章
+    getPostslimit: function getPosts(author,page) {
+        var query = {};
+        if (author) {
+            query.author = author;
+        }
+        return Post
+            .find(query)
+            .skip((page-1)*5)
+            .limit(5)
+            .populate({ path: 'author', model: 'User' })
+            .sort({ _id: -1 })
+            .addCreatedAt()
+            .addCommentsCount()
+            .contentToHtml()
+            .exec();
+    },
 
     // 通过文章 id 给 pv 加 1
     incPv: function incPv(postId) {

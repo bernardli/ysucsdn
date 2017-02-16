@@ -1,16 +1,9 @@
 <%- include('header') %>
 
-<link rel="stylesheet" href="css/posts.css">
+<div class="limit-post-content">
+<%- include('components/limit-post-content', { posts: posts }) %>
+</div>
 
-<div><%= page%></div>
-<% 	
-	for(var i = (page - 1) * 2; i < (page -1 ) * 2 + 2; i++) {
-		if(!posts[i])
-			break;     
-%>
-  	<%- include('components/post-content', { post: posts[i] })%>
-<% } %>
-
-<!--<%- include('components/paging')%>-->
+<%- include('components/loadmore') %>
 
 <%- include('footer') %>
