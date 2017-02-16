@@ -43,6 +43,21 @@
                         <div class="body-news-icon center">
                             <img src="img/local/news.png" alt="" class="img-newsicon center">
                         </div>
+                        <%  var newsPost = {
+                                _id　: 1,
+                                author : "VAN",
+                                title　: "暂无新公告",
+                                pv : 0,
+                                content : "<h1>什么都还没写</h1>",
+                                commentsCount : 0,
+                                created_at :　"宇宙大爆炸之前"　
+                            };
+                            for(var i = 0; i < posts.length; i++) {
+                                if(posts[i].author.name == "ysucsdn") {
+                                    newsPost = posts[i];
+                                    break;
+                                }
+                            }   %>
                         <div class="body-news-text center">
                             <strong class="text-newstext-major">社团新闻</strong>
                             <span class="text-newstext-minor">社团的大事小事都能在这里发现哦</span>
@@ -50,14 +65,14 @@
                         </div>
                         <div class="body-news-box">
                             <div class="body-news-header">
-                                <a class="text-newsheader-title" href="/posts/<%= posts[0]._id %>"><%= posts[0].title%></a>
-                                <span class="text-newsheader-detail">阅读(<%= posts[0].pv%>)</span>
-                                <span class="text-newsheader-detail">评论(<%= posts[0].commentsCount%>)</span>
-                                <span class="text-newsheader-detail"><%= posts[0].created_at%></span>
+                                <a class="text-newsheader-title" href="/posts/<%= newsPost._id %>"><%= newsPost.title%></a>
+                                <span class="text-newsheader-detail">阅读(<%= newsPost.pv%>)</span>
+                                <span class="text-newsheader-detail">评论(<%= newsPost.commentsCount%>)</span>
+                                <span class="text-newsheader-detail"><%= newsPost.created_at%></span>
                             </div>
                             <div class="body-news-content">
                                 <pre class="text-newscontent">
-                                    <%- posts[0].content%>
+                                    <%- newsPost.content%>
                                 </pre>
                             </div>
                             <div class="body-news-footer">
