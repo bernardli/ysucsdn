@@ -4,8 +4,6 @@ $(document).ready(function(){
         var url='/posts?page='+page;
         $.get(url, function(data) {
             $('.limit-post-content').append(data);
-            //console.log(data);
-            //alert(page);
             page=parseInt(page)+1;
         });
     });

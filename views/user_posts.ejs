@@ -1,45 +1,19 @@
 <%- include('header') %>
 
-    <link rel="stylesheet" href="css/posts.css">
+<%- include('components/user-info', { author: author }) %>
 
-    <!--<% posts.forEach(function (post) { %>
-  <%- include('components/post-content', { post: post }) %>
-<% }) %>-->
+<div class="limit-post-content">
+<%- include('components/limit-post-content', { posts: posts }) %>
+</div>
 
-    <div class="user-info">
-        <div class="user-info-box">
-            <% var authorinfo =  JSON.parse(author);%>
-            <div class="user-info-avatar">
-                <img src="/img/users_avatar/<%= authorinfo.avatar %>" alt="">
-            </div>
-            <div class="user-info-name">
-                <label for=""><%= authorinfo.name%></label>
-            </div>
-            <div class="user-info-gender">
-                <label for=""><%= authorinfo.gender%></label>
-            </div>
-        </div>
-        <div class="user-info-box">
-            <div class="user-info-bio">
-                <p>
-                    <%= authorinfo.bio%>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <% for(var i = 0; i < 10; i++) {
-      if(!posts[i])
-        break;      %>
-	<%- include('components/post-content', { post: posts[i] })%>
-	<% } %>
-    <% if(posts.length == 0) { %>
+<% if(posts.length == 0) { %>
         <div class="eight wide column">
             <div class="ui segment">
-                该用户还毛都没写
+                该用户毛都没写
             </div>
         </div>
-    <% } %>
-<%- include('components/paging')%>
+<% } %>
+
+<%- include('components/loadmore') %>
 
 <%- include('footer') %>
