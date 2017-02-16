@@ -111,10 +111,13 @@ router.post('/', checkLogin, function(req, res, next) {
 // GET /posts/:postId 单独一篇的文章页
 router.get('/:postId', function(req, res, next) {
     var postId = req.params.postId;
+    var page = req.query.page||1;
 
-    Promise.all([
+    if(parseInt(page)==1)
+    {
+        Promise.all([
             PostModel.getPostById(postId), // 获取文章信息
-            CommentModel.getComments(postId), // 获取该文章所有留言
+            CommentModel.getCommentslimit(postId,page), // 获取该文章所有留言
             PostModel.incPv(postId) // pv 加 1   浏览量
         ])
         .then(function(result) {
@@ -130,6 +133,27 @@ router.get('/:postId', function(req, res, next) {
             });
         })
         .catch(next);
+    }
+    else
+    {
+        Promise.all([
+            PostModel.getPostById(postId), // 获取文章信息
+            CommentModel.getCommentslimit(postId,page), // 获取该文章所有留言
+        ])
+        .then(function(result) {
+            var post = result[0];
+            var comments = result[1];
+            if (!post) {
+                throw new Error('该文章不存在');
+            }
+
+            res.render('components/limit-comments', {
+                post: post,
+                comments: comments
+            });
+        })
+        .catch(next);
+    }
 });
 
 // GET /posts/:postId/edit 更新文章页

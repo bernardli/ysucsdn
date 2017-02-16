@@ -15,6 +15,14 @@ $(document).ready(function(){
             page=parseInt(page)+1;
         });
     });
+    $('#loadmore_comments').on('click', function(e) {
+        var url=window.location.pathname+'?page='+page;
+        $.get(url, function(data) {
+            $('.limit-comments').append(data);
+            page=parseInt(page)+1;
+            console.log(data);
+        });
+    });
 });
 
 function getUrlParam(name) {
