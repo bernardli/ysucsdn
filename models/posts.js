@@ -72,7 +72,7 @@ module.exports = {
     },
     
     //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章
-    getPostslimit: function getPosts(author,page) {
+    getPostslimit: function getPostslimit(author,page) {
         var query = {};
         if (author) {
             query.author = author;
