@@ -12,7 +12,7 @@ router.get('/', checkNotLogin, function(req, res, next) {
 
 // POST /signin 用户登录
 router.post('/', checkNotLogin, function(req, res, next) {
-    var name = req.fields.name;
+    var name = req.fields.name.toString();
     var password = req.fields.password;
 
     UserModel.getUserByName(name)

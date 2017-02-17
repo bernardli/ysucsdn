@@ -119,5 +119,17 @@ module.exports = {
                     return CommentModel.delCommentsByPostId(postId);
                 }
             });
+    },
+
+    //管理员删除文章
+    admindelPostById: function delPostById(postId) {
+        return Post.remove({ _id: postId })
+            .exec()
+            .then(function(res) {
+                // 文章删除后，再删除该文章下的所有留言
+                if (res.result.ok && res.result.n > 0) {
+                    return CommentModel.delCommentsByPostId(postId);
+                }
+            });
     }
 };

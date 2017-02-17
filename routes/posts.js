@@ -200,13 +200,26 @@ router.get('/:postId/remove', checkLogin, function(req, res, next) {
     var postId = req.params.postId;
     var author = req.session.user._id;
 
-    PostModel.delPostById(postId, author)
+    if(req.session.user.identity.toString()==='admin')
+    {
+        PostModel.admindelPostById(postId)
         .then(function() {
             req.flash('success', '删除文章成功');
             // 删除成功后跳转到主页
             res.redirect('/posts');
         })
         .catch(next);
+    }
+    else
+    {
+        PostModel.delPostById(postId, author)
+        .then(function() {
+            req.flash('success', '删除文章成功');
+            // 删除成功后跳转到主页
+            res.redirect('/posts');
+        })
+        .catch(next);
+    }
 });
 
 // POST /posts/:postId/comment 创建一条留言
@@ -234,13 +247,26 @@ router.get('/:postId/comment/:commentId/remove', checkLogin, function(req, res, 
     var commentId = req.params.commentId;
     var author = req.session.user._id;
 
-    CommentModel.delCommentById(commentId, author)
+    if(req.session.user.identity.toString()==='admin')
+    {
+        CommentModel.admindelCommentById(commentId)
         .then(function() {
             req.flash('success', '删除留言成功');
             // 删除成功后跳转到上一页
             res.redirect('back');
         })
         .catch(next);
+    }
+    else
+    {
+        CommentModel.delCommentById(commentId, author)
+        .then(function() {
+            req.flash('success', '删除留言成功');
+            // 删除成功后跳转到上一页
+            res.redirect('back');
+        })
+        .catch(next);
+    }
 });
 
 module.exports = router;

@@ -35,6 +35,11 @@ module.exports = {
         return Comment.remove({ author: author, _id: commentId }).exec();
     },
 
+    // 管理员通过留言 id 删除一个留言
+    admindelCommentById: function delCommentById(commentId) {
+        return Comment.remove({ _id: commentId }).exec();
+    },
+
     // 通过文章 id 删除该文章下所有留言
     delCommentsByPostId: function delCommentsByPostId(postId) {
         return Comment.remove({ postId: postId }).exec();

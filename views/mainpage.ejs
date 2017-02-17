@@ -52,12 +52,11 @@
                                 commentsCount : 0,
                                 created_at :　"宇宙大爆炸之前"　
                             };
-                            for(var i = 0; i < posts.length; i++) {
-                                if(posts[i].author.name == "ysucsdn") {
-                                    newsPost = posts[i];
-                                    break;
+                            posts.forEach(function (post) {
+                                if(post.author.name == "ysucsdn") {
+                                    newsPost = post;
                                 }
-                            }   %>
+                            })   %>
                         <div class="body-news-text center">
                             <strong class="text-newstext-major">社团新闻</strong>
                             <span class="text-newstext-minor">社团的大事小事都能在这里发现哦</span>
@@ -91,38 +90,36 @@
                             <span class="text-articletext-minor">瞎扯淡的地方，水水更健康</span>
                             <span class="text-articletext-hidden">前方装逼高能 ！</span>
                         </div>
-                        <%  for(var i = 0; i < 3; i++)  {
-                                if(!posts[i])
-                                    break;  %>
+                        <% posts.forEach(function (post) {  %>
                             <div class="body-article-item">
                                 <div class="article-item-author">
                                     <div class="article-item-author-avatar center">
-                                        <img src="/img/users_avatar/<%= posts[i].author.avatar%>" alt="" class="img-author-avatar center">
+                                        <img src="/img/users_avatar/<%= post.author.avatar%>" alt="" class="img-author-avatar center">
                                     </div>
                                     <div class="article-item-author-name">
-                                        <span class="text-authorname"><%= posts[i].author.name%></span>
+                                        <span class="text-authorname"><%= post.author.name%></span>
                                     </div>
                                     <div class="article-item-author-bio">
-                                        <p class="text-authorbio"><%= posts[i].author.bio%></p>
+                                        <p class="text-authorbio"><%= post.author.bio%></p>
                                     </div>
                                 </div>
                                 <div class="article-item-content">
                                     <div class="article-item-content-title">
-                                        <a class="text-article-title" href=""><%= posts[i].title%></a>
+                                        <a class="text-article-title" href=""><%= post.title%></a>
                                     </div>
                                     <div class="article-item-content-text">
                                         <pre class="text-article-content">
-                                            <%- posts[i].content%>
+                                            <%- post.content%>
                                         </pre>
                                     </div>
                                     <div class="article-item-content-footer">
-                                        <span class="text-article-info"><%= posts[i].created_at%></span>
-                                        <span class="text-article-info">阅读(<%= posts[i].pv%>)</span>
-                                        <span class="text-article-info">阅读(<%= posts[i].commentsCount%>)</span>
+                                        <span class="text-article-info"><%= post.created_at%></span>
+                                        <span class="text-article-info">阅读(<%= post.pv%>)</span>
+                                        <span class="text-article-info">阅读(<%= post.commentsCount%>)</span>
                                     </div>
                                 </div>
                             </div>
-                        <%  }   %>
+                        <%  })   %>
                         <div class="body-article-footer">
                             <a href="" class="link-morearticles center">更多文章</a>
                         </div>
