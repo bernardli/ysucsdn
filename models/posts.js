@@ -72,7 +72,7 @@ module.exports = {
     },
     
     //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章
-    getPostslimit: function getPosts(author,page) {
+    getPostslimit: function getPostslimit(author,page) {
         var query = {};
         if (author) {
             query.author = author;
@@ -112,6 +112,18 @@ module.exports = {
     // 通过用户 id 和文章 id 删除一篇文章
     delPostById: function delPostById(postId, author) {
         return Post.remove({ author: author, _id: postId })
+            .exec()
+            .then(function(res) {
+                // 文章删除后，再删除该文章下的所有留言
+                if (res.result.ok && res.result.n > 0) {
+                    return CommentModel.delCommentsByPostId(postId);
+                }
+            });
+    },
+
+    //管理员删除文章
+    admindelPostById: function delPostById(postId) {
+        return Post.remove({ _id: postId })
             .exec()
             .then(function(res) {
                 // 文章删除后，再删除该文章下的所有留言

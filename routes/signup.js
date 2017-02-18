@@ -19,6 +19,7 @@ router.post('/', checkNotLogin, function(req, res, next) {
     var bio = req.fields.bio;
     var avatar = req.files.avatar.path.split(path.sep).pop();
     var password = req.fields.password;
+    var identity = 'normal';
     var repassword = req.fields.repassword;
 
     // 校验参数
@@ -62,6 +63,7 @@ router.post('/', checkNotLogin, function(req, res, next) {
     var user = {
         name: name,
         password: password,
+        identity: identity,
         gender: gender,
         bio: bio,
         avatar: avatar
