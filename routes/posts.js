@@ -10,26 +10,23 @@ var checkLogin = require('../middlewares/check').checkLogin;
 //   eg: GET /posts?author=xxx
 router.get('/', function(req, res, next) {
     var author = req.query.author;
-    var page = req.query.page||1;
-    if(parseInt(page)==1)
-    {
-        PostModel.getPostslimit(author,page)
-        .then(function(posts) {
-            res.render('posts', {
-                posts: posts
-            });
-        })
-        .catch(next);
-    }
-    else
-    {
-        PostModel.getPostslimit(author,page)
-        .then(function(posts) {
-            res.render('components/limit-post-content', {
-                posts: posts
-            });
-        })
-        .catch(next);
+    var page = req.query.page || 1;
+    if (parseInt(page) == 1) {
+        PostModel.getPostslimit(author, page)
+            .then(function(posts) {
+                res.render('posts', {
+                    posts: posts
+                });
+            })
+            .catch(next);
+    } else {
+        PostModel.getPostslimit(author, page)
+            .then(function(posts) {
+                res.render('components/limit-post-content', {
+                    posts: posts
+                });
+            })
+            .catch(next);
     }
 });
 
@@ -37,31 +34,28 @@ router.get('/', function(req, res, next) {
 //   eg: GET /posts/user?author=xxx
 router.get('/user', function(req, res, next) {
     var author = req.query.author;
-    var page = req.query.page||1;
-    if(parseInt(page)==1)
-    {
-        PostModel.getPostslimit(author,page)
-        .then(function(posts) {
-            UserModel.getUserById(author)
-                .then(function(user) {
-                    res.render('user_posts', {
-                        posts: posts,
-                        author: JSON.stringify(user)
-                    });
-                })
-                .catch(next);
-        })
-        .catch(next);
-    }
-    else
-    {
-        PostModel.getPostslimit(author,page)
-        .then(function(posts) {
-            res.render('components/limit-post-content', {
-                posts: posts
-            });
-        })
-        .catch(next);
+    var page = req.query.page || 1;
+    if (parseInt(page) == 1) {
+        PostModel.getPostslimit(author, page)
+            .then(function(posts) {
+                UserModel.getUserById(author)
+                    .then(function(user) {
+                        res.render('user_posts', {
+                            posts: posts,
+                            author: JSON.stringify(user)
+                        });
+                    })
+                    .catch(next);
+            })
+            .catch(next);
+    } else {
+        PostModel.getPostslimit(author, page)
+            .then(function(posts) {
+                res.render('components/limit-post-content', {
+                    posts: posts
+                });
+            })
+            .catch(next);
     }
 });
 
