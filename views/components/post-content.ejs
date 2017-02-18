@@ -1,50 +1,42 @@
-<div class="post-content">
-    <div class="ui grid">
-        <div class="four wide column">
-            <a class="avatar" href="/posts/user?author=<%= post.author._id %>" data-title="<%= post.author.name %> | <%= ({m: '男', f: '女', x: '保密'})[post.author.gender] %>" data-content="<%= post.author.bio %>">
-                <img class="avatar" src="/img/users_avatar/<%= post.author.avatar %>">
-            </a>
+<%  postNum = postNum + 1; 
+    if(postNum % 2 != 0) {
+    %>
+    <div class="post-content post-left">
+<%  } else { %>
+    <div class="post-content post-right">
+<%  } %>
+
+    <div class="body-article-item">
+        <div class="article-item-author">
+            <div class="article-item-author-avatar center">
+                <img src="/img/users_avatar/<%= post.author.avatar%>" alt="" class="img-author-avatar center">
+            </div>
+            <div class="article-item-author-name">
+                <span class="text-authorname"><%= post.author.name%></span>
+            </div>
+            <div class="article-item-author-bio">
+                <p class="text-authorbio">
+                    <%= post.author.bio%>
+                </p>
+            </div>
         </div>
-
-        <div class="eight wide column">
-            <div class="ui segment">
-                <h3>
-                    <a href="/posts/<%= post._id %>">
-                        <%= post.title %>
-                    </a>
-                </h3>
-                <pre class="post-content-pre"><%- post.content %></pre>
-                <div>
-                    <span class="tag"><%= post.created_at %></span>
-                    <span class="tag right">
-                        <span>浏览(<%= post.pv %>)</span>
-                        <span>留言(<%= post.commentsCount %>)</span>
-
-                        <% if (user && post.author._id && user._id.toString() === post.author._id.toString()) { %>
-                            <div class="ui inline dropdown">
-                                <div class="text"></div>
-                                <i class="dropdown icon"></i>
-                                <div class="menu">
-                                    <div class="item"><a href="/posts/<%= post._id %>/edit">编辑</a></div>
-                                    <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
-                                </div>
-                            </div>
-                            <% } %>
-
-
-                            <% if (user && user.identity.toString()==='admin') { %>
-                            <div class="ui inline dropdown">
-                                <div class="text"></div>
-                                <i class="dropdown icon"></i>
-                                <div class="menu">
-                                    <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
-                                </div>
-                            </div>
-                            <% } %>
-
-                    </span>
-                </div>
+        <div class="article-item-content">
+            <div class="article-item-content-title">
+                <a class="text-article-title" href="">
+                    <%= post.title%>
+                </a>
+            </div>
+            <div class="article-item-content-text">
+                <pre class="text-article-content">
+                    <%- post.content%>
+                </pre>
+            </div>
+            <div class="article-item-content-footer">
+                <span class="text-article-info"><%= post.created_at%></span>
+                <span class="text-article-info">阅读(<%= post.pv%>)</span>
+                <span class="text-article-info">阅读(<%= post.commentsCount%>)</span>
             </div>
         </div>
     </div>
+
 </div>

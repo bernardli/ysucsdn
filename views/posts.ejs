@@ -1,14 +1,17 @@
 <%- include('header') %>
 
+<link rel="stylesheet" href="css/posts.css">
+
 <div class="limit-post-content">
+<% postNum = 0%>
 <%- include('components/limit-post-content', { posts: posts }) %>
 </div>
 
-<div class="menu">
-    <div class="item">
-        <button type="button" id="loadmore_posts">加载更多</button>
+<div class="menu-load">
+    <div class="item-load center" id="loadmore_posts">
+        <span>----- 点击加载更多 -----</span>
     </div>
-</div>
+</div> 
 
 <%- include('components/back-to-top') %>
 

@@ -70,16 +70,16 @@ module.exports = {
             .contentToHtml()
             .exec();
     },
-    
+
     //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章
-    getPostslimit: function getPostslimit(author,page) {
+    getPostslimit: function getPostslimit(author, page) {
         var query = {};
         if (author) {
             query.author = author;
         }
         return Post
             .find(query)
-            .skip((page-1)*5)
+            .skip((page - 1) * 5)
             .limit(5)
             .populate({ path: 'author', model: 'User' })
             .sort({ _id: -1 })
