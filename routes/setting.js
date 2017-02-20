@@ -11,10 +11,12 @@ var sha1 = require('sha1');
 //GET /setting 用户设置页面
 router.get('/', function(req, res, next) {
     var name = req.query.name;
+    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
     UserModel.getUserByName(name)
         .then(function(user) {
             res.render('setting', {
-                user: user
+                user: user,
+                ip:ip
             });
         })
         .catch(next);

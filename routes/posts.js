@@ -11,11 +11,13 @@ var checkLogin = require('../middlewares/check').checkLogin;
 router.get('/', function(req, res, next) {
     var author = req.query.author;
     var page = req.query.page || 1;
+    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
     if (parseInt(page) == 1) {
         PostModel.getPostslimit(author, page)
             .then(function(posts) {
                 res.render('posts', {
-                    posts: posts
+                    posts: posts,
+                    ip: ip
                 });
             })
             .catch(next);
@@ -35,6 +37,7 @@ router.get('/', function(req, res, next) {
 router.get('/user', function(req, res, next) {
     var author = req.query.author;
     var page = req.query.page || 1;
+    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
     if (parseInt(page) == 1) {
         PostModel.getPostslimit(author, page)
             .then(function(posts) {
@@ -42,7 +45,8 @@ router.get('/user', function(req, res, next) {
                     .then(function(user) {
                         res.render('user_posts', {
                             posts: posts,
-                            author: JSON.stringify(user)
+                            author: JSON.stringify(user),
+                            ip: ip
                         });
                     })
                     .catch(next);
@@ -62,7 +66,10 @@ router.get('/user', function(req, res, next) {
 
 // GET /posts/create 发表文章页
 router.get('/create', checkLogin, function(req, res, next) {
-    res.render('create');
+    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    res.render('create',{
+        ip: ip
+    });
 });
 
 // POST /posts 发表一篇文章
@@ -105,48 +112,46 @@ router.post('/', checkLogin, function(req, res, next) {
 // GET /posts/:postId 单独一篇的文章页
 router.get('/:postId', function(req, res, next) {
     var postId = req.params.postId;
-    var page = req.query.page||1;
-
-    if(parseInt(page)==1)
-    {
+    var page = req.query.page || 1;
+    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    if (parseInt(page) == 1) {
         Promise.all([
-            PostModel.getPostById(postId), // 获取文章信息
-            CommentModel.getCommentslimit(postId,page), // 获取该文章所有留言
-            PostModel.incPv(postId) // pv 加 1   浏览量
-        ])
-        .then(function(result) {
-            var post = result[0];
-            var comments = result[1];
-            if (!post) {
-                throw new Error('该文章不存在');
-            }
+                PostModel.getPostById(postId), // 获取文章信息
+                CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
+                PostModel.incPv(postId) // pv 加 1   浏览量
+            ])
+            .then(function(result) {
+                var post = result[0];
+                var comments = result[1];
+                if (!post) {
+                    throw new Error('该文章不存在');
+                }
 
-            res.render('post', {
-                post: post,
-                comments: comments
-            });
-        })
-        .catch(next);
-    }
-    else
-    {
+                res.render('post', {
+                    post: post,
+                    comments: comments,
+                    ip: ip
+                });
+            })
+            .catch(next);
+    } else {
         Promise.all([
-            PostModel.getPostById(postId), // 获取文章信息
-            CommentModel.getCommentslimit(postId,page), // 获取该文章所有留言
-        ])
-        .then(function(result) {
-            var post = result[0];
-            var comments = result[1];
-            if (!post) {
-                throw new Error('该文章不存在');
-            }
+                PostModel.getPostById(postId), // 获取文章信息
+                CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
+            ])
+            .then(function(result) {
+                var post = result[0];
+                var comments = result[1];
+                if (!post) {
+                    throw new Error('该文章不存在');
+                }
 
-            res.render('components/limit-comments', {
-                post: post,
-                comments: comments
-            });
-        })
-        .catch(next);
+                res.render('components/limit-comments', {
+                    post: post,
+                    comments: comments
+                });
+            })
+            .catch(next);
     }
 });
 
@@ -154,7 +159,7 @@ router.get('/:postId', function(req, res, next) {
 router.get('/:postId/edit', checkLogin, function(req, res, next) {
     var postId = req.params.postId;
     var author = req.session.user._id;
-
+    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
     PostModel.getRawPostById(postId)
         .then(function(post) {
             if (!post) {
@@ -164,7 +169,8 @@ router.get('/:postId/edit', checkLogin, function(req, res, next) {
                 throw new Error('权限不足');
             }
             res.render('edit', {
-                post: post
+                post: post,
+                ip: ip
             });
         })
         .catch(next);
@@ -179,7 +185,7 @@ router.post('/:postId/edit', checkLogin, function(req, res, next) {
     //获取修改页面表格传来的 title,content 的数据
     var title = req.fields.title;
     var content = req.fields.content;
-
+    
     PostModel.updatePostById(postId, author, { title: title, content: content })
         .then(function() {
             req.flash('success', '编辑文章成功');
@@ -193,26 +199,23 @@ router.post('/:postId/edit', checkLogin, function(req, res, next) {
 router.get('/:postId/remove', checkLogin, function(req, res, next) {
     var postId = req.params.postId;
     var author = req.session.user._id;
-
-    if(req.session.user.identity.toString()==='admin')
-    {
+    
+    if (req.session.user.identity.toString() === 'admin') {
         PostModel.admindelPostById(postId)
-        .then(function() {
-            req.flash('success', '删除文章成功');
-            // 删除成功后跳转到主页
-            res.redirect('/posts');
-        })
-        .catch(next);
-    }
-    else
-    {
+            .then(function() {
+                req.flash('success', '删除文章成功');
+                // 删除成功后跳转到主页
+                res.redirect('/posts');
+            })
+            .catch(next);
+    } else {
         PostModel.delPostById(postId, author)
-        .then(function() {
-            req.flash('success', '删除文章成功');
-            // 删除成功后跳转到主页
-            res.redirect('/posts');
-        })
-        .catch(next);
+            .then(function() {
+                req.flash('success', '删除文章成功');
+                // 删除成功后跳转到主页
+                res.redirect('/posts');
+            })
+            .catch(next);
     }
 });
 
@@ -226,7 +229,7 @@ router.post('/:postId/comment', checkLogin, function(req, res, next) {
         postId: postId,
         content: content
     };
-
+    
     CommentModel.create(comment)
         .then(function() {
             req.flash('success', '留言成功');
@@ -240,26 +243,23 @@ router.post('/:postId/comment', checkLogin, function(req, res, next) {
 router.get('/:postId/comment/:commentId/remove', checkLogin, function(req, res, next) {
     var commentId = req.params.commentId;
     var author = req.session.user._id;
-
-    if(req.session.user.identity.toString()==='admin')
-    {
+    
+    if (req.session.user.identity.toString() === 'admin') {
         CommentModel.admindelCommentById(commentId)
-        .then(function() {
-            req.flash('success', '删除留言成功');
-            // 删除成功后跳转到上一页
-            res.redirect('back');
-        })
-        .catch(next);
-    }
-    else
-    {
+            .then(function() {
+                req.flash('success', '删除留言成功');
+                // 删除成功后跳转到上一页
+                res.redirect('back');
+            })
+            .catch(next);
+    } else {
         CommentModel.delCommentById(commentId, author)
-        .then(function() {
-            req.flash('success', '删除留言成功');
-            // 删除成功后跳转到上一页
-            res.redirect('back');
-        })
-        .catch(next);
+            .then(function() {
+                req.flash('success', '删除留言成功');
+                // 删除成功后跳转到上一页
+                res.redirect('back');
+            })
+            .catch(next);
     }
 });
 
