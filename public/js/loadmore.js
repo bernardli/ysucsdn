@@ -2,14 +2,19 @@
 $(document).ready(function() {
     var page = 2;
     $('#loadmore_posts').on('click', function(e) {
-        var url = window.location.pathname + '?page=' + page;
+        if (getUrlParam('search') == null) {
+            var url = window.location.pathname + '?page=' + page;
+        } else {
+            var search = getUrlParam('search');
+            var url = window.location.pathname + '?page=' + page + '&search=' + search;
+        }
+        //alert(url);
         $.get(url, function(data) {
             $('.limit-post-content').append(data);
             page = parseInt(page) + 1;
         });
     });
     $('#loadmore_user').on('click', function(e) {
-        var author = getUrlParam('author');
         var url = window.location.pathname + window.location.search + '&page=' + page;
         $.get(url, function(data) {
             $('.limit-post-content').append(data);

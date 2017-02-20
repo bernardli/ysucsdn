@@ -72,32 +72,15 @@ module.exports = {
     },
 
     //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章
-    getPostslimit: function getPostslimit(author, page) {
+    getPostslimit: function getPostslimit(author, page, search) {
         var query = {};
         if (author) {
             query.author = author;
+        } else if (search) {
+            query = { $or: ([{ author: { $regex: String(search) } }, { title: { $regex: String(search) } }, { content: { $regex: String(search) } }]) };
         }
         return Post
             .find(query)
-            .skip((page - 1) * 5)
-            .limit(5)
-            .populate({ path: 'author', model: 'User' })
-            .sort({ _id: -1 })
-            .addCreatedAt()
-            .addCommentsCount()
-            .contentToHtml()
-            .exec();
-    },
-
-    //搜索文章
-    getPostssearch: function getPostssearch(page, search) {
-        var query = {};
-        if (author) {
-            query.author = author;
-        }
-        return Post
-            .find(query)
-            .or([{ title: { $regex: search } }, { content: { $regex: search } }])
             .skip((page - 1) * 5)
             .limit(5)
             .populate({ path: 'author', model: 'User' })

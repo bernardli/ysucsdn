@@ -7,13 +7,15 @@ var CommentModel = require('../models/comments');
 var checkLogin = require('../middlewares/check').checkLogin;
 
 // GET /posts 所有用户的文章页
-//   eg: GET /posts?author=xxx
+//   eg: GET /posts?author=xxx?search=xxx
 router.get('/', function(req, res, next) {
     var author = req.query.author;
+    var search = req.query.search;
     var page = req.query.page || 1;
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+
     if (parseInt(page) == 1) {
-        PostModel.getPostslimit(author, page)
+        PostModel.getPostslimit(author, page, search)
             .then(function(posts) {
                 res.render('posts', {
                     posts: posts,
@@ -22,7 +24,7 @@ router.get('/', function(req, res, next) {
             })
             .catch(next);
     } else {
-        PostModel.getPostslimit(author, page)
+        PostModel.getPostslimit(author, page, search)
             .then(function(posts) {
                 res.render('components/limit-post-content', {
                     posts: posts
@@ -36,10 +38,12 @@ router.get('/', function(req, res, next) {
 //   eg: GET /posts/user?author=xxx
 router.get('/user', function(req, res, next) {
     var author = req.query.author;
+    var search = req.query.search;
     var page = req.query.page || 1;
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+
     if (parseInt(page) == 1) {
-        PostModel.getPostslimit(author, page)
+        PostModel.getPostslimit(author, page, search)
             .then(function(posts) {
                 UserModel.getUserById(author)
                     .then(function(user) {
@@ -53,7 +57,7 @@ router.get('/user', function(req, res, next) {
             })
             .catch(next);
     } else {
-        PostModel.getPostslimit(author, page)
+        PostModel.getPostslimit(author, page, search)
             .then(function(posts) {
                 res.render('components/limit-post-content', {
                     posts: posts
@@ -258,33 +262,6 @@ router.get('/:postId/comment/:commentId/remove', checkLogin, function(req, res, 
                 req.flash('success', '删除留言成功');
                 // 删除成功后跳转到上一页
                 res.redirect('back');
-            })
-            .catch(next);
-    }
-});
-
-// GET /posts/search 搜索文章页
-//   eg: GET /posts/search?search=xxx
-router.get('/search', function(req, res, next) {
-    var page = req.query.page || 1;
-    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
-    var search = req.query.search;
-
-    if (parseInt(page) == 1) {
-        PostModel.getPostssearch(page, search)
-            .then(function(posts) {
-                res.render('posts', {
-                    posts: posts,
-                    ip: ip
-                });
-            })
-            .catch(next);
-    } else {
-        PostModel.getPostssearch(page, search)
-            .then(function(posts) {
-                res.render('components/limit-post-content', {
-                    posts: posts
-                });
             })
             .catch(next);
     }
