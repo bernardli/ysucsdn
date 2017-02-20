@@ -23,10 +23,8 @@
                             <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
                         </div>
                     </div>
-                    <% } %>
-
-
-                    <% if (user && user.identity.toString()==='admin') { %>
+                    <% }
+                    else if (user && user.identity.toString()==='admin') { %>
                         <div class="ui inline dropdown">
                             <div class="text">编辑</div>                           
                             <i class="dropdown icon"></i>
