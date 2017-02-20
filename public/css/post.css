@@ -117,6 +117,7 @@
 .comment-body {
     /*搭配Semantic-UI*/
     max-width: 900px !important;
+    width: 900px;
     height: auto;
     padding: 10px;
     box-shadow: 0px 0px 20px #c1c1cb;

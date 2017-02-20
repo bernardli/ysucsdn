@@ -11,7 +11,7 @@ var checkLogin = require('../middlewares/check').checkLogin;
 router.get('/', function(req, res, next) {
     var author = req.query.author;
     var page = req.query.page || 1;
-    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
     if (parseInt(page) == 1) {
         PostModel.getPostslimit(author, page)
             .then(function(posts) {
@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
 router.get('/user', function(req, res, next) {
     var author = req.query.author;
     var page = req.query.page || 1;
-    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
     if (parseInt(page) == 1) {
         PostModel.getPostslimit(author, page)
             .then(function(posts) {
@@ -66,8 +66,8 @@ router.get('/user', function(req, res, next) {
 
 // GET /posts/create 发表文章页
 router.get('/create', checkLogin, function(req, res, next) {
-    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
-    res.render('create',{
+    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    res.render('create', {
         ip: ip
     });
 });
@@ -113,19 +113,11 @@ router.post('/', checkLogin, function(req, res, next) {
 router.get('/:postId', function(req, res, next) {
     var postId = req.params.postId;
     var page = req.query.page || 1;
-<<<<<<< HEAD
-
-    if (parseInt(page) == 1) {
-        Promise.all([
-                PostModel.getPostById(postId), // 获取文章信息
-                CommentModel.getCommentslimit(postId, page), // 获取该文章部分留言
-=======
-    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
     if (parseInt(page) == 1) {
         Promise.all([
                 PostModel.getPostById(postId), // 获取文章信息
                 CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
->>>>>>> 9fd2811d836fad0c10d03ab6c637b727a1e711bd
                 PostModel.incPv(postId) // pv 加 1   浏览量
             ])
             .then(function(result) {
@@ -137,17 +129,6 @@ router.get('/:postId', function(req, res, next) {
 
                 res.render('post', {
                     post: post,
-<<<<<<< HEAD
-                    comments: comments
-                });
-            })
-            .catch(next);
-    } else //加载更多留言
-    {
-        Promise.all([
-                PostModel.getPostById(postId), // 获取文章信息
-                CommentModel.getCommentslimit(postId, page), // 获取该文章部分留言
-=======
                     comments: comments,
                     ip: ip
                 });
@@ -157,7 +138,6 @@ router.get('/:postId', function(req, res, next) {
         Promise.all([
                 PostModel.getPostById(postId), // 获取文章信息
                 CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
->>>>>>> 9fd2811d836fad0c10d03ab6c637b727a1e711bd
             ])
             .then(function(result) {
                 var post = result[0];
@@ -179,7 +159,7 @@ router.get('/:postId', function(req, res, next) {
 router.get('/:postId/edit', checkLogin, function(req, res, next) {
     var postId = req.params.postId;
     var author = req.session.user._id;
-    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
     PostModel.getRawPostById(postId)
         .then(function(post) {
             if (!post) {
@@ -205,7 +185,7 @@ router.post('/:postId/edit', checkLogin, function(req, res, next) {
     //获取修改页面表格传来的 title,content 的数据
     var title = req.fields.title;
     var content = req.fields.content;
-    
+
     PostModel.updatePostById(postId, author, { title: title, content: content })
         .then(function() {
             req.flash('success', '编辑文章成功');
@@ -219,11 +199,7 @@ router.post('/:postId/edit', checkLogin, function(req, res, next) {
 router.get('/:postId/remove', checkLogin, function(req, res, next) {
     var postId = req.params.postId;
     var author = req.session.user._id;
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> 9fd2811d836fad0c10d03ab6c637b727a1e711bd
     if (req.session.user.identity.toString() === 'admin') {
         PostModel.admindelPostById(postId)
             .then(function() {
@@ -253,7 +229,7 @@ router.post('/:postId/comment', checkLogin, function(req, res, next) {
         postId: postId,
         content: content
     };
-    
+
     CommentModel.create(comment)
         .then(function() {
             req.flash('success', '留言成功');
@@ -267,11 +243,7 @@ router.post('/:postId/comment', checkLogin, function(req, res, next) {
 router.get('/:postId/comment/:commentId/remove', checkLogin, function(req, res, next) {
     var commentId = req.params.commentId;
     var author = req.session.user._id;
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> 9fd2811d836fad0c10d03ab6c637b727a1e711bd
     if (req.session.user.identity.toString() === 'admin') {
         CommentModel.admindelCommentById(commentId)
             .then(function() {
