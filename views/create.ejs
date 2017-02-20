@@ -1,5 +1,16 @@
 <%- include('header') %>
 
+<link rel="stylesheet" href="/editormd/css/editormd.min.css">
+<script src="/editormd/editormd.min.js"></script>
+
+<script type="text/javascript">
+    $(function() {
+        var editor = editormd("editormd", {
+            path : "/editormd/lib/"
+        });
+    });
+</script>
+
     <div class="ui grid">
         <div class="four wide column">
             <a class="avatar" href="/posts?author=<%= user._id %>" data-title="<%= user.name %> | <%= ({m: '男', f: '女', x: '保密'})[user.gender] %>" data-content="<%= user.bio %>">
@@ -7,15 +18,15 @@
             </a>
         </div>
 
-        <div class="eight wide column">
+        <div class="sixteen wide column">
             <form class="ui form segment" method="post" action="/posts">
                 <div class="field required">
                     <label>标题</label>
                     <input type="text" name="title">
                 </div>
-                <div class="field required">
+                <div id="editormd" class="field required">
                     <label>内容</label>
-                    <textarea name="content" rows="15"></textarea>
+                    <textarea name="content" style="display:none;">### Hello Editor.md !</textarea>
                 </div>
                 <input type="submit" class="ui button" value="发布">
             </form>
