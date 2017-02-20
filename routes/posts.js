@@ -105,48 +105,46 @@ router.post('/', checkLogin, function(req, res, next) {
 // GET /posts/:postId 单独一篇的文章页
 router.get('/:postId', function(req, res, next) {
     var postId = req.params.postId;
-    var page = req.query.page||1;
+    var page = req.query.page || 1;
 
-    if(parseInt(page)==1)
+    if (parseInt(page) == 1) {
+        Promise.all([
+                PostModel.getPostById(postId), // 获取文章信息
+                CommentModel.getCommentslimit(postId, page), // 获取该文章部分留言
+                PostModel.incPv(postId) // pv 加 1   浏览量
+            ])
+            .then(function(result) {
+                var post = result[0];
+                var comments = result[1];
+                if (!post) {
+                    throw new Error('该文章不存在');
+                }
+
+                res.render('post', {
+                    post: post,
+                    comments: comments
+                });
+            })
+            .catch(next);
+    } else //加载更多留言
     {
         Promise.all([
-            PostModel.getPostById(postId), // 获取文章信息
-            CommentModel.getCommentslimit(postId,page), // 获取该文章所有留言
-            PostModel.incPv(postId) // pv 加 1   浏览量
-        ])
-        .then(function(result) {
-            var post = result[0];
-            var comments = result[1];
-            if (!post) {
-                throw new Error('该文章不存在');
-            }
+                PostModel.getPostById(postId), // 获取文章信息
+                CommentModel.getCommentslimit(postId, page), // 获取该文章部分留言
+            ])
+            .then(function(result) {
+                var post = result[0];
+                var comments = result[1];
+                if (!post) {
+                    throw new Error('该文章不存在');
+                }
 
-            res.render('post', {
-                post: post,
-                comments: comments
-            });
-        })
-        .catch(next);
-    }
-    else
-    {
-        Promise.all([
-            PostModel.getPostById(postId), // 获取文章信息
-            CommentModel.getCommentslimit(postId,page), // 获取该文章所有留言
-        ])
-        .then(function(result) {
-            var post = result[0];
-            var comments = result[1];
-            if (!post) {
-                throw new Error('该文章不存在');
-            }
-
-            res.render('components/limit-comments', {
-                post: post,
-                comments: comments
-            });
-        })
-        .catch(next);
+                res.render('components/limit-comments', {
+                    post: post,
+                    comments: comments
+                });
+            })
+            .catch(next);
     }
 });
 
@@ -194,25 +192,22 @@ router.get('/:postId/remove', checkLogin, function(req, res, next) {
     var postId = req.params.postId;
     var author = req.session.user._id;
 
-    if(req.session.user.identity.toString()==='admin')
-    {
+    if (req.session.user.identity.toString() === 'admin') {
         PostModel.admindelPostById(postId)
-        .then(function() {
-            req.flash('success', '删除文章成功');
-            // 删除成功后跳转到主页
-            res.redirect('/posts');
-        })
-        .catch(next);
-    }
-    else
-    {
+            .then(function() {
+                req.flash('success', '删除文章成功');
+                // 删除成功后跳转到主页
+                res.redirect('/posts');
+            })
+            .catch(next);
+    } else {
         PostModel.delPostById(postId, author)
-        .then(function() {
-            req.flash('success', '删除文章成功');
-            // 删除成功后跳转到主页
-            res.redirect('/posts');
-        })
-        .catch(next);
+            .then(function() {
+                req.flash('success', '删除文章成功');
+                // 删除成功后跳转到主页
+                res.redirect('/posts');
+            })
+            .catch(next);
     }
 });
 
@@ -241,25 +236,22 @@ router.get('/:postId/comment/:commentId/remove', checkLogin, function(req, res, 
     var commentId = req.params.commentId;
     var author = req.session.user._id;
 
-    if(req.session.user.identity.toString()==='admin')
-    {
+    if (req.session.user.identity.toString() === 'admin') {
         CommentModel.admindelCommentById(commentId)
-        .then(function() {
-            req.flash('success', '删除留言成功');
-            // 删除成功后跳转到上一页
-            res.redirect('back');
-        })
-        .catch(next);
-    }
-    else
-    {
+            .then(function() {
+                req.flash('success', '删除留言成功');
+                // 删除成功后跳转到上一页
+                res.redirect('back');
+            })
+            .catch(next);
+    } else {
         CommentModel.delCommentById(commentId, author)
-        .then(function() {
-            req.flash('success', '删除留言成功');
-            // 删除成功后跳转到上一页
-            res.redirect('back');
-        })
-        .catch(next);
+            .then(function() {
+                req.flash('success', '删除留言成功');
+                // 删除成功后跳转到上一页
+                res.redirect('back');
+            })
+            .catch(next);
     }
 });
 

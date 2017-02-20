@@ -1,0 +1,141 @@
+/*------ 文章 ------*/
+
+.post {
+    width: 1000px;
+    height: auto;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post-author {
+    width: auto;
+    height: 100px;
+    margin: 20px 0px 20px 50px;
+    display: flex;
+    align-self: flex-start;
+}
+
+.post-author-avatar {
+    width: auto;
+    height: auto;
+    margin: 0px 30px;
+}
+
+.img-author-avatar {
+    width: 100px;
+    height: 100px;
+    border: 2px solid #4fc08d;
+}
+
+.post-author-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.text-author-name {
+    color: #4fc08d;
+    font-size: 30px;
+}
+
+.post-content {}
+
+.post-content-header {
+    width: 100%;
+    height: 80px;
+    display: flex;
+}
+
+.text-post-title {
+    margin: auto auto auto 40px;
+    font-size: 35px;
+    color: #4fc08d;
+    align-self: center;
+    text-decoration: none;
+    position: relative;
+}
+
+.text-post-detail {
+    color: #999;
+    font-size: 13px;
+    margin: 8px;
+    align-self: flex-end;
+}
+
+.post-edit {
+    align-self: flex-end;
+    margin: 8px;
+}
+
+.post-content-body {
+    display: flex;
+    width: 900px;
+    height: 400px;
+    box-shadow: 0px 0px 20px #c1c1cb;
+}
+
+.text-post-content {
+    margin: 10px 50px;
+}
+
+
+/*------ 评论 ------*/
+
+.limit-comments {
+    margin: 10px;
+}
+
+.comment-single {
+    /*搭配Semantic-UI*/
+    height: auto;
+    overflow: hidden;
+}
+
+.comment-box {
+    width: 1000px;
+    height: auto;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.comment-header {
+    width: 100%;
+    height: 80px;
+    display: flex;
+}
+
+.text-comment {
+    font-size: 25px;
+    color: #4fc08d;
+    margin: auto auto auto 40px;
+}
+
+.comment-body {
+    /*搭配Semantic-UI*/
+    max-width: 900px !important;
+    height: auto;
+    padding: 10px;
+    box-shadow: 0px 0px 20px #c1c1cb;
+}
+
+.menu-load {
+    width: 100%;
+    height: 30px;
+}
+
+.item-load {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transition: all 1s;
+    font-size: 20px;
+    color: #c1c1cb;
+}
+
+.item-load:hover {
+    background-color: #f7f4f4;
+}

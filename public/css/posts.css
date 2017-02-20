@@ -1,11 +1,5 @@
 /*posts页面公共部分css*/
 
-.center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .post-content-pre {
     max-height: 400px;
     overflow: hidden;
@@ -14,8 +8,9 @@
 }
 
 .limit-post-content {
-    width: 100%;
+    width: 1000px;
     height: auto;
+    margin: 40px auto 0px auto;
     /*display: flex;*/
     /*background-color: red;*/
     /*justify-content: center;*/
@@ -168,26 +163,33 @@
 
 .user-info {
     width: 100%;
-    height: 200px;
-}
-
-.user-info-box {
-    width: 100%;
-    height: 100px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .user-info-avatar {
-    width: 50px;
-    height: 50px;
-    float: left;
+    width: 100px;
+    height: 100px;
 }
 
-.user-info-name {
-    float: left;
+.img-info-avatar {
+    width: 100%;
+    height: 100%;
 }
 
-.user-info-gender {
-    float: left;
+.user-info-namegender {
+    width: auto;
+    height: 100px;
+    font-size: 20px;
+    color: #4fc08d;
+}
+
+.user-info-bio {
+    width: 500px;
+    height: 120px;
+    color: #999;
 }
 
 
