@@ -63,7 +63,6 @@ $(function() {
                     opacity: 0
                 })
             }),
-        //download by www.sucaijiayuan.com
         $(".level-3").click(function() {
             function t() {
                 var t = e.css("background-position");
