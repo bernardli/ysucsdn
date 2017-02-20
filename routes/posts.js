@@ -263,4 +263,31 @@ router.get('/:postId/comment/:commentId/remove', checkLogin, function(req, res, 
     }
 });
 
+// GET /posts/search 搜索文章页
+//   eg: GET /posts/search?search=xxx
+router.get('/search', function(req, res, next) {
+    var page = req.query.page || 1;
+    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    var search = req.query.search;
+
+    if (parseInt(page) == 1) {
+        PostModel.getPostssearch(page, search)
+            .then(function(posts) {
+                res.render('posts', {
+                    posts: posts,
+                    ip: ip
+                });
+            })
+            .catch(next);
+    } else {
+        PostModel.getPostssearch(page, search)
+            .then(function(posts) {
+                res.render('components/limit-post-content', {
+                    posts: posts
+                });
+            })
+            .catch(next);
+    }
+});
+
 module.exports = router;

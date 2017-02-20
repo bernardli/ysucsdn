@@ -2,7 +2,7 @@
 $(document).ready(function() {
     var page = 2;
     $('#loadmore_posts').on('click', function(e) {
-        var url = '/posts?page=' + page;
+        var url = window.location.pathname + '?page=' + page;
         $.get(url, function(data) {
             $('.limit-post-content').append(data);
             page = parseInt(page) + 1;
@@ -10,7 +10,7 @@ $(document).ready(function() {
     });
     $('#loadmore_user').on('click', function(e) {
         var author = getUrlParam('author');
-        var url = '/posts/user?page=' + page + '&author=' + author;
+        var url = window.location.pathname + window.location.search + '&page=' + page;
         $.get(url, function(data) {
             $('.limit-post-content').append(data);
             page = parseInt(page) + 1;
@@ -21,7 +21,6 @@ $(document).ready(function() {
         $.get(url, function(data) {
             $('.limit-comments').append(data);
             page = parseInt(page) + 1;
-            console.log(data);
         });
     });
 });

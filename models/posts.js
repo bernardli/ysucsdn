@@ -89,6 +89,25 @@ module.exports = {
             .exec();
     },
 
+    //搜索文章
+    getPostssearch: function getPostssearch(page, search) {
+        var query = {};
+        if (author) {
+            query.author = author;
+        }
+        return Post
+            .find(query)
+            .or([{ title: { $regex: search } }, { content: { $regex: search } }])
+            .skip((page - 1) * 5)
+            .limit(5)
+            .populate({ path: 'author', model: 'User' })
+            .sort({ _id: -1 })
+            .addCreatedAt()
+            .addCommentsCount()
+            .contentToHtml()
+            .exec();
+    },
+
     // 通过文章 id 给 pv 加 1
     incPv: function incPv(postId) {
         return Post
