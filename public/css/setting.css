@@ -1,5 +1,71 @@
+.setting-box--all {
+    /*搭配Semantic-UI*/
+    width: 1000px;
+    margin: 20px auto !important;
+    max-width: 1000px !important;
+}
+
+.setting-box--large {
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+
+.setting-box--small {
+    width: 200px;
+    height: auto;
+    margin: 0px auto 0px 20px;
+}
+
+.user-avatar {}
+
+.form-avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text-avatar {
+    font-size: 20px;
+    color: #4fc08d;
+    align-self: flex-start;
+}
+
+.img-setting-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    border: 2px solid #4fc08d;
+}
+
+.input-avatar--file {
+    /*搭配Semantic-UI*/
+    margin: 10px 0px !important;
+}
+
+.input-avatar--submit {
+    /*搭配Semantic-UI*/
+    margin: 10px 0px !important;
+    width: 100%;
+}
+
 .user-name {}
 
-.user-password-input {
+.user-password {
+    width: 600px;
+    height: 300px;
+    margin: 0px 20px;
+}
+
+.text-password {
     display: block;
+    color: #4fc08d;
+    font-size: 20px;
+    margin: 10px 0px;
+}
+
+.input-password-submit {
+    /*搭配Semantic-UI*/
+    margin: 10px 0px !important;
+    width: 200px !important;
 }

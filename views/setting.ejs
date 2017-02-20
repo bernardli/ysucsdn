@@ -2,40 +2,38 @@
 
     <link rel="stylesheet" type="" href="css/setting.css">
 
-    <div class="ui gird">
-        <div class="eight wide column">
-            <div class="ui segment">
+    <div class="setting-box--all">
+        <div class="setting-box--large">
+            <div class="setting-box--small">
                 <div class="user-avatar">
-                    <form class="ui form segment" method="post" action="/setting/avatar?avatarId=<%= user.avatar %>" enctype="multipart/form-data">
-                        <img class="" src="/img/users_avatar/<%= user.avatar %>">
-                        <label>更换头像</label>
-                        <input type="file" name="avatar">
-                        <input type="submit" class="ui button" value="更改">
+                    <form class="ui form form-avatar" method="post" action="/setting/avatar?avatarId=<%= user.avatar %>" enctype="multipart/form-data">
+                        <span class="text-avatar">当前头像:</span>
+                        <img class="img-setting-avatar" src="/img/users_avatar/<%= user.avatar %>">
+                        <input type="file" name="avatar" class="input-avatar--file" value="选择新头像">
+                        <input type="submit" class="ui button input-avatar--submit" value="更换头像">
                     </form>
                 </div>
-                <div class="user-name">
-                    <label>用户昵称/账号</label>
-                    <p>
-                        <%= user.name%>
-                    </p>
-                </div>
-                <div class="user-password">
-                    <form class="ui form segment" method="post" action="/setting/password">
-                        <label>更改密码</label>
-                        <input class="user-password-input" type="password" name="oldpassword">
-                        <input class="user-password-input" type="password" name="newpassword">
-                        <input class="user-password-input" type="password" name="newrepassword">
-                        <input type="submit" class="ui button" value="修改">
-                    </form>
-                </div>
-                <form class="ui form segment" method="post" action="/setting/bio">
-                    <div class="field required">
-                        <label>用户介绍</label>
-                        <textarea name="bio" rows="15"><%= user.bio %></textarea>
-                    </div>
-                    <input type="submit" class="ui button" value="修改">
+            </div>
+            <div class="user-password">
+                <form class="ui form " method="post" action="/setting/password">
+                    <span class="text-password">原密码:</span>
+                    <input class="user-password-input" type="password" name="oldpassword">
+                    <span class="text-password">新密码:</span>
+                    <input class="user-password-input" type="password" name="newpassword">
+                    <span class="text-password">确认新密码:</span>
+                    <input class="user-password-input" type="password" name="newrepassword">
+                    <input type="submit" class="ui button input-password-submit" value="修改">
+                    <span class="text-password-forget">忘记密码</span>
                 </form>
             </div>
         </div>
+        <form class="ui form " method="post" action="/setting/bio">
+            <div class="field required">
+                <label>用户介绍</label>
+                <textarea name="bio" rows="15"><%= user.bio %></textarea>
+            </div>
+            <input type="submit" class="ui button" value="修改">
+        </form>
     </div>
+
     <%- include('footer') %>
