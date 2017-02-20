@@ -206,9 +206,10 @@
     border-radius: 2px;
 }
 
-.text-newsheader-title:hover {
+
+/*.text-newsheader-title:hover {
     text-decoration: underline;
-}
+}*/
 
 .text-newsheader-detail {
     color: #999;

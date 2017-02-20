@@ -1,15 +1,21 @@
 /* ---------- 全局样式 ---------- */
 
 body {
-    width: 1000px;
+    width: 100%;
     height: auto;
     margin: 0 auto;
-    padding-top: 40px;
 }
 
-a:hover {
-    border-bottom: 3px solid #4fc08d;
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+
+/*a:hover {
+    border-bottom: 3px solid #4fc08d;
+}*/
 
 .button {
     background-color: #4fc08d !important;
@@ -21,6 +27,22 @@ a:hover {
     width: 48px;
     height: 48px;
     float: right;
+}
+
+.top {
+    width: 100%;
+    height: 80px;
+    display: block;
+}
+
+.blur {
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    display: block;
+    background-color: white;
+    filter: opacity(80%);
+    z-index: 900;
 }
 
 
@@ -56,6 +78,48 @@ a:hover {
 .nav-setting .icon.bars {
     color: #000;
     font-size: 18px;
+}
+
+
+/* ---------- header ---------- */
+
+.header {
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    z-index: 99;
+    display: flex;
+    justify-content: flex-start;
+    z-index: 950;
+    box-shadow: 0px 2px 5px #f1efef;
+}
+
+.header-logo {
+    margin: auto 50px auto 120px;
+    width: 200px;
+    height: 60px;
+    overflow: hidden;
+}
+
+.header-item {
+    color: #b6b6b6;
+    margin: auto 0px;
+    height: 100%;
+    width: 120px;
+}
+
+.link-header-item {
+    width: 100%;
+    height: 100%;
+    font-size: 22px;
+    color: #888;
+    transition: all 0.5s;
+    text-decoration: none;
+}
+
+.link-header-item:hover {
+    color: black;
+    background-color: #fbfbfb;
 }
 
 
