@@ -66,7 +66,7 @@ body {
 .nav-setting {
     position: fixed;
     right: 30px;
-    top: 35px;
+    top: 25px;
     z-index: 999;
 }
 
@@ -78,6 +78,11 @@ body {
 .nav-setting .icon.bars {
     color: #000;
     font-size: 18px;
+}
+
+.text-navsetting {
+    color: #272727;
+    font-size: 16px;
 }
 
 
@@ -211,8 +216,16 @@ body {
 
 /* ---------- create || edit ---------- */
 
-.form-writing {}
+.form-writing {
+    display: flex;
+    flex-direction: column;
+}
 
 .text-writing {
     min-height: 500px;
+}
+
+.button-publish {
+    width: 200px;
+    align-self: flex-end;
 }

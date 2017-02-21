@@ -76,7 +76,7 @@
                                 </pre>
                             </div>
                             <div class="body-news-footer">
-                                <a href="" class="link-morenews center">更多新闻</a>
+                                <a href="/posts/user?author=<%= newsPost.author._id %>" class="link-morenews center">更多新闻</a>
                             </div>
                         </div>
                     </div>
@@ -95,7 +95,9 @@
                             <div class="body-article-item">
                                 <div class="article-item-author">
                                     <div class="article-item-author-avatar center">
-                                        <img src="/img/users_avatar/<%= post.author.avatar%>" alt="" class="img-author-avatar center">
+                                        <a href="/posts/user?author=<%= post.author._id %>">
+                                            <img src="/img/users_avatar/<%= post.author.avatar%>" alt="" class="img-author-avatar center">
+                                        </a>
                                     </div>
                                     <div class="article-item-author-name">
                                         <span class="text-authorname"><%= post.author.name%></span>
@@ -106,7 +108,7 @@
                                 </div>
                                 <div class="article-item-content">
                                     <div class="article-item-content-title">
-                                        <a class="text-article-title" href=""><%= post.title%></a>
+                                        <a class="text-article-title" href="/posts/<%= post._id%>"><%= post.title%></a>
                                     </div>
                                     <div class="article-item-content-text">
                                         <pre class="text-article-content">
@@ -122,7 +124,7 @@
                             </div>
                         <%  })   %>
                         <div class="body-article-footer">
-                            <a href="" class="link-morearticles center">更多文章</a>
+                            <a href="/posts" class="link-morearticles center">更多文章</a>
                         </div>
                     </div>
                 </div>
