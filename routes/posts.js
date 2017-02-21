@@ -7,7 +7,7 @@ var CommentModel = require('../models/comments');
 var checkLogin = require('../middlewares/check').checkLogin;
 
 // GET /posts 所有用户的文章页
-//   eg: GET /posts?author=xxx?search=xxx
+//   eg: GET /posts?search=xxx
 router.get('/', function(req, res, next) {
     var author = req.query.author;
     var search = req.query.search;
@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
     if (parseInt(page) == 1) {
-        PostModel.getPostslimit(author, page, search)
+        PostModel.getPostspre(author, page, search)
             .then(function(posts) {
                 res.render('posts', {
                     posts: posts,
@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
             })
             .catch(next);
     } else {
-        PostModel.getPostslimit(author, page, search)
+        PostModel.getPostspre(author, page, search)
             .then(function(posts) {
                 res.render('components/limit-post-content', {
                     posts: posts

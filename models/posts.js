@@ -54,6 +54,30 @@ Post.plugin('contentToHtml', {
     }
 });
 
+// ,
+Post.plugin('pre', {
+    afterFind: function(posts) {
+        return posts.map(function(post) {
+            //post.content = marked(post.content);
+            post.content=post.content.replace(/<\/?.+?>/g,"");//去除 HTML 标签
+            post.content=post.content.replace(/[\r\n]/g,"");//去回车
+            post.content=post.content.replace(/[ ]/g,"");//去空格
+            post.content=post.content.substring(0,100);//获取前100个字符
+            return post;
+        });
+    },
+    afterFindOne: function(post) {
+        if (post) {
+            // post.content = marked(post.content);
+            post.content=post.content.replace(/<\/?.+?>/g,"");//去除 HTML 标签
+            post.content=post.content.replace(/[\r\n]/g,"");//去回车
+            post.content=post.content.replace(/[ ]/g,"");//去空格
+            post.content=post.content.substring(0,100);//获取前100个字符
+        }
+        return post;
+    }
+});
+
 module.exports = {
     // 创建一篇文章
     create: function create(post) {
@@ -68,6 +92,27 @@ module.exports = {
             .addCreatedAt()
             .addCommentsCount()
             .contentToHtml()
+            .exec();
+    },
+
+    //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章的摘要
+    getPostspre: function getPostspre(author, page, search) {
+        var query = {};
+        if (author) {
+            query.author = author;
+        } else if (search) {
+            query = { $or: ([{ author: { $regex: String(search) } }, { title: { $regex: String(search) } }, { content: { $regex: String(search) } }]) };
+        }
+        return Post
+            .find(query)
+            .skip((page - 1) * 5)
+            .limit(5)
+            .populate({ path: 'author', model: 'User' })
+            .sort({ _id: -1 })
+            .addCreatedAt()
+            .addCommentsCount()
+            .contentToHtml()
+            .pre()
             .exec();
     },
 
