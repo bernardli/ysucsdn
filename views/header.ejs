@@ -20,12 +20,10 @@
             <div class="header-item">
                 <a href="/posts" class="link-header-item center">文章</a>
             </div>
-            <div class="header-item">
-                <form class="" method="get" action="/posts">
-                    <div class="field">
-                        <textarea name="search"></textarea>
-                    </div>
-                    <input type="submit" class="ui icon button" value="搜索" />
+            <div class="header-item center">
+                <form class="ui form form-search" method="get" action="/posts">
+                    <input type="text" name="search" class="text-search">
+                    <input type="submit" class="ui icon button button-header-search" value="搜索" />
                 </form>
             </div>
         </div>

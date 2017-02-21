@@ -29,6 +29,7 @@ $(document).ready(function() {
         });
     });
 });
+
 //获取url参数
 function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
@@ -36,6 +37,7 @@ function getUrlParam(name) {
     if (r != null) return unescape(r[2]);
     return null; //返回参数值
 }
+
 //back to top
 $(function() {
     var e = $("#rocket-to-top"),

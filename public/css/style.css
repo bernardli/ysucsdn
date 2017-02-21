@@ -122,6 +122,26 @@ body {
     background-color: #fbfbfb;
 }
 
+.form-search {
+    display: flex;
+}
+
+.text-search {
+    /*搭配*/
+    width: 150px !important;
+    height: 30px;
+    margin: 5px !important;
+}
+
+.button-header-search {
+    display: block;
+    width: 50px;
+    /*height: 30px;*/
+    font-size: 25px;
+    color: #888 !important;
+    background-color: white !important;
+}
+
 
 /* ---------- post-content ---------- */
 
@@ -186,4 +206,13 @@ body {
     top: 80%;
     width: 149px;
     z-index: 11;
+}
+
+
+/* ---------- create || edit ---------- */
+
+.form-writing {}
+
+.text-writing {
+    min-height: 500px;
 }
