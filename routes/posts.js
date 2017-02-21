@@ -43,7 +43,7 @@ router.get('/user', function(req, res, next) {
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
     if (parseInt(page) == 1) {
-        PostModel.getPostslimit(author, page, search)
+        PostModel.getPostspre(author, page, search)
             .then(function(posts) {
                 UserModel.getUserById(author)
                     .then(function(user) {
@@ -57,7 +57,7 @@ router.get('/user', function(req, res, next) {
             })
             .catch(next);
     } else {
-        PostModel.getPostslimit(author, page, search)
+        PostModel.getPostspre(author, page, search)
             .then(function(posts) {
                 res.render('components/limit-post-content', {
                     posts: posts

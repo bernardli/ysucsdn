@@ -60,8 +60,8 @@ Post.plugin('pre', {
         return posts.map(function(post) {
             //post.content = marked(post.content);
             post.content=post.content.replace(/<\/?.+?>/g,"");//去除 HTML 标签
-            post.content=post.content.replace(/[\r\n]/g,"");//去回车
             post.content=post.content.replace(/[ ]/g,"");//去空格
+            post.content=post.content.replace(/[\r\n]/g," ");//回车变空格
             post.content=post.content.substring(0,100);//获取前100个字符
             return post;
         });
@@ -70,8 +70,8 @@ Post.plugin('pre', {
         if (post) {
             // post.content = marked(post.content);
             post.content=post.content.replace(/<\/?.+?>/g,"");//去除 HTML 标签
-            post.content=post.content.replace(/[\r\n]/g,"");//去回车
             post.content=post.content.replace(/[ ]/g,"");//去空格
+            post.content=post.content.replace(/[\r\n]/g," ");//回车变空格
             post.content=post.content.substring(0,100);//获取前100个字符
         }
         return post;
