@@ -51,7 +51,7 @@ router.get('/user', function(req, res, next) {
                             posts: posts,
                             author: JSON.stringify(user),
                             ip: ip,
-                    page:page
+                            page: page
                         });
                     })
                     .catch(next);
@@ -62,7 +62,7 @@ router.get('/user', function(req, res, next) {
             .then(function(posts) {
                 res.render('components/limit-post-content', {
                     posts: posts,
-                    page:page
+                    page: page
                 });
             })
             .catch(next);
@@ -120,11 +120,19 @@ router.get('/:postId', function(req, res, next) {
     var postId = req.params.postId;
     var page = req.query.page || 1;
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    var w_pv; //判断是否+1s//1+1s//0
+    var reading = new RegExp(postId);
+    if (reading.test(req.session.read) == false) {
+        w_pv = 1;
+        req.session.read = req.session.read + postId + ',';
+    } else {
+        w_pv = 0;
+    }
     if (parseInt(page) == 1) {
         Promise.all([
                 PostModel.getPostById(postId), // 获取文章信息
                 CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
-                PostModel.incPv(postId) // pv 加 1   浏览量
+                PostModel.incPv(postId, w_pv) // pv 加 1   浏览量
             ])
             .then(function(result) {
                 var post = result[0];
@@ -137,7 +145,7 @@ router.get('/:postId', function(req, res, next) {
                     post: post,
                     comments: comments,
                     ip: ip,
-                    page:page
+                    page: page
                 });
             })
             .catch(next);
@@ -156,7 +164,7 @@ router.get('/:postId', function(req, res, next) {
                 res.render('components/limit-comments', {
                     post: post,
                     comments: comments,
-                    page:page
+                    page: page
                 });
             })
             .catch(next);
