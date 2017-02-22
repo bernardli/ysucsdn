@@ -72,12 +72,16 @@
 .post-content-body {
     display: flex;
     width: 900px;
-    height: 400px;
+    height: auto;
     box-shadow: 0px 0px 20px #c1c1cb;
 }
 
 .text-post-content {
-    margin: 10px 50px;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 500px;
+    margin: 20px 50px;
 }
 
 

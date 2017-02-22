@@ -122,6 +122,19 @@
 }
 
 .text-article-content {
+    width: 640px;
+    height: 160px;
+    font-size: 20px;
+    word-break: break-all;
+    max-height: 160px;
+    min-height: 160px;
+    max-width: 640px;
+    min-width: 640px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /*display: -webkit-box;*/
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
     margin: 20px;
 }
 

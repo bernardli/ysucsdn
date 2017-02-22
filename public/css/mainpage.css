@@ -222,14 +222,16 @@
     display: flex;
     width: 900px;
     height: 400px;
-    overflow: hidden;
     /*border-top: 1px solid #505054;
     border-bottom: 1px solid #505054;*/
     box-shadow: 0px 0px 20px #c1c1cb;
 }
 
 .text-newscontent {
-    margin: 10px 50px;
+    overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    margin: 20px 50px;
 }
 
 .body-news-footer {
@@ -400,6 +402,9 @@
 .article-item-content-text {
     width: 100%;
     height: 200px;
+    overflow: hidden;
+    word-break: break-all;
+    text-overflow: ellipsis;
     border-top: 2px solid #333131;
 }
 
