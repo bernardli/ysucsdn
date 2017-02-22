@@ -50,7 +50,8 @@ router.get('/user', function(req, res, next) {
                         res.render('user_posts', {
                             posts: posts,
                             author: JSON.stringify(user),
-                            ip: ip
+                            ip: ip,
+                    page:page
                         });
                     })
                     .catch(next);
@@ -60,7 +61,8 @@ router.get('/user', function(req, res, next) {
         PostModel.getPostspre(author, page, search)
             .then(function(posts) {
                 res.render('components/limit-post-content', {
-                    posts: posts
+                    posts: posts,
+                    page:page
                 });
             })
             .catch(next);
@@ -134,7 +136,8 @@ router.get('/:postId', function(req, res, next) {
                 res.render('post', {
                     post: post,
                     comments: comments,
-                    ip: ip
+                    ip: ip,
+                    page:page
                 });
             })
             .catch(next);
@@ -152,7 +155,8 @@ router.get('/:postId', function(req, res, next) {
 
                 res.render('components/limit-comments', {
                     post: post,
-                    comments: comments
+                    comments: comments,
+                    page:page
                 });
             })
             .catch(next);

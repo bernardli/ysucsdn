@@ -7,12 +7,26 @@
         <div class=limit-comments>
             <%- include('limit-comments') %>
         </div>
-        
+
+        <% if(comments.length==0&&page==1){ %>
         <div class="menu-load">
-            <div class="item-load center" id="loadmore_comments">
-                <span>----- 点击加载更多 -----</span>
+            <div class="item-load center" id="no_comments">
+                <span>----- 惊啦 Σ(っ °Д °;)っ 居然没有评论，少年 (๑•̀ㅂ•́)و✧ 伦家的第一次是你的啦 (*/ω＼*) -----</span>
             </div>
         </div>
+        <% } else if (comments.length==5){ %>
+        <div class="menu-load">
+            <div class="item-load center" id="loadmore_comments">
+                <span>----- 点伦家再给你看更多啊 (′▽`〃) -----</span>
+            </div>
+        </div>
+        <% } else { %>
+        <div class="menu-load">
+            <div class="item-load center" id="nomore_comments">
+                <span>----- 更多的评论 (＠_＠;) 不存在的ヽ(*´Д｀*)ﾉ -----</span>
+            </div>
+        </div>
+        <% } %>
 
         <% if (user) { %>
             <form class="ui reply form" method="post" action="/posts/<%= post._id %>/comment">

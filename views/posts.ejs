@@ -3,15 +3,23 @@
 <link rel="stylesheet" href="css/posts.css">
 
 <div class="limit-post-content">
-<% postNum = 0%>
+<%postNum = 0%>
 <%- include('components/limit-post-content', { posts: posts }) %>
 </div>
 
+<% if(posts.length==5){ %>
 <div class="menu-load">
     <div class="item-load center" id="loadmore_posts">
-        <span>----- 点击加载更多 -----</span>
+        <span>----- 点击获取人生经验 ヾ(≧O≦)〃吼不吼啊~ -----</span>
     </div>
-</div> 
+</div>
+<% } else { %>
+<div class="menu-load">
+    <div class="item-load center" id="no_posts">
+        <span>----- 没有文章了/(ㄒoㄒ)/~~ -----</span>
+    </div>
+</div>
+<% } %>
 
 <%- include('components/back-to-top') %>
 
