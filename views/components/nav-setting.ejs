@@ -2,6 +2,11 @@
     <div class="ui buttons">
     <div class="ui floating dropdown button">
         <i class="icon bars"></i>
+        <%  if(user) { %>
+            <span class="text-navsetting"><%= user.name%></span>
+        <%  } else {%>
+            <span class="text-navsetting">登录/注册</span>
+        <%  } %>
         <div class="menu">
             <% if (user) { %>
                 <a class="item" href="/posts/user?author=<%= user._id %>">个人主页</a>
