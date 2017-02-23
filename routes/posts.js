@@ -120,7 +120,7 @@ router.get('/:postId', function(req, res, next) {
     var postId = req.params.postId;
     var page = req.query.page || 1;
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
-    var w_pv; //判断是否+1s//1+1s//0
+    var w_pv; //判断是否+1s//1 +1s//0
     var reading = new RegExp(postId);
     if (reading.test(req.session.read) == false) {
         w_pv = 1;
@@ -129,30 +129,33 @@ router.get('/:postId', function(req, res, next) {
         w_pv = 0;
     }
     if (parseInt(page) == 1) {
-        Promise.all([
-                PostModel.getPostById(postId), // 获取文章信息
-                CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
-                PostModel.incPv(postId, w_pv) // pv 加 1   浏览量
-            ])
-            .then(function(result) {
-                var post = result[0];
-                var comments = result[1];
-                if (!post) {
-                    throw new Error('该文章不存在');
-                }
-
-                res.render('post', {
-                    post: post,
-                    comments: comments,
-                    ip: ip,
-                    page: page
-                });
+        // pv 加 1   浏览量
+        PostModel.incPv(postId, w_pv)
+            .then(function(incPv_result) {
+                Promise.all([
+                        PostModel.getPostById(postId), // 获取文章信息
+                        CommentModel.getCommentslimit(postId, page) // 获取该文章所有留言
+                    ])
+                    .then(function(result) {
+                        var post = result[0];
+                        var comments = result[1];
+                        if (!post) {
+                            throw new Error('该文章不存在');
+                        }
+                        res.render('post', {
+                            post: post,
+                            comments: comments,
+                            ip: ip,
+                            page: page
+                        });
+                    })
+                    .catch(next);
             })
             .catch(next);
     } else {
         Promise.all([
                 PostModel.getPostById(postId), // 获取文章信息
-                CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
+                CommentModel.getCommentslimit(postId, page) // 获取该文章留言
             ])
             .then(function(result) {
                 var post = result[0];
@@ -160,7 +163,6 @@ router.get('/:postId', function(req, res, next) {
                 if (!post) {
                     throw new Error('该文章不存在');
                 }
-
                 res.render('components/limit-comments', {
                     post: post,
                     comments: comments,

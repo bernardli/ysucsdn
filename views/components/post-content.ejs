@@ -34,7 +34,7 @@
             <div class="article-item-content-footer">
                 <span class="text-article-info"><%= post.created_at%></span>
                 <span class="text-article-info">阅读(<%= post.pv%>)</span>
-                <span class="text-article-info">阅读(<%= post.commentsCount%>)</span>
+                <span class="text-article-info">评论(<%= post.commentsCount%>)</span>
                 <span>
                     <% if (user && post.author._id && user._id.toString() === post.author._id.toString()) { %>
                     <div class="ui inline dropdown">
