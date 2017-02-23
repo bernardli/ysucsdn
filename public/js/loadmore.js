@@ -10,8 +10,13 @@ $(document).ready(function() {
         }
         //alert(url);
         $.get(url, function(data) {
+            //获取post个数
+            var num_post=data.match(/body-article-item/g).length;
+            //alert(num_post);
+            //追加更新
             $('.limit-post-content').append(data);
-            if (data == 0) {
+            //改变“加载更多”
+            if (data == 0||num_post!=5) {
                 $('.text-load').text('----- 没有文章了/(ㄒoㄒ)/~~ -----');
                 $('.item-load').attr('id', 'no_posts');
             }
@@ -21,10 +26,14 @@ $(document).ready(function() {
     $('#loadmore_user').on('click', function(e) {
         var url = window.location.pathname + window.location.search + '&page=' + page;
         $.get(url, function(data) {
+            //获取post个数
+            var num_post=data.match(/body-article-item/g).length;
+            //追加更新
             $('.limit-post-content').append(data);
-            if (data == 0) {
-                $('.text-load').text('----- 没有文章了/(ㄒoㄒ)/~~ -----');
-                $('.item-load').attr('id', 'no_posts');
+            //改变“加载更多”
+            if (data == 0||num_post!=5) {
+                $('.text-load').text('----- 人呐就是不知道 (っ*´Д`)っ 已经没有更多文章了 -----');
+                $('.item-load').attr('id', 'no_user');
             }
             page = parseInt(page) + 1;
         });
@@ -32,8 +41,12 @@ $(document).ready(function() {
     $('#loadmore_comments').on('click', function(e) {
         var url = window.location.pathname + '?page=' + page;
         $.get(url, function(data) {
+            //获取comment个数
+            var num_comment=data.match(/comment comment-single/g).length;
+            //追加更新
             $('.limit-comments').append(data);
-            if (data == 0) {
+            //改变“加载更多”
+            if (data == 0||num_comment!=5) {
                 $('.text-load').text('----- 更多的评论 (＠_＠;) 不存在的ヽ(*´Д｀*)ﾉ -----');
                 $('.item-load').attr('id', 'no_comments');
             }
