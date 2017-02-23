@@ -26,9 +26,13 @@ router.get('/', function(req, res, next) {
     } else {
         PostModel.getPostspre(author, page, search)
             .then(function(posts) {
-                res.render('components/limit-post-content', {
-                    posts: posts
-                });
+                if (posts) {
+                    res.render('components/limit-post-content', {
+                        posts: posts
+                    });
+                } else {
+                    res.send(0);
+                }
             })
             .catch(next);
     }
@@ -60,10 +64,14 @@ router.get('/user', function(req, res, next) {
     } else {
         PostModel.getPostspre(author, page, search)
             .then(function(posts) {
-                res.render('components/limit-post-content', {
-                    posts: posts,
-                    page: page
-                });
+                if (posts) {
+                    res.render('components/limit-post-content', {
+                        posts: posts,
+                        page: page
+                    });
+                } else {
+                    res.send(0);
+                }
             })
             .catch(next);
     }
@@ -161,11 +169,15 @@ router.get('/:postId', function(req, res, next) {
                     throw new Error('该文章不存在');
                 }
 
-                res.render('components/limit-comments', {
-                    post: post,
-                    comments: comments,
-                    page: page
-                });
+                if (!comments) {
+                    res.render('components/limit-comments', {
+                        post: post,
+                        comments: comments,
+                        page: page
+                    });
+                } else {
+                    res.send(0);
+                }
             })
             .catch(next);
     }

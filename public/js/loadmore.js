@@ -11,6 +11,10 @@ $(document).ready(function() {
         //alert(url);
         $.get(url, function(data) {
             $('.limit-post-content').append(data);
+            if (data == 0) {
+                $('.text-load').text('----- 没有文章了/(ㄒoㄒ)/~~ -----');
+                $('.item-load').attr('id', 'no_posts');
+            }
             page = parseInt(page) + 1;
         });
     });
@@ -18,6 +22,10 @@ $(document).ready(function() {
         var url = window.location.pathname + window.location.search + '&page=' + page;
         $.get(url, function(data) {
             $('.limit-post-content').append(data);
+            if (data == 0) {
+                $('.text-load').text('----- 没有文章了/(ㄒoㄒ)/~~ -----');
+                $('.item-load').attr('id', 'no_posts');
+            }
             page = parseInt(page) + 1;
         });
     });
@@ -25,6 +33,10 @@ $(document).ready(function() {
         var url = window.location.pathname + '?page=' + page;
         $.get(url, function(data) {
             $('.limit-comments').append(data);
+            if (data == 0) {
+                $('.text-load').text('----- 更多的评论 (＠_＠;) 不存在的ヽ(*´Д｀*)ﾉ -----');
+                $('.item-load').attr('id', 'no_comments');
+            }
             page = parseInt(page) + 1;
         });
     });
