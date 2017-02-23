@@ -225,3 +225,10 @@
 .item-load:hover {
     background-color: #f7f4f4;
 }
+
+.item-load--nomore {
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+    color: #c1c1cb;
+}
