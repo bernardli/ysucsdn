@@ -137,30 +137,33 @@ router.get('/:postId', function(req, res, next) {
         w_pv = 0;
     }
     if (parseInt(page) == 1) {
-        Promise.all([
-                PostModel.getPostById(postId), // 获取文章信息
-                CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
-                PostModel.incPv(postId, w_pv) // pv 加 1   浏览量
-            ])
-            .then(function(result) {
-                var post = result[0];
-                var comments = result[1];
-                if (!post) {
-                    throw new Error('该文章不存在');
-                }
-
-                res.render('post', {
-                    post: post,
-                    comments: comments,
-                    ip: ip,
-                    page: page
-                });
+        // pv 加 1   浏览量
+        PostModel.incPv(postId, w_pv)
+            .then(function(incPv_result) {
+                Promise.all([
+                        PostModel.getPostById(postId), // 获取文章信息
+                        CommentModel.getCommentslimit(postId, page) // 获取该文章所有留言
+                    ])
+                    .then(function(result) {
+                        var post = result[0];
+                        var comments = result[1];
+                        if (!post) {
+                            throw new Error('该文章不存在');
+                        }
+                        res.render('post', {
+                            post: post,
+                            comments: comments,
+                            ip: ip,
+                            page: page
+                        });
+                    })
+                    .catch(next);
             })
             .catch(next);
     } else {
         Promise.all([
                 PostModel.getPostById(postId), // 获取文章信息
-                CommentModel.getCommentslimit(postId, page), // 获取该文章留言
+                CommentModel.getCommentslimit(postId, page) // 获取该文章留言
             ])
             .then(function(result) {
                 var post = result[0];
@@ -168,7 +171,6 @@ router.get('/:postId', function(req, res, next) {
                 if (!post) {
                     throw new Error('该文章不存在');
                 }
-
                 if (!comments) {
                     res.render('components/limit-comments', {
                         post: post,
