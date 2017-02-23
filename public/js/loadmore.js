@@ -17,6 +17,9 @@ $(document).ready(function() {
             if (!data || (data&&data.match(/body-article-item/g).length != 5)) {
                 $('.text-load').text('----- 没有文章了/(ㄒoㄒ)/~~ -----');
                 $('.item-load').attr('id', 'no_posts');
+                $('#no_posts').unbind();
+                $('#no_posts').removeClass('item-load');
+                $('#no_posts').addClass('item-load--nomore');
             }
             page = parseInt(page) + 1;
         });
@@ -30,6 +33,9 @@ $(document).ready(function() {
             if (!data || (data&&data.match(/body-article-item/g).length != 5)) {
                 $('.text-load').text('----- 人呐就是不知道 (っ*´Д`)っ 已经没有更多文章了 -----');
                 $('.item-load').attr('id', 'no_user');
+                $('#no_user').unbind();
+                $('#no_user').removeClass('item-load');
+                $('#no_user').addClass('item-load--nomore');
             }
             page = parseInt(page) + 1;
         });
@@ -44,6 +50,9 @@ $(document).ready(function() {
             if (!data || (data&&data.match(/comment comment-single/g).length != 5)) {
                 $('.text-load').text('----- 更多的评论 (＠_＠;) 不存在的ヽ(*´Д｀*)ﾉ -----');
                 $('.item-load').attr('id', 'no_comments');
+                $('#no_comments').unbind();
+                $('#no_comments').removeClass('item-load');
+                $('#no_comments').addClass('item-load--nomore');
             }
             page = parseInt(page) + 1;
         });
