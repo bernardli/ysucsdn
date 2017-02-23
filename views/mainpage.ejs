@@ -45,7 +45,8 @@
                         <div class="body-news-icon center">
                             <img src="img/local/news.png" alt="" class="img-newsicon center">
                         </div>
-                        <%  var newsPost = {
+                        <%  if(!announcement){
+                            var announcement = {
                                 _id　: 1,
                                 author : "VAN",
                                 title　: "暂无新公告",
@@ -53,13 +54,8 @@
                                 content : "<h1>什么都还没写</h1>",
                                 commentsCount : 0,
                                 created_at :　"宇宙大爆炸之前"　
-                            };
-                            posts.forEach(function (post) {
-                                if(post.author.name == "官方账号") {
-                                    newsPost = post;
-                                    return false;
-                                }
-                            })   %>
+                                };
+                                }%>
                         <div class="body-news-text center">
                             <strong class="text-newstext-major">社团新闻</strong>
                             <span class="text-newstext-minor">社团的大事小事都能在这里发现哦</span>
@@ -67,18 +63,18 @@
                         </div>
                         <div class="body-news-box">
                             <div class="body-news-header">
-                                <a class="text-newsheader-title" href="/posts/<%= newsPost._id %>"><%= newsPost.title%></a>
-                                <span class="text-newsheader-detail">阅读(<%= newsPost.pv%>)</span>
-                                <span class="text-newsheader-detail">评论(<%= newsPost.commentsCount%>)</span>
-                                <span class="text-newsheader-detail"><%= newsPost.created_at%></span>
+                                <a class="text-newsheader-title" href="/posts/<%= announcement._id %>"><%= announcement.title%></a>
+                                <span class="text-newsheader-detail">阅读(<%= announcement.pv%>)</span>
+                                <span class="text-newsheader-detail">评论(<%= announcement.commentsCount%>)</span>
+                                <span class="text-newsheader-detail"><%= announcement.created_at%></span>
                             </div>
                             <div class="body-news-content">
                                 <div class="text-newscontent">
-                                    <%- newsPost.content%>
+                                    <%- announcement.content%>
                                 </div>
                             </div>
                             <div class="body-news-footer">
-                                <a href="/posts/user?author=<%= newsPost.author._id %>" class="link-morenews center">更多新闻</a>
+                                <a href="/posts/user?author=<%= announcement.author._id %>" class="link-morenews center">更多新闻</a>
                             </div>
                         </div>
                     </div>

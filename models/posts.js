@@ -116,6 +116,19 @@ module.exports = {
             .exec();
     },
 
+    //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章的摘要
+    getannouncement: function getannouncement() {
+        return Post
+            .findOne({ author: '58a681312523391bfc73f1af' })
+            .populate({ path: 'author', model: 'User' })
+            /*.sort({ _id: -1 })
+            .limit(1)*/
+            .addCreatedAt()
+            .addCommentsCount()
+            .contentToHtml()
+            .exec();
+    },
+
     //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章
     getPostslimit: function getPostslimit(author, page, search) {
         var query = {};

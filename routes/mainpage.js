@@ -7,11 +7,19 @@ var PostModel = require('../models/posts');
 router.get('/', function(req, res, next) {
     var author = req.query.author;
     var page = 1;
+    var search = req.query.search;
+    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
-    PostModel.getPostslimit(author, page)
-        .then(function(posts) {
+    Promise.all([
+        PostModel.getPostslimit(author, page, search),
+        PostModel.getannouncement()
+    ])
+        .then(function(results) {
+            var posts = results[0];
+            var announcement = results[1];
             res.render('mainpage', {
-                posts: posts
+                posts: posts,
+                announcement:announcement
             });
         })
         .catch(next);
