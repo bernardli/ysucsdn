@@ -9,9 +9,9 @@ var checkNotLogin = require('../middlewares/check').checkNotLogin;
 
 // GET /signup 注册页
 router.get('/', checkNotLogin, function(req, res, next) {
-    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
-    res.render('signup',{
-        ip:ip
+    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    res.render('signup', {
+        ip: ip
     });
 });
 
@@ -24,6 +24,8 @@ router.post('/', checkNotLogin, function(req, res, next) {
     var password = req.fields.password;
     var identity = 'normal';
     var repassword = req.fields.repassword;
+    var email = req.fields.email;
+    var point = 0;
 
     // 校验参数
     try {
@@ -69,7 +71,9 @@ router.post('/', checkNotLogin, function(req, res, next) {
         identity: identity,
         gender: gender,
         bio: bio,
-        avatar: avatar
+        avatar: avatar,
+        email: email,
+        point: point
     };
     // 用户信息写入数据库
     UserModel.create(user)
