@@ -38,7 +38,8 @@ router.get('/', function(req, res, next) {
                 posts: posts,
                 announcement: announcement
             });
-        });
+        })
+        .catch(next);
 });
 
 module.exports = router;

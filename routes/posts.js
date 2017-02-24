@@ -150,7 +150,8 @@ router.get('/:postId', function(req, res, next) {
                     ip: ip,
                     page: page
                 });
-            });
+            })
+            .catch(next);
     } else {
         Promise.all([
                 PostModel.getPostById(postId), // 获取文章信息
