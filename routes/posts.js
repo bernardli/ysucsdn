@@ -42,6 +42,14 @@ router.get('/user', function(req, res, next) {
     var page = req.query.page || 1;
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
+    UserModel.getUserById(author)
+        .then(function(author) {
+            if (!author) {
+                req.flash('error', '没有这个用户');
+                return res.redirect('/posts');
+            }
+        })
+
     if (parseInt(page) == 1) {
         PostModel.getPostspre(author, page, search)
             .then(function(posts) {

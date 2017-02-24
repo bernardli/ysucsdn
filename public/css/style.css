@@ -46,6 +46,13 @@ body {
 }
 
 
+/* ---------- notification ---------- */
+
+.notice {
+    margin-top: 20px !important;
+}
+
+
 /* ---------- nav ---------- */
 
 .nav {
@@ -228,4 +235,9 @@ body {
 .button-publish {
     width: 200px;
     align-self: flex-end;
+}
+
+.panel-writing {
+    width: 1200px;
+    margin: 20px auto !important;
 }

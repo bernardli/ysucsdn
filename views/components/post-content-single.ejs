@@ -1,7 +1,9 @@
 <div class="post">
     <div class="post-author">
         <div class="post-author-avatar">
-            <img src="/img/users_avatar/<%= post.author.avatar%>" alt="" class="img-author-avatar">
+            <a href="/posts/user?author=<%= post.author._id %>">
+                <img src="/img/users_avatar/<%= post.author.avatar%>" alt="" class="img-author-avatar">
+            </a>
         </div>
         <div class="post-author-name">
             <span class="text-author-name"><%= post.author.name%></span>

@@ -6,11 +6,22 @@
     <div class="user-info-namegender center">
         <span><%= authorinfo.name%></span>
         <span>|</span>
-        <span><%= authorinfo.gender%></span>
+        <% if( authorinfo.gender == 'f') { %>
+            <span><i class="woman icon icon-gender"></i></span>
+        <% } else { %>
+            <span><i class="man icon icon-gender"></i></span>
+        <% } %>
     </div>
     <div class="user-info-bio">
-        <p>
-            <%= authorinfo.bio%>
-        </p>
+        <p class="text-biotitle">关于我:</p>
+        <% if(authorinfo.bio) { %>
+            <p class="text-bio">
+                <%= authorinfo.bio%>
+            </p>
+        <% } else { %>
+            <p class="text-bio">
+                改用户很懒，什么简介都没写
+            </p>
+        <% }　%>
     </div>
 </div>

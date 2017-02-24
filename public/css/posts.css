@@ -183,6 +183,8 @@
 }
 
 .user-info-avatar {
+    margin-top: 20px;
+    border: 2px solid #4fc08d;
     width: 100px;
     height: 100px;
 }
@@ -195,14 +197,27 @@
 .user-info-namegender {
     width: auto;
     height: 100px;
-    font-size: 20px;
+    font-size: 30px;
     color: #4fc08d;
+}
+
+.icon-gender {
+    font-size: 23px !important;
 }
 
 .user-info-bio {
     width: 500px;
     height: 120px;
     color: #999;
+}
+
+.text-biotitle {
+    font-size: 20px;
+}
+
+.text-bio {
+    display: block;
+    margin: 0px 20px;
 }
 
 
