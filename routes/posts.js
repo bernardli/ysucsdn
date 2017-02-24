@@ -51,18 +51,19 @@ router.get('/user', function(req, res, next) {
         })
 
     if (parseInt(page) == 1) {
-        PostModel.getPostspre(author, page, search)
-            .then(function(posts) {
+        Promise.all([
+                PostModel.getPostspre(author, page, search),
                 UserModel.getUserById(author)
-                    .then(function(user) {
-                        res.render('user_posts', {
-                            posts: posts,
-                            author: JSON.stringify(user),
-                            ip: ip,
-                            page: page
-                        });
-                    })
-                    .catch(next);
+            ])
+            .then(function(results) {
+                var posts = results[0];
+                var author = results[1];
+                res.render('user_posts', {
+                    posts: posts,
+                    author: author,
+                    ip: ip,
+                    page: page
+                });
             })
             .catch(next);
     } else {
@@ -140,24 +141,23 @@ router.get('/:postId', function(req, res, next) {
         // pv 加 1   浏览量
         PostModel.incPv(postId, w_pv)
             .then(function(incPv_result) {
-                Promise.all([
-                        PostModel.getPostById(postId), // 获取文章信息
-                        CommentModel.getCommentslimit(postId, page) // 获取该文章所有留言
-                    ])
-                    .then(function(result) {
-                        var post = result[0];
-                        var comments = result[1];
-                        if (!post) {
-                            throw new Error('该文章不存在');
-                        }
-                        res.render('post', {
-                            post: post,
-                            comments: comments,
-                            ip: ip,
-                            page: page
-                        });
-                    })
-                    .catch(next);
+                return Promise.all([
+                    PostModel.getPostById(postId), // 获取文章信息
+                    CommentModel.getCommentslimit(postId, page) // 获取该文章所有留言
+                ]);
+            })
+            .then(function(results) {
+                var post = results[0];
+                var comments = results[1];
+                if (!post) {
+                    throw new Error('该文章不存在');
+                }
+                res.render('post', {
+                    post: post,
+                    comments: comments,
+                    ip: ip,
+                    page: page
+                });
             })
             .catch(next);
     } else {
@@ -165,9 +165,9 @@ router.get('/:postId', function(req, res, next) {
                 PostModel.getPostById(postId), // 获取文章信息
                 CommentModel.getCommentslimit(postId, page) // 获取该文章留言
             ])
-            .then(function(result) {
-                var post = result[0];
-                var comments = result[1];
+            .then(function(results) {
+                var post = results[0];
+                var comments = results[1];
                 if (!post) {
                     throw new Error('该文章不存在');
                 }
