@@ -59,20 +59,20 @@ Post.plugin('pre', {
     afterFind: function(posts) {
         return posts.map(function(post) {
             //post.content = marked(post.content);
-            post.content=post.content.replace(/<\/?.+?>/g,"");//去除 HTML 标签
-            post.content=post.content.replace(/[ ]/g,"");//去空格
-            post.content=post.content.replace(/[\r\n]/g," ");//回车变空格
-            post.content=post.content.substring(0,100);//获取前100个字符
+            post.content = post.content.replace(/<\/?.+?>/g, ""); //去除 HTML 标签
+            post.content = post.content.replace(/[ ]/g, ""); //去空格
+            post.content = post.content.replace(/[\r\n]/g, " "); //回车变空格
+            post.content = post.content.substring(0, 100); //获取前100个字符
             return post;
         });
     },
     afterFindOne: function(post) {
         if (post) {
             // post.content = marked(post.content);
-            post.content=post.content.replace(/<\/?.+?>/g,"");//去除 HTML 标签
-            post.content=post.content.replace(/[ ]/g,"");//去空格
-            post.content=post.content.replace(/[\r\n]/g," ");//回车变空格
-            post.content=post.content.substring(0,100);//获取前100个字符
+            post.content = post.content.replace(/<\/?.+?>/g, ""); //去除 HTML 标签
+            post.content = post.content.replace(/[ ]/g, ""); //去空格
+            post.content = post.content.replace(/[\r\n]/g, " "); //回车变空格
+            post.content = post.content.substring(0, 100); //获取前100个字符
         }
         return post;
     }
@@ -121,8 +121,6 @@ module.exports = {
         return Post
             .findOne({ author: '58a681312523391bfc73f1af' })
             .populate({ path: 'author', model: 'User' })
-            /*.sort({ _id: -1 })
-            .limit(1)*/
             .addCreatedAt()
             .addCommentsCount()
             .contentToHtml()
@@ -150,7 +148,7 @@ module.exports = {
     },
 
     // 通过文章 id 给 pv 加 1
-    incPv: function incPv(postId,w_pv) {
+    incPv: function incPv(postId, w_pv) {
         return Post
             .update({ _id: postId }, { $inc: { pv: parseInt(w_pv) } })
             .exec();
