@@ -1,16 +1,15 @@
 <div class="user-info">
-    <% var authorinfo =  JSON.parse(author);%>
     <div class="user-info-avatar">
-        <img src="/img/users_avatar/<%= authorinfo.avatar %>" alt="" class="img-info-avatar">
+        <img src="/img/users_avatar/<%= author.avatar %>" alt="" class="img-info-avatar">
     </div>
     <div class="user-info-namegender center">
-        <span><%= authorinfo.name%></span>
+        <span><%= author.name%></span>
         <span>|</span>
-        <span><%= authorinfo.gender%></span>
+        <span><%= author.gender%></span>
     </div>
     <div class="user-info-bio">
         <p>
-            <%= authorinfo.bio%>
+            <%= author.bio%>
         </p>
     </div>
 </div>
