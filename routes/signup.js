@@ -3,15 +3,17 @@ var path = require('path');
 var sha1 = require('sha1');
 var express = require('express');
 var router = express.Router();
+var config = require('config-lite');
+var nodemailer = require('nodemailer');
 
 var UserModel = require('../models/users');
 var checkNotLogin = require('../middlewares/check').checkNotLogin;
 
 // GET /signup 注册页
 router.get('/', checkNotLogin, function(req, res, next) {
-    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
-    res.render('signup',{
-        ip:ip
+    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    res.render('signup', {
+        ip: ip
     });
 });
 
@@ -22,8 +24,9 @@ router.post('/', checkNotLogin, function(req, res, next) {
     var bio = req.fields.bio;
     var avatar = req.files.avatar.path.split(path.sep).pop();
     var password = req.fields.password;
-    var identity = 'normal';
     var repassword = req.fields.repassword;
+    var email = req.fields.email;
+    var transporter = nodemailer.createTransport(config.transporter);
 
     // 校验参数
     try {
@@ -36,9 +39,6 @@ router.post('/', checkNotLogin, function(req, res, next) {
         if (!(bio.length >= 0 && bio.length <= 30)) {
             throw new Error('个人简介请限制在 1-30 个字符');
         }
-        // if (!req.files.avatar.name) {
-        //     throw new Error('缺少头像');
-        // }
         if (password.length < 6) {
             throw new Error('密码至少 6 个字符');
         }
@@ -66,10 +66,12 @@ router.post('/', checkNotLogin, function(req, res, next) {
     var user = {
         name: name,
         password: password,
-        identity: identity,
+        identity: 'normal',
         gender: gender,
         bio: bio,
-        avatar: avatar
+        avatar: avatar,
+        email: email,
+        point: 0
     };
     // 用户信息写入数据库
     UserModel.create(user)
@@ -83,6 +85,20 @@ router.post('/', checkNotLogin, function(req, res, next) {
             req.flash('success', '注册成功');
             // 跳转到首页
             res.redirect('/posts');
+            //发送欢迎邮件
+            var mailOptions = {
+                from: '"welcome" <reply@puresox.cn>', // 发件人
+                to: user.email, // 收件人
+                subject: '欢迎' + user.name, // 标题
+                text: '欢迎', // 内容
+                html: '<b>welcome</b>' // html
+            };
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    return console.log(error);
+                }
+                console.log('Message %s sent: %s', info.messageId, info.response);
+            });
         })
         .catch(function(e) {
             // 注册失败，异步删除上传的头像
