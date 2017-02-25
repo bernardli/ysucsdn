@@ -10,6 +10,17 @@
         <script src="/js/loadmore.js?a=15843523"></script>
     </head>
     <body>
+        <%  if(!announcement){
+            var announcement = {
+                _id　: 1,
+                author : "VAN",
+                title　: "暂无新公告",
+                pv : 0,
+                content : "<h1>什么都还没写</h1>",
+                commentsCount : 0,
+                created_at :　"宇宙大爆炸之前"　
+                };
+                }       %>
         <div class="box--total">
             <div class="header">
                 <div class="header-logo center">
@@ -45,17 +56,6 @@
                         <div class="body-news-icon center">
                             <img src="img/local/news.png" alt="" class="img-newsicon center">
                         </div>
-                        <%  if(!announcement){
-                            var announcement = {
-                                _id　: 1,
-                                author : "VAN",
-                                title　: "暂无新公告",
-                                pv : 0,
-                                content : "<h1>什么都还没写</h1>",
-                                commentsCount : 0,
-                                created_at :　"宇宙大爆炸之前"　
-                                };
-                                }%>
                         <div class="body-news-text center">
                             <strong class="text-newstext-major">社团新闻</strong>
                             <span class="text-newstext-minor">社团的大事小事都能在这里发现哦</span>

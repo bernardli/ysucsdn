@@ -37,7 +37,7 @@ router.post('/', checkNotLogin, function(req, res, next) {
             throw new Error('性别只能是 m、f 或 x');
         }
         if (!(bio.length >= 0 && bio.length <= 30)) {
-            throw new Error('个人简介请限制在 1-30 个字符');
+            throw new Error('个人简介请限制在 0-30 个字符');
         }
         if (password.length < 6) {
             throw new Error('密码至少 6 个字符');
