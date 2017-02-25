@@ -15,6 +15,8 @@ var Post = require('../lib/mongo').Post;
 
 var CommentModel = require('./comments');
 
+var config = require('config-lite');
+
 // 给 post 添加留言数 commentsCount
 Post.plugin('addCommentsCount', {
     afterFind: function(posts) {
@@ -119,7 +121,7 @@ module.exports = {
     //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章的摘要
     getannouncement: function getannouncement() {
         return Post
-            .findOne({ author: '58a681312523391bfc73f1af' })
+            .findOne({ author: config.admin_id })
             .populate({ path: 'author', model: 'User' })
             .addCreatedAt()
             .addCommentsCount()
