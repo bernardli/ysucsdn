@@ -6,17 +6,18 @@ var checkLogin = require('../middlewares/check').checkLogin;
 
 var fs = require('fs');
 var path = require('path');
-var sha1 = require('sha1');
+var bcrypt = require('bcrypt');
+var saltRounds = 10;
 
 //GET /setting 用户设置页面
 router.get('/', function(req, res, next) {
     var name = req.query.name;
-    var ip=req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
     UserModel.getUserByName(name)
         .then(function(user) {
             res.render('setting', {
                 user: user,
-                ip:ip
+                ip: ip
             });
         })
         .catch(next);
@@ -81,10 +82,14 @@ router.post('/password', checkLogin, function(req, res, next) {
     var oldpassword = req.fields.oldpassword;
     var newpassword = req.fields.newpassword;
     var newrepassword = req.fields.newrepassword;
+
     UserModel.getUserByName(userName)
         .then(function(user) {
+            return bcrypt.compare(oldpassword, user.password);
+        })
+        .then(function(result) {
             // 检查密码是否匹配
-            if (sha1(oldpassword) !== user.password) {
+            if (result == false) {
                 req.flash('error', '原密码错误');
                 return res.redirect('back');
             } else if (newpassword.length < 6) {
@@ -92,18 +97,19 @@ router.post('/password', checkLogin, function(req, res, next) {
                 return res.redirect('back');
             } else if (!(newpassword !== newrepassword)) {
                 // 明文密码加密
-                newpassword = sha1(newpassword);
-                UserModel.updatePasswordById(userId, userName, { password: newpassword })
-                    .then(function() {
-                        req.flash('success', '修改密码成功');
-                        // 编辑成功后跳转到上一页
-                        res.redirect('back');
-                    })
-                    .catch(next);
+                return bcrypt.hash(newpassword, saltRounds);
             } else {
                 req.flash('error', '两次密码不一致');
                 return res.redirect('back');
             }
+        })
+        .then(function(newpassword) {
+            return UserModel.updatePasswordById(userId, userName, { password: newpassword });
+        })
+        .then(function() {
+            req.flash('success', '修改密码成功');
+            // 编辑成功后跳转到上一页
+            res.redirect('back');
         })
         .catch(next);
 });

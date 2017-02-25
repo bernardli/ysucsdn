@@ -1,4 +1,5 @@
-var sha1 = require('sha1');
+var bcrypt = require('bcrypt');
+var saltRounds = 10;
 var express = require('express');
 var router = express.Router();
 var config = require('config-lite');
@@ -27,7 +28,15 @@ router.post('/', checkNotLogin, function(req, res, next) {
                 return res.redirect('back');
             }
             // 检查密码是否匹配
-            if (sha1(password) !== user.password) {
+            return Promise.all([
+                bcrypt.compare(password, user.password),
+                user
+            ])
+        })
+        .then(function(results) {
+            result=results[0];
+            user=results[1];
+            if (result == false) {
                 req.flash('error', '用户名或密码错误');
                 return res.redirect('back');
             }
