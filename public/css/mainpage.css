@@ -61,7 +61,7 @@
     width: 100%;
     height: auto;
     position: relative;
-    z-index: 2;
+    z-index: 101;
 }
 
 .body-introbox {
@@ -111,25 +111,29 @@
 
 /*新闻部分*/
 
-.body-newsbox {
+.body-newsbox,
+.body-picbox {
     width: 100%;
     height: auto;
     background-color: white;
     box-shadow: 0px 2px 10px #505054;
 }
 
-.body-news {
+.body-news,
+.body-pic {
     margin: 50px auto;
     width: 1000px;
     height: auto;
 }
 
-.body-news-icon {
+.body-news-icon,
+.body-pic-icon {
     width: 100%;
     height: 120px;
 }
 
-.img-newsicon {
+.img-newsicon,
+.img-picicon {
     width: 120px;
     height: 120px;
     transition: all 1s;
@@ -139,7 +143,12 @@
     transform: rotate(360deg) scale(1.2, 1.2);
 }
 
-.body-news-text {
+.img-picicon:hover {
+    transform: rotate(360deg) scale(1.2, 1.2);
+}
+
+.body-news-text,
+.body-pic-text {
     width: 100%;
     height: 100px;
     margin: 10px 0px;
@@ -147,23 +156,30 @@
     flex-direction: column;
 }
 
-.text-newstext-major {
+.text-newstext-major,
+.text-pictext-major {
     color: #2d2525;
     font-size: 40px;
     margin: 10px 0px;
 }
 
-.text-newstext-minor {
+.text-newstext-minor,
+.text-pictext-minor {
     color: #545454;
     margin: 5px;
 }
 
-.text-newstext-hidden {
+.text-newstext-hidden,
+.text-pictext-hidden {
     color: white;
     transition: all 1s;
 }
 
 .text-newstext-hidden:hover {
+    color: #545454;
+}
+
+.text-pictext-hidden:hover {
     color: #545454;
 }
 
@@ -444,6 +460,79 @@
     margin: 10px;
     text-decoration: none;
 }
+
+
+/*相册部分*/
+
+.body-pic-picpre {
+    width: 1000px;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.pic-item {
+    width: 250px;
+    height: 250px;
+    margin: 20px;
+    border: 2px solid black;
+    overflow: hidden;
+    display: flex;
+}
+
+.img-pic-item {
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 100%;
+    margin: auto;
+}
+
+.pic-show-box {
+    position: fixed;
+    z-index: 1024;
+    top: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.pic-show-box-filter {
+    position: fixed;
+    top: 0px;
+    z-index: 1000;
+    background-color: black;
+    filter: opacity(80%);
+}
+
+.pic-show-box-header {
+    position: relative;
+    z-index: 10086;
+    width: 100%;
+    height: 50px;
+    background-color: gray;
+}
+
+.pic-show-box-footer {
+    position: relative;
+    width: 100%;
+    height: 80px;
+    background-color: gray;
+}
+
+.img-show-detail {
+    position: relative;
+    max-width: 600px;
+    max-height: 600px;
+    min-width: 300px;
+    margin: auto;
+}
+
+.hide {
+    display: none;
+}
+
+
+/*脚注部分*/
 
 .footer {
     width: 100%;
