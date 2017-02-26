@@ -1,6 +1,7 @@
 var fs = require('fs');
 var path = require('path');
-var sha1 = require('sha1');
+var bcrypt = require('bcrypt');
+var saltRounds = 10;
 var express = require('express');
 var router = express.Router();
 var config = require('config-lite');
@@ -53,28 +54,31 @@ router.post('/', checkNotLogin, function(req, res, next) {
     }
 
     // 明文密码加密
-    password = sha1(password);
-    //分配默认头像
-    if (!req.files.avatar.name) {
-        //异步删除上传的头像
-        fs.unlink(req.files.avatar.path);
-        //设置默认头像
-        avatar = "../local/defaultAvatar.png";
-    }
-
-    // 待写入数据库的用户信息
-    var user = {
-        name: name,
-        password: password,
-        identity: 'normal',
-        gender: gender,
-        bio: bio,
-        avatar: avatar,
-        email: email,
-        point: 0
-    };
-    // 用户信息写入数据库
-    UserModel.create(user)
+    bcrypt.hash(password, saltRounds)
+        .then(function(password) {
+            //分配默认头像
+            if (!req.files.avatar.name) {
+                //异步删除上传的头像
+                fs.unlink(req.files.avatar.path);
+                //设置默认头像
+                avatar = "../local/defaultAvatar.png";
+            }
+            // 待写入数据库的用户信息
+            var user = {
+                name: name,
+                password: password,
+                identity: 'normal',
+                gender: gender,
+                bio: bio,
+                avatar: avatar,
+                email: email,
+                point: 0
+            };
+            return user;
+        })
+        .then(function(user) {
+            return UserModel.create(user); // 用户信息写入数据库
+        })
         .then(function(result) {
             // 此 user 是插入 mongodb 后的值，包含 _id
             user = result.ops[0];
