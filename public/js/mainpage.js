@@ -13,6 +13,7 @@ $(document).ready(function() {
         console.log('show');
         $('.pic-show-box-filter').toggleClass('hide');
         $('.pic-show-box').toggleClass('hide');
+        $('.header').toggleClass('hide');
         $('.img-show-detail').attr('src', $(e.target).attr('src'));
     });
 
@@ -20,6 +21,7 @@ $(document).ready(function() {
         console.log('hide');
         $('.pic-show-box').toggleClass('hide');
         $('.pic-show-box-filter').toggleClass('hide');
+        $('.header').toggleClass('hide');
     });
 
     console.log('ready');

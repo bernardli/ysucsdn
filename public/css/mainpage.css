@@ -61,7 +61,7 @@
     width: 100%;
     height: auto;
     position: relative;
-    z-index: 101;
+    z-index: 2;
 }
 
 .body-introbox {
