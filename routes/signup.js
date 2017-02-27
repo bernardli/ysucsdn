@@ -9,6 +9,7 @@ var nodemailer = require('nodemailer');
 
 var UserModel = require('../models/users');
 var checkNotLogin = require('../middlewares/check').checkNotLogin;
+var email_adress=config.transporter.auth.user;
 
 // GET /signup 注册页
 router.get('/', checkNotLogin, function(req, res, next) {
@@ -91,7 +92,7 @@ router.post('/', checkNotLogin, function(req, res, next) {
             res.redirect('/posts');
             //发送欢迎邮件
             var mailOptions = {
-                from: '"welcome" <reply@puresox.cn>', // 发件人
+                from: '"welcome" '+email_adress+'', // 发件人
                 to: user.email, // 收件人
                 subject: '欢迎' + user.name, // 标题
                 text: '欢迎', // 内容

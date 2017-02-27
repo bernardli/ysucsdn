@@ -7,6 +7,7 @@ var nodemailer = require('nodemailer');
 
 var UserModel = require('../models/users');
 var checkNotLogin = require('../middlewares/check').checkNotLogin;
+var email_adress=config.transporter.auth.user;
 
 // GET /signin 登录页
 router.get('/', checkNotLogin, function(req, res, next) {
@@ -55,7 +56,7 @@ router.post('/forget', checkNotLogin, function(req, res, next) {
     var transporter = nodemailer.createTransport(config.transporter);
 
     var mailOptions = {
-        from: '"puresox" <reply@puresox.cn>', // 发件人
+        from: '"puresox" '+email_adress+'', // 发件人
         to: 'bernardli1248@qq.com', // 收件人
         subject: '欢迎使用找不回密码功能', // 标题
         text: '忘记密码了么？欢迎致电管理员libo，她不会帮你找回密码，她会删掉您的账户，欢迎重新创建账号', // 内容
