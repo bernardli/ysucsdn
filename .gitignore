@@ -2,6 +2,7 @@ node_modules
 config/*
 !config/nothing.*
 public/img/users_avatar/*
+!public/img/users_avatar/nothing.*
 logs/*
 !logs/nothing.*
 .vscode
