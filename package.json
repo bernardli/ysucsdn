@@ -1,6 +1,6 @@
 {
     "name": "ysucsdn",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "description": "燕山大学CSDN官网",
     "main": "index.js",
     "scripts": {
