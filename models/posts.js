@@ -1,14 +1,5 @@
 var marked = require('marked');
-marked.setOptions({
-    renderer: new marked.Renderer(),
-    gfm: true,
-    tables: true,
-    breaks: true,
-    pedantic: true,
-    sanitize: true,
-    smartLists: true,
-    smartypants: true
-});
+
 var markdown = require("markdown").markdown;
 
 var Post = require('../lib/mongo').Post;
@@ -43,14 +34,14 @@ Post.plugin('contentToHtml', {
     afterFind: function(posts) {
         return posts.map(function(post) {
             //post.content = marked(post.content);
-            post.content = markdown.toHTML(post.content);
+            post.content = marked(post.content);
             return post;
         });
     },
     afterFindOne: function(post) {
         if (post) {
             // post.content = marked(post.content);
-            post.content = markdown.toHTML(post.content);
+            post.content = marked(post.content);
         }
         return post;
     }
