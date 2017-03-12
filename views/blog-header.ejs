@@ -22,7 +22,6 @@
                 <div class="header">
                     <h1 class="brand-title">ysucsdn</h1>
                     <h2 class="brand-tagline">文章页</h2>
-
                     <nav class="nav">
                         <ul class="nav-list">
                             <li class="nav-item">
@@ -32,16 +31,45 @@
                                 <a class="pure-button" href="/posts/user?author=233">新闻</a>
                             </li>
                         </ul>
+                    </nav>
+                    
+                    <br>
+                    <br>
+                    <br>
+
+                    <%  if(user) { %>
+                    <a href="/posts/user?author=<%= user._id %>">
+                        <img width="48" height="48" alt="Eric Ferraiuolo&#x27;s avatar" class="post-avatar" src="/img/users_avatar/<%= user.avatar%>">
+                    </a>
+                    <h2 class="brand-tagline">欢迎,<%= user.name%></h2>
+                    <%  } else { %>
+                    <h2 class="brand-tagline">抱歉，请登录</h2>
+                    <%  } %>
+                    <nav class="nav">
                         <ul class="nav-list">
+                            <% if (user) { %>
                             <li class="nav-item">
-                                <form class="ui form form-search" method="get" action="/posts">
-                                    <input type="text" name="search" class="text-search">
-                                    <input type="submit" class="ui icon button button-header-search" value="搜索" />
-                                </form>
+                                <a class="pure-button" href="/posts/user?author=<%= user._id %>">个人主页</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="pure-button" href="/setting?name=<%= user.name %>">账号设置</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="pure-button" href="/posts/create">发表文章</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="pure-button" href="/signout">登出</a>
+                            </li>
+                            <% } else { %>
+                            <li class="nav-item">
+                                <a class="pure-button" href="/signin">登录</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="pure-button" href="/signup">注册</a>
+                            </li>
+                            <% } %>
                         </ul>
                     </nav>
-                    <%- include('components/nav-setting') %>
                     <%- include('components/notification') %>
                 </div>
             </div>
