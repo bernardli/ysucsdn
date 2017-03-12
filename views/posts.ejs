@@ -1,10 +1,14 @@
-<%- include('header') %>
+<%- include('blog-header') %>
 
-<link rel="stylesheet" href="css/posts.css">
+<div class="posts">
+    <h1 class="content-subhead">置顶文章</h1>
+</div>
 
-<div class="limit-post-content">
-<%postNum = 0%>
-<%- include('components/limit-post-content', { posts: posts }) %>
+
+<div class="posts limit-post-content">
+    <h1 class="content-subhead">最新文章</h1>
+    <%postNum = 0%>
+    <%- include('components/limit-post-content', { posts: posts }) %>
 </div>
 
 <% if(posts.length==5){ %>
@@ -21,6 +25,7 @@
 </div>
 <% } %>
 
+
 <%- include('components/back-to-top') %>
 
-<%- include('footer') %>
+<%- include('blog-footer') %>
