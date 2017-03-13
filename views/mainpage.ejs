@@ -1,210 +1,193 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-    <head>
-        <title>CSDN主页</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="css/mainpage.css">
-        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.7/semantic.min.css">
-        <script src="/js/loadmore.js"></script>
-        <script src="js/mainpage.js"></script>
-        <script src="https://cdn.bootcss.com/typed.js/1.1.4/typed.min.js"></script>
-        <script>
-        $(function(){
-            $(".element").typed({
-                strings: ["<h1>Hello World!</h1> ^1000", "<h1>It just works!</h1>"],
-                typeSpeed: 50,
-                contentType: 'html',
-                showCursor: true,
-                cursorChar: "_",
-                shuffle: true
-            });
-        });
-        </script>
-        <style type="text/css">
-        .typed-cursor{
-            opacity: 1;
-            -webkit-animation: blink 0.7s infinite;
-            -moz-animation: blink 0.7s infinite;
-            animation: blink 0.7s infinite;
-        }
-        @keyframes blink{
-            0% { opacity:1; }
-            50% { opacity:0; }
-            100% { opacity:1; }
-        }
-        @-webkit-keyframes blink{
-            0% { opacity:1; }
-            50% { opacity:0; }
-            100% { opacity:1; }
-        }
-        @-moz-keyframes blink{
-            0% { opacity:1; }
-            50% { opacity:0; }
-            100% { opacity:1; }
-        }
-        </style>
-    </head>
-    <body>
-        <%  if(!announcement){
-            var announcement = {
-                _id　: 1,
-                author : "VAN",
-                title　: "暂无新公告",
-                pv : 0,
-                content : "<h1>什么都还没写</h1>",
-                commentsCount : 0,
-                created_at :　"宇宙大爆炸之前"　
-                };
-                }       %>
-        <div class="box--total">
-            <div class="header">
-                <div class="header-logo center">
-                    <a href="/mainpage">
-                        <img src="img/local/logo.jpg" alt="">
-                    </a>
-                </div>
-                <div class="header-item">
-                    <a href="/posts/user?author=<%= announcement.author._id %>" class="link-header-item center">新闻</a>
-                </div>
-                <div class="header-item">
-                    <a href="/posts" class="link-header-item center">文章</a>
-                </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSDN主页</title>
+    
+    <link rel="stylesheet" href="https://cdn.bootcss.com/pure/0.6.2/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="/css/marketing.css">
+    <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+    ga('create', 'UA-41480445-1', 'purecss.io');
+    ga('send', 'pageview');
+    </script>
+</head>
+<body>
+
+
+
+
+
+
+
+
+
+<div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="pure-menu-heading" href="">YSUCSDN</a>
+
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected"><a href="/posts" class="pure-menu-link">blog</a></li>
+            <%  if(user) { %>
+            <li class="pure-menu-item"><a href="/posts/user?author=<%= user._id %>" class="pure-menu-link">欢迎,<%= user.name%></a></li>
+            <%  } else { %>
+            <li class="pure-menu-item"><a href="/signup" class="pure-menu-link">注册</a></li>
+            <li class="pure-menu-item"><a href="/signin" class="pure-menu-link">登录</a></li>
+            <%  } %>
+        </ul>
+    </div>
+</div>
+
+<div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Hello World!</h1>
+        <p class="splash-subhead">
+            跟bernardli大佬学全栈
+        </p>
+        <p>
+            <a href="/posts" class="pure-button pure-button-primary">Get Started</a>
+        </p>
+    </div>
+</div>
+
+<div class="content-wrapper">
+    <div class="content">
+        <h2 class="content-head is-center">荣誉墙</h2>
+
+        <div class="pure-g">
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+
+                <h3 class="content-subhead">
+                    <i class="fa fa-rocket"></i>
+                    跟bernardli大佬学的快
+                </h3>
+                <p>
+                    一小时学会html，2小时熟悉css，3小时精通javascript。
+                </p>
             </div>
-            <div class="background center">
-                <img src="http://file06.16sucai.com/2016/0304/e0606a03e230f44060199d626deea30f.jpg" alt="">
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-mobile"></i>
+                    bernardli大佬debug能力强
+                </h3>
+                <p>
+                    三分钟定位bug，5分钟重新上线
+                </p>
             </div>
-            <div class="body">
-                <div class="body-introbox center">
-                    <span class="element">$ </span>
-                </div>
-                <div class="body-newsbox center">
-                    <div class="body-news">
-                        <div class="body-news-icon center">
-                            <img src="img/local/news.png" alt="" class="img-newsicon center">
-                        </div>
-                        <div class="body-news-text center">
-                            <strong class="text-newstext-major">社团新闻</strong>
-                            <span class="text-newstext-minor">社团的大事小事都能在这里发现哦</span>
-                            <span class="text-newstext-hidden">总想搞个大新闻= =</span>
-                        </div>
-                        <div class="body-news-box">
-                            <div class="body-news-header">
-                                <a class="text-newsheader-title" href="/posts/<%= announcement._id %>"><%= announcement.title%></a>
-                                <span class="text-newsheader-detail">阅读(<%= announcement.pv%>)</span>
-                                <span class="text-newsheader-detail">评论(<%= announcement.commentsCount%>)</span>
-                                <span class="text-newsheader-detail"><%= announcement.created_at%></span>
-                            </div>
-                            <div class="body-news-content">
-                                <div class="text-newscontent">
-                                    <%- announcement.content%>
-                                </div>
-                            </div>
-                            <div class="body-news-footer">
-                                <a href="/posts/user?author=<%= announcement.author._id %>" class="link-morenews center">更多新闻</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="body-articlebox">
-                    <div class="body-article">
-                        <div class="body-article-icon center">
-                            <img src="img/local/articles.png" alt="" class="img-articleicon center">
-                        </div>
-                        <div class="body-article-text center">
-                            <strong class="text-articletext-major">文章</strong>
-                            <span class="text-articletext-minor">瞎扯淡的地方，水水更健康</span>
-                            <span class="text-articletext-hidden">前方装逼高能 ！</span>
-                        </div>
-                        <% posts.forEach(function (post) {  %>
-                            <div class="body-article-item">
-                                <div class="article-item-author">
-                                    <div class="article-item-author-avatar center">
-                                        <a href="/posts/user?author=<%= post.author._id %>">
-                                            <img src="/img/users_avatar/<%= post.author.avatar%>" alt="" class="img-author-avatar center">
-                                        </a>
-                                    </div>
-                                    <div class="article-item-author-name">
-                                        <span class="text-authorname"><%= post.author.name%></span>
-                                    </div>
-                                </div>
-                                <div class="article-item-content">
-                                    <div class="article-item-content-title">
-                                        <a class="text-article-title" href="/posts/<%= post._id%>"><%= post.title%></a>
-                                    </div>
-                                    <div class="article-item-content-text">
-                                        <div class="text-article-content">
-                                            <%- post.content%>
-                                        </div>
-                                    </div>
-                                    <div class="article-item-content-footer">
-                                        <span class="text-article-info"><%= post.created_at%></span>
-                                        <span class="text-article-info">阅读(<%= post.pv%>)</span>
-                                        <span class="text-article-info">阅读(<%= post.commentsCount%>)</span>
-                                    </div>
-                                </div>
-                            </div>
-                        <%  })   %>
-                        <div class="body-article-footer">
-                            <a href="/posts" class="link-morearticles center">更多文章</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="body-picbox center">
-                    <div class="body-pic">
-                        <div class="body-pic-icon center">
-                            <img src="img/local/news.png" alt="" class="img-picicon center">
-                        </div>
-                        <div class="body-pic-text center">
-                            <strong class="text-pictext-major">相册</strong>
-                            <span class="text-pictext-minor">记录那些逗比的岁月</span>
-                            <span class="text-pictext-hidden">poi~</span>
-                        </div>
-                        <div class="body-pic-picpre">
-                            <div class="pic-item">
-                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
-                            </div>
-                            <div class="pic-item">
-                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
-                            </div>
-                            <div class="pic-item">
-                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
-                            </div>
-                            <div class="pic-item">
-                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
-                            </div>
-                            <div class="pic-item">
-                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
-                            </div>
-                            <div class="pic-item">
-                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="pic-show-box-filter hide"></div>
-                    <div class="pic-show-box hide">
-                        <div class="pic-show-box-header">点击这里退出</div>
-                        <img src="" alt="加载失败，刷新看看？" class="img-show-detail">
-                        <div class="pic-show-box-footer">这里是介绍</div>
-                    </div>
-                </div>
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-th-large"></i>
+                    bernardli大佬经验丰富
+                </h3>
+                <p>
+                    年仅20岁便有30年开发经验，如50岁般年轻
+                </p>
             </div>
-            <div class="footer">
-                <div class="footer-links">
-                    <div class="footer-links-text center">
-                        <span>友情链接</span>
-                    </div>
-                    <div class="footer-links-item center">
-                        <a href="http://www.ysu.edu.cn/">燕山大学</a>
-                    </div>
-                    <div class="footer-links-item center">
-                        <a href="http://www.ysu.edu.cn/">燕山大学</a>
-                    </div>
-                </div>
+            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                <h3 class="content-subhead">
+                    <i class="fa fa-check-square-o"></i>
+                    bernardli大佬技术硬
+                </h3>
+                <p>
+                    bernardli大佬保佑你一次编译通过
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="ribbon l-box-lrg pure-g">
+        <div class="l-box-lrg is-center pure-u-1 pure-u-md-1-2 pure-u-lg-2-5">
+            <img width="300" alt="File Icons" class="pure-img-responsive" src="img/local/logo.jpg">
+        </div>
+        <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-3-5">
+
+            <h2 class="content-head content-head-ribbon">紧密团结在以bernardli大佬为部长的技术部周围</h2>
+
+            <p>
+                紧密团结在以bernardli大佬为部长的技术部周围 坚定不移地朝着CSDN伟大复兴目标奋勇前进
+            </p>
+        </div>
+    </div>
+
+    <div class="content">
+        <h2 class="content-head is-center">Dolore magna aliqua. Uis aute irure.</h2>
+
+        <div class="pure-g">
+            <div class="l-box-lrg pure-u-1 pure-u-md-2-5">
+                <form class="pure-form pure-form-stacked">
+                    <fieldset>
+
+                        <label for="name">Your Name</label>
+                        <input id="name" type="text" placeholder="Your Name">
+
+
+                        <label for="email">Your Email</label>
+                        <input id="email" type="email" placeholder="Your Email">
+
+                        <label for="password">Your Password</label>
+                        <input id="password" type="password" placeholder="Your Password">
+
+                        <button type="submit" class="pure-button">Sign Up</button>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
+                <h4>Contact Us</h4>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat.
+                </p>
+
+                <h4>More Information</h4>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.
+                </p>
             </div>
         </div>
 
-        <%- include('components/back-to-top') %>
-    </body>
+    </div>
+
+    <div class="footer l-box is-center">
+        View the source of this layout to learn more. Made with love by the YUI Team.
+    </div>
+
+</div>
+
+<script>
+(function (root) {
+/* -- Data -- */
+root.YUI_config = {"version":"3.18.1","base":"http:\u002F\u002Fyui.yahooapis.com\u002F3.18.1\u002F","comboBase":"https:\u002F\u002Fyui-s.yahooapis.com\u002Fcombo?","comboSep":"&","root":"3.18.1\u002F","filter":"min","logLevel":"error","combine":true,"patches":[],"maxURLLength":2048,"groups":{"vendor":{"combine":true,"comboBase":"\u002Fcombo\u002F1.18.13?","base":"\u002F","root":"\u002F","modules":{"css-mediaquery":{"path":"vendor\u002Fcss-mediaquery.js"},"handlebars-runtime":{"path":"vendor\u002Fhandlebars.runtime.js"}}},"app":{"combine":true,"comboBase":"\u002Fcombo\u002F1.18.13?","base":"\u002Fjs\u002F","root":"\u002Fjs\u002F"}}};
+root.app || (root.app = {});
+root.app.yui = {"use":function () { return this._bootstrap('use', [].slice.call(arguments)); },"require":function () { this._bootstrap('require', [].slice.call(arguments)); },"ready":function (callback) { this.use(function () { callback(); }); },"_bootstrap":function bootstrap(method, args) { var self = this, d = document, head = d.getElementsByTagName('head')[0], ie = /MSIE/.test(navigator.userAgent), callback = [], config = typeof YUI_config != "undefined" ? YUI_config : {}; function flush() { var l = callback.length, i; if (!self.YUI && typeof YUI == "undefined") { throw new Error("YUI was not injected correctly!"); } self.YUI = self.YUI || YUI; for (i = 0; i < l; i++) { callback.shift()(); } } function decrementRequestPending() { self._pending--; if (self._pending <= 0) { setTimeout(flush, 0); } else { load(); } } function createScriptNode(src) { var node = d.createElement('script'); if (node.async) { node.async = false; } if (ie) { node.onreadystatechange = function () { if (/loaded|complete/.test(this.readyState)) { this.onreadystatechange = null; decrementRequestPending(); } }; } else { node.onload = node.onerror = decrementRequestPending; } node.setAttribute('src', src); return node; } function load() { if (!config.seed) { throw new Error('YUI_config.seed array is required.'); } var seed = config.seed, l = seed.length, i, node; if (!self._injected) { self._injected = true; self._pending = seed.length; } for (i = 0; i < l; i++) { node = createScriptNode(seed.shift()); head.appendChild(node); if (node.async !== false) { break; } } } callback.push(function () { var i; if (!self._Y) { self.YUI.Env.core.push.apply(self.YUI.Env.core, config.extendedCore || []); self._Y = self.YUI(); self.use = self._Y.use; if (config.patches && config.patches.length) { for (i = 0; i < config.patches.length; i += 1) { config.patches[i](self._Y, self._Y.Env._loader); } } } self._Y[method].apply(self._Y, args); }); self.YUI = self.YUI || (typeof YUI != "undefined" ? YUI : null); if (!self.YUI && !self._injected) { load(); } else if (self._pending <= 0) { setTimeout(flush, 0); } return this; }};
+root.YUI_config || (root.YUI_config = {});
+root.YUI_config.seed = ["https:\u002F\u002Fyui-s.yahooapis.com\u002Fcombo?3.18.1\u002Fyui\u002Fyui-min.js"];
+root.YUI_config.groups || (root.YUI_config.groups = {});
+root.YUI_config.groups.app || (root.YUI_config.groups.app = {});
+root.YUI_config.groups.app.modules = {"start\u002Fapp":{"path":"start\u002Fapp.js","requires":["handlebars-runtime","yui","base-build","router","pjax-base","view","start\u002Fmodels\u002Fgrid","start\u002Fviews\u002Finput","start\u002Fviews\u002Foutput","start\u002Fviews\u002Fdownload"]},"start\u002Fmodels\u002Fgrid":{"path":"start\u002Fmodels\u002Fgrid.js","requires":["yui","querystring","base-build","model","model-sync-rest","start\u002Fmodels\u002Fmq"]},"start\u002Fmodels\u002Fmq":{"path":"start\u002Fmodels\u002Fmq.js","requires":["css-mediaquery","attribute","base-build","model","model-list"]},"start\u002Fviews\u002Fdownload":{"path":"start\u002Fviews\u002Fdownload.js","requires":["yui","base-build","querystring","view"]},"start\u002Fviews\u002Finput":{"path":"start\u002Fviews\u002Finput.js","requires":["base-build","start\u002Fmodels\u002Fmq","start\u002Fviews\u002Ftab"]},"start\u002Fviews\u002Foutput":{"path":"start\u002Fviews\u002Foutput.js","requires":["base-build","escape","start\u002Fviews\u002Ftab"]},"start\u002Fviews\u002Ftab":{"path":"start\u002Fviews\u002Ftab.js","requires":["yui","base-build","view"]}};
+}(this));
+</script>
+<script>
+app.yui.use('node-base', 'node-event-delegate', function (Y) {
+    // This just makes sure that the href="#" attached to the <a> elements
+    // don't scroll you back up the page.
+    Y.one('body').delegate('click', function (e) {
+        e.preventDefault();
+    }, 'a[href="#"]');
+});
+</script>
+
+
+
+</body>
 </html>
