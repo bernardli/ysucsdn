@@ -1,193 +1,360 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSDN主页</title>
-    
+
     <link rel="stylesheet" href="https://cdn.bootcss.com/pure/0.6.2/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css">
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
     <link rel="stylesheet" href="/css/marketing.css">
     <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    
-    ga('create', 'UA-41480445-1', 'purecss.io');
-    ga('send', 'pageview');
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-41480445-1', 'purecss.io');
+        ga('send', 'pageview');
     </script>
 </head>
+
 <body>
+    <!--页眉-->
+    <div class="header">
+        <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+            <a class="pure-menu-heading" href="">YSUCSDN</a>
 
-
-
-
-
-
-
-
-
-<div class="header">
-    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="">YSUCSDN</a>
-
-        <ul class="pure-menu-list">
-            <li class="pure-menu-item pure-menu-selected"><a href="/posts" class="pure-menu-link">blog</a></li>
-            <%  if(user) { %>
-            <li class="pure-menu-item"><a href="/posts/user?author=<%= user._id %>" class="pure-menu-link">欢迎,<%= user.name%></a></li>
-            <%  } else { %>
-            <li class="pure-menu-item"><a href="/signup" class="pure-menu-link">注册</a></li>
-            <li class="pure-menu-item"><a href="/signin" class="pure-menu-link">登录</a></li>
-            <%  } %>
-        </ul>
-    </div>
-</div>
-
-<div class="splash-container">
-    <div class="splash">
-        <h1 class="splash-head">Hello World!</h1>
-        <p class="splash-subhead">
-            跟bernardli大佬学全栈
-        </p>
-        <p>
-            <a href="/posts" class="pure-button pure-button-primary">Get Started</a>
-        </p>
-    </div>
-</div>
-
-<div class="content-wrapper">
-    <div class="content">
-        <h2 class="content-head is-center">荣誉墙</h2>
-
-        <div class="pure-g">
-            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
-
-                <h3 class="content-subhead">
-                    <i class="fa fa-rocket"></i>
-                    跟bernardli大佬学的快
-                </h3>
-                <p>
-                    一小时学会html，2小时熟悉css，3小时精通javascript。
-                </p>
-            </div>
-            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
-                <h3 class="content-subhead">
-                    <i class="fa fa-mobile"></i>
-                    bernardli大佬debug能力强
-                </h3>
-                <p>
-                    三分钟定位bug，5分钟重新上线
-                </p>
-            </div>
-            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
-                <h3 class="content-subhead">
-                    <i class="fa fa-th-large"></i>
-                    bernardli大佬经验丰富
-                </h3>
-                <p>
-                    年仅20岁便有30年开发经验，如50岁般年轻
-                </p>
-            </div>
-            <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
-                <h3 class="content-subhead">
-                    <i class="fa fa-check-square-o"></i>
-                    bernardli大佬技术硬
-                </h3>
-                <p>
-                    bernardli大佬保佑你一次编译通过
-                </p>
-            </div>
+            <ul class="pure-menu-list">
+                <li class="pure-menu-item pure-menu-selected"><a href="/posts" class="pure-menu-link">blog</a></li>
+                <%  if(user) { %>
+                    <li class="pure-menu-item"><a href="/posts/user?author=<%= user._id %>" class="pure-menu-link">欢迎,<%= user.name%></a></li>
+                    <%  } else { %>
+                        <li class="pure-menu-item"><a href="/signup" class="pure-menu-link">注册</a></li>
+                        <li class="pure-menu-item"><a href="/signin" class="pure-menu-link">登录</a></li>
+                        <%  } %>
+            </ul>
         </div>
     </div>
 
-    <div class="ribbon l-box-lrg pure-g">
-        <div class="l-box-lrg is-center pure-u-1 pure-u-md-1-2 pure-u-lg-2-5">
-            <img width="300" alt="File Icons" class="pure-img-responsive" src="img/local/logo.jpg">
-        </div>
-        <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-3-5">
-
-            <h2 class="content-head content-head-ribbon">紧密团结在以bernardli大佬为部长的技术部周围</h2>
-
+    <!--底层背景-->
+    <div class="splash-container">
+        <div class="splash">
+            <h1 class="splash-head">Hello World!</h1>
+            <p class="splash-subhead">
+                跟bernardli大佬学全栈
+            </p>
             <p>
-                紧密团结在以bernardli大佬为部长的技术部周围 坚定不移地朝着CSDN伟大复兴目标奋勇前进
+                <a href="/posts" class="pure-button pure-button-primary">Get Started</a>
             </p>
         </div>
     </div>
 
-    <div class="content">
-        <h2 class="content-head is-center">Dolore magna aliqua. Uis aute irure.</h2>
 
-        <div class="pure-g">
-            <div class="l-box-lrg pure-u-1 pure-u-md-2-5">
-                <form class="pure-form pure-form-stacked">
-                    <fieldset>
+    <!--主要内容集合体-->
+    <div class="content-wrapper">
 
-                        <label for="name">Your Name</label>
-                        <input id="name" type="text" placeholder="Your Name">
+        <!--荣誉墙（装逼部分）-->
+        <div class="content">
+            <h2 class="content-head is-center">荣誉墙</h2>
 
+            <div class="pure-g">
+                <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
 
-                        <label for="email">Your Email</label>
-                        <input id="email" type="email" placeholder="Your Email">
-
-                        <label for="password">Your Password</label>
-                        <input id="password" type="password" placeholder="Your Password">
-
-                        <button type="submit" class="pure-button">Sign Up</button>
-                    </fieldset>
-                </form>
+                    <h3 class="content-subhead">
+                        <i class="fa fa-rocket"></i> 跟bernardli大佬学的快
+                    </h3>
+                    <p>
+                        一小时学会html，2小时熟悉css，3小时精通javascript。
+                    </p>
+                </div>
+                <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                    <h3 class="content-subhead">
+                        <i class="fa fa-mobile"></i> bernardli大佬debug能力强
+                    </h3>
+                    <p>
+                        三分钟定位bug，5分钟重新上线
+                    </p>
+                </div>
+                <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                    <h3 class="content-subhead">
+                        <i class="fa fa-th-large"></i> bernardli大佬经验丰富
+                    </h3>
+                    <p>
+                        年仅20岁便有30年开发经验，如50岁般年轻
+                    </p>
+                </div>
+                <div class="l-box pure-u-1 pure-u-md-1-2 pure-u-lg-1-4">
+                    <h3 class="content-subhead">
+                        <i class="fa fa-check-square-o"></i> bernardli大佬技术硬
+                    </h3>
+                    <p>
+                        bernardli大佬保佑你一次编译通过
+                    </p>
+                </div>
             </div>
+        </div>
 
-            <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
-                <h4>Contact Us</h4>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat.
-                </p>
+        <!--迷之介绍部分-->
+        <div class="ribbon l-box-lrg pure-g">
+            <div class="l-box-lrg is-center pure-u-1 pure-u-md-1-2 pure-u-lg-2-5">
+                <img width="300" alt="File Icons" class="pure-img-responsive" src="img/local/logo.jpg">
+            </div>
+            <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-3-5">
 
-                <h4>More Information</h4>
+                <h2 class="content-head content-head-ribbon">紧密团结在以bernardli大佬为部长的技术部周围</h2>
+
                 <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua.
+                    紧密团结在以bernardli大佬为部长的技术部周围 坚定不移地朝着CSDN伟大复兴目标奋勇前进
                 </p>
             </div>
         </div>
 
+        <!--迷之表单部分-->
+        <div class="content">
+            <h2 class="content-head is-center">Dolore magna aliqua. Uis aute irure.</h2>
+
+            <div class="pure-g">
+                <div class="l-box-lrg pure-u-1 pure-u-md-2-5">
+                    <form class="pure-form pure-form-stacked">
+                        <fieldset>
+
+                            <label for="name">Your Name</label>
+                            <input id="name" type="text" placeholder="Your Name">
+
+
+                            <label for="email">Your Email</label>
+                            <input id="email" type="email" placeholder="Your Email">
+
+                            <label for="password">Your Password</label>
+                            <input id="password" type="password" placeholder="Your Password">
+
+                            <button type="submit" class="pure-button">Sign Up</button>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div class="l-box-lrg pure-u-1 pure-u-md-3-5">
+                    <h4>Contact Us</h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    </p>
+
+                    <h4>More Information</h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!--迷之页脚-->
+        <div class="footer l-box is-center">
+            View the source of this layout to learn more. Made with love by the YUI Team.
+        </div>
+
     </div>
 
-    <div class="footer l-box is-center">
-        View the source of this layout to learn more. Made with love by the YUI Team.
-    </div>
 
-</div>
 
-<script>
-(function (root) {
-/* -- Data -- */
-root.YUI_config = {"version":"3.18.1","base":"http:\u002F\u002Fyui.yahooapis.com\u002F3.18.1\u002F","comboBase":"https:\u002F\u002Fyui-s.yahooapis.com\u002Fcombo?","comboSep":"&","root":"3.18.1\u002F","filter":"min","logLevel":"error","combine":true,"patches":[],"maxURLLength":2048,"groups":{"vendor":{"combine":true,"comboBase":"\u002Fcombo\u002F1.18.13?","base":"\u002F","root":"\u002F","modules":{"css-mediaquery":{"path":"vendor\u002Fcss-mediaquery.js"},"handlebars-runtime":{"path":"vendor\u002Fhandlebars.runtime.js"}}},"app":{"combine":true,"comboBase":"\u002Fcombo\u002F1.18.13?","base":"\u002Fjs\u002F","root":"\u002Fjs\u002F"}}};
-root.app || (root.app = {});
-root.app.yui = {"use":function () { return this._bootstrap('use', [].slice.call(arguments)); },"require":function () { this._bootstrap('require', [].slice.call(arguments)); },"ready":function (callback) { this.use(function () { callback(); }); },"_bootstrap":function bootstrap(method, args) { var self = this, d = document, head = d.getElementsByTagName('head')[0], ie = /MSIE/.test(navigator.userAgent), callback = [], config = typeof YUI_config != "undefined" ? YUI_config : {}; function flush() { var l = callback.length, i; if (!self.YUI && typeof YUI == "undefined") { throw new Error("YUI was not injected correctly!"); } self.YUI = self.YUI || YUI; for (i = 0; i < l; i++) { callback.shift()(); } } function decrementRequestPending() { self._pending--; if (self._pending <= 0) { setTimeout(flush, 0); } else { load(); } } function createScriptNode(src) { var node = d.createElement('script'); if (node.async) { node.async = false; } if (ie) { node.onreadystatechange = function () { if (/loaded|complete/.test(this.readyState)) { this.onreadystatechange = null; decrementRequestPending(); } }; } else { node.onload = node.onerror = decrementRequestPending; } node.setAttribute('src', src); return node; } function load() { if (!config.seed) { throw new Error('YUI_config.seed array is required.'); } var seed = config.seed, l = seed.length, i, node; if (!self._injected) { self._injected = true; self._pending = seed.length; } for (i = 0; i < l; i++) { node = createScriptNode(seed.shift()); head.appendChild(node); if (node.async !== false) { break; } } } callback.push(function () { var i; if (!self._Y) { self.YUI.Env.core.push.apply(self.YUI.Env.core, config.extendedCore || []); self._Y = self.YUI(); self.use = self._Y.use; if (config.patches && config.patches.length) { for (i = 0; i < config.patches.length; i += 1) { config.patches[i](self._Y, self._Y.Env._loader); } } } self._Y[method].apply(self._Y, args); }); self.YUI = self.YUI || (typeof YUI != "undefined" ? YUI : null); if (!self.YUI && !self._injected) { load(); } else if (self._pending <= 0) { setTimeout(flush, 0); } return this; }};
-root.YUI_config || (root.YUI_config = {});
-root.YUI_config.seed = ["https:\u002F\u002Fyui-s.yahooapis.com\u002Fcombo?3.18.1\u002Fyui\u002Fyui-min.js"];
-root.YUI_config.groups || (root.YUI_config.groups = {});
-root.YUI_config.groups.app || (root.YUI_config.groups.app = {});
-root.YUI_config.groups.app.modules = {"start\u002Fapp":{"path":"start\u002Fapp.js","requires":["handlebars-runtime","yui","base-build","router","pjax-base","view","start\u002Fmodels\u002Fgrid","start\u002Fviews\u002Finput","start\u002Fviews\u002Foutput","start\u002Fviews\u002Fdownload"]},"start\u002Fmodels\u002Fgrid":{"path":"start\u002Fmodels\u002Fgrid.js","requires":["yui","querystring","base-build","model","model-sync-rest","start\u002Fmodels\u002Fmq"]},"start\u002Fmodels\u002Fmq":{"path":"start\u002Fmodels\u002Fmq.js","requires":["css-mediaquery","attribute","base-build","model","model-list"]},"start\u002Fviews\u002Fdownload":{"path":"start\u002Fviews\u002Fdownload.js","requires":["yui","base-build","querystring","view"]},"start\u002Fviews\u002Finput":{"path":"start\u002Fviews\u002Finput.js","requires":["base-build","start\u002Fmodels\u002Fmq","start\u002Fviews\u002Ftab"]},"start\u002Fviews\u002Foutput":{"path":"start\u002Fviews\u002Foutput.js","requires":["base-build","escape","start\u002Fviews\u002Ftab"]},"start\u002Fviews\u002Ftab":{"path":"start\u002Fviews\u002Ftab.js","requires":["yui","base-build","view"]}};
-}(this));
-</script>
-<script>
-app.yui.use('node-base', 'node-event-delegate', function (Y) {
-    // This just makes sure that the href="#" attached to the <a> elements
-    // don't scroll you back up the page.
-    Y.one('body').delegate('click', function (e) {
-        e.preventDefault();
-    }, 'a[href="#"]');
-});
-</script>
+    <script>
+        (function(root) {
+            /* -- Data -- */
+            root.YUI_config = {
+                "version": "3.18.1",
+                "base": "http:\u002F\u002Fyui.yahooapis.com\u002F3.18.1\u002F",
+                "comboBase": "https:\u002F\u002Fyui-s.yahooapis.com\u002Fcombo?",
+                "comboSep": "&",
+                "root": "3.18.1\u002F",
+                "filter": "min",
+                "logLevel": "error",
+                "combine": true,
+                "patches": [],
+                "maxURLLength": 2048,
+                "groups": {
+                    "vendor": {
+                        "combine": true,
+                        "comboBase": "\u002Fcombo\u002F1.18.13?",
+                        "base": "\u002F",
+                        "root": "\u002F",
+                        "modules": {
+                            "css-mediaquery": {
+                                "path": "vendor\u002Fcss-mediaquery.js"
+                            },
+                            "handlebars-runtime": {
+                                "path": "vendor\u002Fhandlebars.runtime.js"
+                            }
+                        }
+                    },
+                    "app": {
+                        "combine": true,
+                        "comboBase": "\u002Fcombo\u002F1.18.13?",
+                        "base": "\u002Fjs\u002F",
+                        "root": "\u002Fjs\u002F"
+                    }
+                }
+            };
+            root.app || (root.app = {});
+            root.app.yui = {
+                "use": function() {
+                    return this._bootstrap('use', [].slice.call(arguments));
+                },
+                "require": function() {
+                    this._bootstrap('require', [].slice.call(arguments));
+                },
+                "ready": function(callback) {
+                    this.use(function() {
+                        callback();
+                    });
+                },
+                "_bootstrap": function bootstrap(method, args) {
+                    var self = this,
+                        d = document,
+                        head = d.getElementsByTagName('head')[0],
+                        ie = /MSIE/.test(navigator.userAgent),
+                        callback = [],
+                        config = typeof YUI_config != "undefined" ? YUI_config : {};
+
+                    function flush() {
+                        var l = callback.length,
+                            i;
+                        if (!self.YUI && typeof YUI == "undefined") {
+                            throw new Error("YUI was not injected correctly!");
+                        }
+                        self.YUI = self.YUI || YUI;
+                        for (i = 0; i < l; i++) {
+                            callback.shift()();
+                        }
+                    }
+
+                    function decrementRequestPending() {
+                        self._pending--;
+                        if (self._pending <= 0) {
+                            setTimeout(flush, 0);
+                        } else {
+                            load();
+                        }
+                    }
+
+                    function createScriptNode(src) {
+                        var node = d.createElement('script');
+                        if (node.async) {
+                            node.async = false;
+                        }
+                        if (ie) {
+                            node.onreadystatechange = function() {
+                                if (/loaded|complete/.test(this.readyState)) {
+                                    this.onreadystatechange = null;
+                                    decrementRequestPending();
+                                }
+                            };
+                        } else {
+                            node.onload = node.onerror = decrementRequestPending;
+                        }
+                        node.setAttribute('src', src);
+                        return node;
+                    }
+
+                    function load() {
+                        if (!config.seed) {
+                            throw new Error('YUI_config.seed array is required.');
+                        }
+                        var seed = config.seed,
+                            l = seed.length,
+                            i, node;
+                        if (!self._injected) {
+                            self._injected = true;
+                            self._pending = seed.length;
+                        }
+                        for (i = 0; i < l; i++) {
+                            node = createScriptNode(seed.shift());
+                            head.appendChild(node);
+                            if (node.async !== false) {
+                                break;
+                            }
+                        }
+                    }
+                    callback.push(function() {
+                        var i;
+                        if (!self._Y) {
+                            self.YUI.Env.core.push.apply(self.YUI.Env.core, config.extendedCore || []);
+                            self._Y = self.YUI();
+                            self.use = self._Y.use;
+                            if (config.patches && config.patches.length) {
+                                for (i = 0; i < config.patches.length; i += 1) {
+                                    config.patches[i](self._Y, self._Y.Env._loader);
+                                }
+                            }
+                        }
+                        self._Y[method].apply(self._Y, args);
+                    });
+                    self.YUI = self.YUI || (typeof YUI != "undefined" ? YUI : null);
+                    if (!self.YUI && !self._injected) {
+                        load();
+                    } else if (self._pending <= 0) {
+                        setTimeout(flush, 0);
+                    }
+                    return this;
+                }
+            };
+            root.YUI_config || (root.YUI_config = {});
+            root.YUI_config.seed = ["https:\u002F\u002Fyui-s.yahooapis.com\u002Fcombo?3.18.1\u002Fyui\u002Fyui-min.js"];
+            root.YUI_config.groups || (root.YUI_config.groups = {});
+            root.YUI_config.groups.app || (root.YUI_config.groups.app = {});
+            root.YUI_config.groups.app.modules = {
+                "start\u002Fapp": {
+                    "path": "start\u002Fapp.js",
+                    "requires": ["handlebars-runtime", "yui", "base-build", "router", "pjax-base", "view", "start\u002Fmodels\u002Fgrid", "start\u002Fviews\u002Finput", "start\u002Fviews\u002Foutput", "start\u002Fviews\u002Fdownload"]
+                },
+                "start\u002Fmodels\u002Fgrid": {
+                    "path": "start\u002Fmodels\u002Fgrid.js",
+                    "requires": ["yui", "querystring", "base-build", "model", "model-sync-rest", "start\u002Fmodels\u002Fmq"]
+                },
+                "start\u002Fmodels\u002Fmq": {
+                    "path": "start\u002Fmodels\u002Fmq.js",
+                    "requires": ["css-mediaquery", "attribute", "base-build", "model", "model-list"]
+                },
+                "start\u002Fviews\u002Fdownload": {
+                    "path": "start\u002Fviews\u002Fdownload.js",
+                    "requires": ["yui", "base-build", "querystring", "view"]
+                },
+                "start\u002Fviews\u002Finput": {
+                    "path": "start\u002Fviews\u002Finput.js",
+                    "requires": ["base-build", "start\u002Fmodels\u002Fmq", "start\u002Fviews\u002Ftab"]
+                },
+                "start\u002Fviews\u002Foutput": {
+                    "path": "start\u002Fviews\u002Foutput.js",
+                    "requires": ["base-build", "escape", "start\u002Fviews\u002Ftab"]
+                },
+                "start\u002Fviews\u002Ftab": {
+                    "path": "start\u002Fviews\u002Ftab.js",
+                    "requires": ["yui", "base-build", "view"]
+                }
+            };
+        }(this));
+    </script>
+    <script>
+        app.yui.use('node-base', 'node-event-delegate', function(Y) {
+            // This just makes sure that the href="#" attached to the <a> elements
+            // don't scroll you back up the page.
+            Y.one('body').delegate('click', function(e) {
+                e.preventDefault();
+            }, 'a[href="#"]');
+        });
+    </script>
 
 
 
 </body>
+
 </html>

@@ -1,5 +1,7 @@
 /*posts页面公共部分css*/
 
+
+/*
 .post-content-pre {
     max-height: 400px;
     overflow: hidden;
@@ -11,9 +13,6 @@
     width: 1000px;
     height: auto;
     margin: 40px auto 0px auto;
-    /*display: flex;*/
-    /*background-color: red;*/
-    /*justify-content: center;*/
 }
 
 .post-content {
@@ -132,7 +131,6 @@
     min-width: 640px;
     overflow: hidden;
     text-overflow: ellipsis;
-    /*display: -webkit-box;*/
     -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
     margin: 20px;
@@ -169,6 +167,30 @@
     color: white;
     margin: 10px;
     text-decoration: none;
+}*/
+
+.post-content {
+    width: auto;
+    height: auto;
+    min-height: 150px;
+    max-height: 200px;
+    padding: 10px;
+    font-size: 20px;
+}
+
+.post-footer {
+    display: flex;
+    height: 20px;
+}
+
+.post-footer-info {
+    font-size: 13px;
+    margin-right: 5px;
+    color: #999;
+}
+
+.post-footer-info:first-child {
+    margin-right: auto;
 }
 
 

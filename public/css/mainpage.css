@@ -479,12 +479,13 @@
     border: 2px solid black;
     overflow: hidden;
     display: flex;
+    cursor: pointer;
 }
 
 .img-pic-item {
     max-width: 100%;
     min-width: 100%;
-    max-height: 100%;
+    max-height: 80%;
     margin: auto;
 }
 
@@ -509,20 +510,18 @@
     z-index: 10086;
     width: 100%;
     height: 50px;
-    background-color: gray;
 }
 
 .pic-show-box-footer {
     position: relative;
     width: 100%;
     height: 80px;
-    background-color: gray;
 }
 
 .img-show-detail {
     position: relative;
-    max-width: 600px;
-    max-height: 600px;
+    max-width: 700px;
+    max-height: 700px;
     min-width: 300px;
     margin: auto;
 }

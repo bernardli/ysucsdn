@@ -1,9 +1,6 @@
 <%- include('blog-header') %>
 
-<form class="pure-form" method="get" action="/posts">
-    <input type="text" name="search" class="pure-input-rounded">
-    <button type="submit" class="pure-button" value="搜索">Search</button>
-</form>
+<link rel="stylesheet" href="css/posts.css">
 
 <%- include('components/top-posts', { tops: tops }) %>
 <%- include('components/recent-posts', { posts: posts }) %>
