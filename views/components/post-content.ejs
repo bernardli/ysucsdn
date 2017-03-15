@@ -1,60 +1,44 @@
-<%  postNum = postNum + 1; 
-    if(postNum % 2 != 0) {
-    %>
-    <div class="post-content post-left">
-<%  } else { %>
-    <div class="post-content post-right">
-<%  } %>
-
-    <div class="body-article-item">
-        <div class="article-item-author">
-            <div class="article-item-author-avatar center">
-                <a class="" href="/posts/user?author=<%= post.author._id %>">
-                    <img src="/img/users_avatar/<%= post.author.avatar%>" alt="" class="img-author-avatar center">
-                </a>
-            </div>
-            <div class="article-item-author-name">
-                <span class="text-authorname"><%= post.author.name%></span>
-            </div>
-        </div>
-        <div class="article-item-content">
-            <div class="article-item-content-title">
-                <a class="text-article-title" href="/posts/<%= post._id%>">
-                    <%= post.title%>
-                </a>
-            </div>
-            <div class="article-item-content-text">
-                <div class="text-article-content"><%- post.content%></div>
-            </div>
-            <div class="article-item-content-footer">
-                <span class="text-article-info"><%= post.created_at%></span>
-                <span class="text-article-info">阅读(<%= post.pv%>)</span>
-                <span class="text-article-info">评论(<%= post.commentsCount%>)</span>
-                <span>
-                    <% if (user && post.author._id && user._id.toString() === post.author._id.toString()) { %>
-                    <div class="ui inline dropdown">
-                        <div class="text"></div>
-                        <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <div class="item"><a href="/posts/<%= post._id %>/edit">编辑</a></div>
-                            <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
-                        </div>
-                    </div>
-                    <% } %>
-
-
-                    <% if (user && user.identity.toString()==='admin') { %>
-                        <div class="ui inline dropdown">
-                            <div class="text"></div>
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
-                            </div>
-                        </div>
-                    <% } %>
-                </span>
-            </div>
-        </div>
+<section class="post">
+    <header class="post-header">
+        <a href="/posts/user?author=<%= post.author._id %>">
+            <img width="48" height="48" alt="Eric Ferraiuolo&#x27;s avatar" class="post-avatar" src="/img/users_avatar/<%= post.author.avatar%>">
+        </a>
+        <a href="/posts/<%= post._id%>">
+            <h2 class="post-title"><%= post.title%></h2>
+        </a>
+        <p class="post-meta">
+            By <a class="post-author" href="#"><%= post.author.name%></a>
+        </p>
+    </header>
+    <div class="post-description">
+        <p>
+            <%- post.content%>
+        </p>
     </div>
-
-</div>
+    <div class="article-item-content-footer">
+        <span class="text-article-info"><%= post.created_at%></span>
+        <span class="text-article-info">阅读(<%= post.pv%>)</span>
+        <span class="text-article-info">评论(<%= post.commentsCount%>)</span>
+        <span>
+            <% if (user && post.author._id && user._id.toString() === post.author._id.toString()) { %>
+            <div class="ui inline dropdown">
+                <div class="text"></div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <div class="item"><a href="/posts/<%= post._id %>/edit">编辑</a></div>
+                    <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
+                </div>
+            </div>
+            <% } %>
+            <% if (user && user.identity.toString()==='admin') { %>
+            <div class="ui inline dropdown">
+                <div class="text"></div>
+                <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
+                    </div>
+            </div>
+            <% } %>
+        </span>
+    </div>
+</section>

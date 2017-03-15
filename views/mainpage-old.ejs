@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>CSDN主页</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/mainpage.css">
+        <link rel="stylesheet" href="//cdn.bootcss.com/semantic-ui/2.2.7/semantic.min.css">
+        <script src="/js/loadmore.js"></script>
+        <script src="js/mainpage.js"></script>
+        <script src="https://cdn.bootcss.com/typed.js/1.1.4/typed.min.js"></script>
+        <script>
+        $(function(){
+            $(".element").typed({
+                strings: ["<h1>Hello World!</h1> ^1000", "<h1>It just works!</h1>"],
+                typeSpeed: 50,
+                contentType: 'html',
+                showCursor: true,
+                cursorChar: "_",
+                shuffle: true
+            });
+        });
+        </script>
+        <style type="text/css">
+        .typed-cursor{
+            opacity: 1;
+            -webkit-animation: blink 0.7s infinite;
+            -moz-animation: blink 0.7s infinite;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink{
+            0% { opacity:1; }
+            50% { opacity:0; }
+            100% { opacity:1; }
+        }
+        @-webkit-keyframes blink{
+            0% { opacity:1; }
+            50% { opacity:0; }
+            100% { opacity:1; }
+        }
+        @-moz-keyframes blink{
+            0% { opacity:1; }
+            50% { opacity:0; }
+            100% { opacity:1; }
+        }
+        </style>
+    </head>
+    <body>
+        <%  if(!announcement){
+            var announcement = {
+                _id　: 1,
+                author : "VAN",
+                title　: "暂无新公告",
+                pv : 0,
+                content : "<h1>什么都还没写</h1>",
+                commentsCount : 0,
+                created_at :　"宇宙大爆炸之前"　
+                };
+                }       %>
+        <div class="box--total">
+            <div class="header">
+                <div class="header-logo center">
+                    <a href="/mainpage">
+                        <img src="img/local/logo.jpg" alt="">
+                    </a>
+                </div>
+                <div class="header-item">
+                    <a href="/posts" class="link-header-item center">文章</a>
+                </div>
+            </div>
+            <div class="background center">
+                <img src="http://file06.16sucai.com/2016/0304/e0606a03e230f44060199d626deea30f.jpg" alt="">
+            </div>
+            <div class="body">
+                <div class="body-introbox center">
+                    <span class="element">$ </span>
+                </div>
+                <div class="body-newsbox center">
+                    <div class="body-news">
+                        <div class="body-news-icon center">
+                            <img src="img/local/news.png" alt="" class="img-newsicon center">
+                        </div>
+                        <div class="body-news-text center">
+                            <strong class="text-newstext-major">社团新闻</strong>
+                            <span class="text-newstext-minor">社团的大事小事都能在这里发现哦</span>
+                            <span class="text-newstext-hidden">总想搞个大新闻= =</span>
+                        </div>
+                        <div class="body-news-box">
+                            <div class="body-news-header">
+                                <a class="text-newsheader-title" href="/posts/<%= announcement._id %>"><%= announcement.title%></a>
+                                <span class="text-newsheader-detail">阅读(<%= announcement.pv%>)</span>
+                                <span class="text-newsheader-detail">评论(<%= announcement.commentsCount%>)</span>
+                                <span class="text-newsheader-detail"><%= announcement.created_at%></span>
+                            </div>
+                            <div class="body-news-content">
+                                <div class="text-newscontent">
+                                    <%- announcement.content%>
+                                </div>
+                            </div>
+                            <div class="body-news-footer">
+                                <a href="/posts/user?author=<%= announcement.author._id %>" class="link-morenews center">更多新闻</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body-articlebox">
+                    <div class="body-article">
+                        <div class="body-article-icon center">
+                            <img src="img/local/articles.png" alt="" class="img-articleicon center">
+                        </div>
+                        <div class="body-article-text center">
+                            <strong class="text-articletext-major">文章</strong>
+                            <span class="text-articletext-minor">瞎扯淡的地方，水水更健康</span>
+                            <span class="text-articletext-hidden">前方装逼高能 ！</span>
+                        </div>
+                        <% posts.forEach(function (post) {  %>
+                            <div class="body-article-item">
+                                <div class="article-item-author">
+                                    <div class="article-item-author-avatar center">
+                                        <a href="/posts/user?author=<%= post.author._id %>">
+                                            <img src="/img/users_avatar/<%= post.author.avatar%>" alt="" class="img-author-avatar center">
+                                        </a>
+                                    </div>
+                                    <div class="article-item-author-name">
+                                        <span class="text-authorname"><%= post.author.name%></span>
+                                    </div>
+                                </div>
+                                <div class="article-item-content">
+                                    <div class="article-item-content-title">
+                                        <a class="text-article-title" href="/posts/<%= post._id%>"><%= post.title%></a>
+                                    </div>
+                                    <div class="article-item-content-text">
+                                        <div class="text-article-content">
+                                            <%- post.content%>
+                                        </div>
+                                    </div>
+                                    <div class="article-item-content-footer">
+                                        <span class="text-article-info"><%= post.created_at%></span>
+                                        <span class="text-article-info">阅读(<%= post.pv%>)</span>
+                                        <span class="text-article-info">阅读(<%= post.commentsCount%>)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        <%  })   %>
+                        <div class="body-article-footer">
+                            <a href="/posts" class="link-morearticles center">更多文章</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="body-picbox center">
+                    <div class="body-pic">
+                        <div class="body-pic-icon center">
+                            <img src="img/local/news.png" alt="" class="img-picicon center">
+                        </div>
+                        <div class="body-pic-text center">
+                            <strong class="text-pictext-major">相册</strong>
+                            <span class="text-pictext-minor">记录那些逗比的岁月</span>
+                            <span class="text-pictext-hidden">poi~</span>
+                        </div>
+                        <div class="body-pic-picpre">
+                            <div class="pic-item">
+                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
+                            </div>
+                            <div class="pic-item">
+                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
+                            </div>
+                            <div class="pic-item">
+                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
+                            </div>
+                            <div class="pic-item">
+                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
+                            </div>
+                            <div class="pic-item">
+                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
+                            </div>
+                            <div class="pic-item">
+                                <img src="img/pictures/noname.jpg" alt="找不到图片" class="img-pic-item">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pic-show-box-filter hide"></div>
+                    <div class="pic-show-box hide">
+                        <div class="pic-show-box-header">点击这里退出</div>
+                        <img src="" alt="加载失败，刷新看看？" class="img-show-detail">
+                        <div class="pic-show-box-footer">这里是介绍</div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <div class="footer-links">
+                    <div class="footer-links-text center">
+                        <span>友情链接</span>
+                    </div>
+                    <div class="footer-links-item center">
+                        <a href="http://www.ysu.edu.cn/">燕山大学</a>
+                    </div>
+                    <div class="footer-links-item center">
+                        <a href="http://www.ysu.edu.cn/">燕山大学</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <%- include('components/back-to-top') %>
+    </body>
+</html>

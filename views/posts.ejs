@@ -1,10 +1,20 @@
-<%- include('header') %>
+<%- include('blog-header') %>
 
-<link rel="stylesheet" href="css/posts.css">
+<form class="pure-form" method="get" action="/posts">
+    <input type="text" name="search" class="pure-input-rounded">
+    <button type="submit" class="pure-button" value="搜索">Search</button>
+</form>
 
-<div class="limit-post-content">
-<%postNum = 0%>
-<%- include('components/limit-post-content', { posts: posts }) %>
+<div class="posts">
+    <h1 class="content-subhead">置顶文章</h1>
+    <p>无</p>
+</div>
+
+
+<div class="posts limit-post-content">
+    <h1 class="content-subhead">最新文章</h1>
+    <%postNum = 0%>
+    <%- include('components/limit-post-content', { posts: posts }) %>
 </div>
 
 <% if(posts.length==5){ %>
@@ -21,6 +31,7 @@
 </div>
 <% } %>
 
+
 <%- include('components/back-to-top') %>
 
-<%- include('footer') %>
+<%- include('blog-footer') %>
