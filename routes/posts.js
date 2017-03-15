@@ -15,10 +15,16 @@ router.get('/', function(req, res, next) {
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
     if (parseInt(page) == 1) {
-        PostModel.getPostspre(author, page, search)
-            .then(function(posts) {
+        Promise.all([
+            PostModel.getPostspre(author, page, search),
+            PostModel.gettopPosts()
+        ])
+            .then(function(results) {
+                posts=results[0];
+                tops=results[1];
                 res.render('posts', {
                     posts: posts,
+                    tops:tops,
                     ip: ip
                 });
             })

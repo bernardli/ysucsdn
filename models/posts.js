@@ -118,6 +118,19 @@ module.exports = {
             .exec();
     },
 
+    //获取指定文章
+    gettopPosts: function gettopPosts() {
+        return Post
+            .find({ top: 1 })
+            .populate({ path: 'author', model: 'User' })
+            .sort({ _id: -1 })
+            .addCreatedAt()
+            .addCommentsCount()
+            .contentToHtml()
+            .pre()
+            .exec();
+    },
+
     //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章的摘要
     getannouncement: function getannouncement() {
         return Post

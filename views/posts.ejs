@@ -5,17 +5,8 @@
     <button type="submit" class="pure-button" value="搜索">Search</button>
 </form>
 
-<div class="posts">
-    <h1 class="content-subhead">置顶文章</h1>
-    <p>无</p>
-</div>
-
-
-<div class="posts limit-post-content">
-    <h1 class="content-subhead">最新文章</h1>
-    <%postNum = 0%>
-    <%- include('components/limit-post-content', { posts: posts }) %>
-</div>
+<%- include('components/top-posts', { tops: tops }) %>
+<%- include('components/recent-posts', { posts: posts }) %>
 
 <% if(posts.length==5){ %>
 <div class="menu-load">

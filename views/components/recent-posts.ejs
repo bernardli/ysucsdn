@@ -1,0 +1,6 @@
+<div class="posts limit-post-content">
+    <h1 class="content-subhead">最新文章</h1>
+    <% posts.forEach(function (post) { %>
+    <%- include('post-content', { post: post }) %>
+    <% }) %>
+</div>
