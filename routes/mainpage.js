@@ -10,8 +10,10 @@ router.get('/', function(req, res, next) {
     var search = req.query.search;
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
+    res.render('mainpage');
 
-    PostModel.getannouncement()
+
+    /*PostModel.getannouncement()
         .then(function(announcement) {
             //增加点击量
             var postId;
@@ -44,7 +46,7 @@ router.get('/', function(req, res, next) {
                 announcement: announcement
             });
         })
-        .catch(next);
+        .catch(next);*/
 });
 
 module.exports = router;
