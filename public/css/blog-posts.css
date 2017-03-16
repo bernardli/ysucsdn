@@ -1,0 +1,41 @@
+.post-footer {
+    height: 20px;
+    display: flex;
+}
+
+.post-footer-info {
+    font-size: 13px;
+    margin-right: 5px;
+    color: #999;
+}
+
+.post-footer-info:first-child {
+    margin-right: auto;
+}
+
+.post-content {
+    padding: 10px;
+    font-size: 20px;
+    min-height: 100px;
+}
+
+.content-subhead {
+    text-transform: uppercase;
+    color: #aaa;
+    border-bottom: 1px solid #eee;
+    padding: 0.4em 0;
+    font-size: 80%;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+}
+
+.content {
+    padding: 2em 1em 0;
+}
+
+@media (min-width: 48em) {
+    .content {
+        padding: 2em 3em 0;
+        margin-left: 25%;
+    }
+}

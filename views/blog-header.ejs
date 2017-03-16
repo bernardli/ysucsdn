@@ -1,85 +1,81 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title><%= blog.title %></title>
-        <link rel="stylesheet" href="https://cdn.bootcss.com/pure/0.6.2/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css">
-        <link rel="stylesheet" href="/css/blog.css">
-        <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-            ga('create', 'UA-41480445-1', 'purecss.io');
-            ga('send', 'pageview');
-        </script>
-    </head>
-    <body>
-        <div id="layout" class="pure-g">
-            <div class="sidebar pure-u-1 pure-u-md-1-4">
-                <div class="header">
+<!doctype html>
+<html lang="en">
 
-                    <div class="post-search">
-                        <form class="pure-form" method="get" action="/posts/s">
-                            <input type="text" name="search" class="pure-input-rounded">
-                            <button type="submit" class="pure-button" value="搜索">Search</button>
-                        </form>
-                    </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example that shows off a blog page with a list of posts.">
+    <title>Blog &ndash; Layout Examples &ndash; Pure</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">
+
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/grids-responsive-min.css">
+    <!--<![endif]-->
 
 
-                    <div class="post-menu">
-                        <h1 class="brand-title">ysucsdn</h1>
-                        <h2 class="brand-tagline">文章页</h2>
-                        <nav class="nav">
-                            <ul class="nav-list">
-                                <li class="nav-item">
-                                    <a class="pure-button" href="/mainpage">首页</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="pure-button" href="/posts/user?author=233">新闻</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                
+    <!--[if lte IE 8]>
+            <link rel="stylesheet" href="css/layouts/blog-old-ie.css">
+        <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <!--<![endif]-->
+</head>
 
-                    <%  if(user) { %>
-                        <a href="/posts/user?author=<%= user._id %>">
-                            <img width="48" height="48" alt="Eric Ferraiuolo&#x27;s avatar" class="post-avatar" src="/img/users_avatar/<%= user.avatar%>">
+<body>
+    <div id="layout" class="pure-g">
+        <div class="sidebar pure-u-1 pure-u-md-1-4">
+            <div class="header">
+                <span class="text-title">ysucsdn</span>
+                <span class="text-tagline">瞎扯淡的地方</span>
+
+                <div class="nav">
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a class="pure-button" href="/mainpage">首页</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="pure-button" href="/posts">文章页</a>
+                        </li>
+                    </ul>
+                </div>
+                <%  if(user) { %>
+                    <div class="post-user-info">
+                        <span class="text-tagline">欢迎,<%= user.name%></span>
+                        <a href="/posts/user?author=<%= user._id %>" class="link-user-avatar">
+                            <img width="60" height="60" alt="Eric Ferraiuolo&#x27;s avatar" class="user-avatar" src="/img/users_avatar/<%= user.avatar%>">
                         </a>
-                        <h2 class="brand-tagline">欢迎,<%= user.name%></h2>
-                    <%  } else { %>
-                        <h2 class="brand-tagline">抱歉，请登录</h2>
-                    <%  } %>
-                    <nav class="nav">
-                        <ul class="nav-list">
-                            <% if (user) { %>
-                                <li class="nav-item">
-                                    <a class="pure-button" href="/posts/user?author=<%= user._id %>">个人主页</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="pure-button" href="/setting?name=<%= user.name %>">账号设置</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="pure-button" href="/posts/create">发表文章</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="pure-button" href="/signout">登出</a>
-                                </li>
-                            <% } else { %>
-                                <li class="nav-item">
-                                    <a class="pure-button" href="/signin">登录</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="pure-button" href="/signup">注册</a>
-                                </li>
-                            <% } %>
-                        </ul>
-                    </nav>
+                    </div>
+                <%  } else { %>
+                    <span class="text-tagline">尚未登录</span>
+                <%  } %>
+
+                <div class="nav">
+                    <ul class="nav-list">
+                        <% if (user) { %>
+                            <li class="nav-item">
+                                <a class="pure-button" href="/posts/user?author=<%= user._id %>">个人主页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="pure-button" href="/setting?name=<%= user.name %>">账号设置</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="pure-button" href="/posts/create">发表文章</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="pure-button" href="/signout">登出</a>
+                            </li>
+                        <% } else { %>
+                            <li class="nav-item">
+                                <a class="pure-button" href="/signin">登录</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="pure-button" href="/signup">注册</a>
+                            </li>
+                        <% } %>
+                    </ul>
                 </div>
             </div>
-            
-            <div class="content pure-u-1 pure-u-md-3-4">
-                <div>
+        </div>

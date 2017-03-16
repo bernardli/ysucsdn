@@ -30,7 +30,11 @@ h3 {
     padding: 0;
 }
 
-.header {}
+.header {
+    text-align: center;
+    top: auto;
+    margin: 3em auto;
+}
 
 .sidebar {
     background: rgb(61, 79, 93);
@@ -77,20 +81,6 @@ h3 {
 .nav-item a:focus {
     border: 2px solid rgb(61, 146, 201);
     text-decoration: none;
-}
-
-.content-subhead {
-    text-transform: uppercase;
-    color: #aaa;
-    border-bottom: 1px solid #eee;
-    padding: 0.4em 0;
-    font-size: 80%;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-}
-
-.content {
-    padding: 2em 1em 0;
 }
 
 .post {
@@ -171,12 +161,8 @@ h3 {
 }
 
 @media (min-width: 48em) {
-    .content {
-        padding: 2em 3em 0;
-        margin-left: 25%;
-    }
     .header {
-        margin: 80% 2em 0;
+        margin: 40% 2em 0;
         text-align: right;
     }
     .sidebar {
@@ -187,4 +173,31 @@ h3 {
     .footer {
         text-align: center;
     }
+}
+
+
+/*自加的*/
+
+.post-user-info {
+    margin: 20px auto;
+}
+
+.user-avatar {
+    border-radius: 50%;
+}
+
+.text-title {
+    margin: 0;
+    text-transform: uppercase;
+    font-size: 2em;
+    font-weight: bold;
+    display: block;
+}
+
+.text-tagline {
+    margin: 0;
+    font-weight: 300;
+    color: rgb(176, 202, 219);
+    font-size: 1.5em;
+    display: block;
 }

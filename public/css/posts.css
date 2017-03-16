@@ -169,7 +169,8 @@
     text-decoration: none;
 }*/
 
-.post-content {
+
+/*.post-content {
     width: auto;
     height: auto;
     min-height: 150px;
@@ -191,12 +192,13 @@
 
 .post-footer-info:first-child {
     margin-right: auto;
-}
+}*/
 
 
 /*posts页面用户个人部分css*/
 
-.user-info {
+
+/*.user-info {
     width: 100%;
     height: auto;
     display: flex;
@@ -240,12 +242,13 @@
 .text-bio {
     display: block;
     margin: 0px 20px;
-}
+}*/
 
 
 /*底部加载更多按钮*/
 
-.menu-load {
+
+/*.menu-load {
     width: 100%;
     height: 100px;
 }
@@ -268,4 +271,4 @@
     height: 100%;
     font-size: 30px;
     color: #c1c1cb;
-}
+}*/

@@ -1,46 +1,91 @@
-<div class="post">
-    <div class="post-author">
-        <div class="post-author-avatar">
-            <a href="/posts/user?author=<%= post.author._id %>">
-                <img src="/img/users_avatar/<%= post.author.avatar%>" alt="" class="img-author-avatar">
-            </a>
+<div class="pure-u-1 pure-u-md-3-4 main">
+    <!--
+    <div class="post">
+        <div class="post-author">
+            <div class="post-author-avatar">
+                <a href="/posts/user?author=<%= post.author._id %>">
+                    <img src="/img/users_avatar/<%= post.author.avatar%>" alt="" class="img-author-avatar">
+                </a>
+            </div>
+            <div class="post-author-name">
+                <span class="text-author-name"><%= post.author.name%></span>
+            </div>
         </div>
-        <div class="post-author-name">
-            <span class="text-author-name"><%= post.author.name%></span>
-        </div>
-    </div>
-    <div class="post-content">
-        <div class="post-content-header">
-            <span class="text-post-title"><%= post.title%></span>
-            <span class="text-post-detail">阅读(<%= post.pv%>)</span>
-            <span class="text-post-detail">评论(<%= post.commentsCount%>)</span>
-            <span class="text-post-detail"><%= post.created_at%></span>
-            <span class="post-edit">
-                    <% if (user && post.author._id && user._id.toString() === post.author._id.toString()) { %>
-                    <div class="ui inline dropdown">
-                        <div class="text">菜单</div>
-                        <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <div class="item"><a href="/posts/<%= post._id %>/edit">编辑</a></div>
-                            <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
-                        </div>
-                    </div>
-                    <% }
-                    else if (user && user.identity.toString()==='admin') { %>
+        <div class="post-content">
+            <div class="post-content-header">
+                <span class="text-post-title"><%= post.title%></span>
+                <span class="text-post-detail">阅读(<%= post.pv%>)</span>
+                <span class="text-post-detail">评论(<%= post.commentsCount%>)</span>
+                <span class="text-post-detail"><%= post.created_at%></span>
+                <span class="post-edit">
+                        <% if (user && post.author._id && user._id.toString() === post.author._id.toString()) { %>
                         <div class="ui inline dropdown">
-                            <div class="text">菜单</div>                           
+                            <div class="text">菜单</div>
                             <i class="dropdown icon"></i>
                             <div class="menu">
+                                <div class="item"><a href="/posts/<%= post._id %>/edit">编辑</a></div>
                                 <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
                             </div>
                         </div>
-                    <% } %>
-                </span>
-        </div>
-        <div class="post-content-body">
-            <div class="text-post-content">
-                <%- post.content%>
+                        <% }
+                        else if (user && user.identity.toString()==='admin') { %>
+                            <div class="ui inline dropdown">
+                                <div class="text">菜单</div>                           
+                                <i class="dropdown icon"></i>
+                                <div class="menu">
+                                    <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
+                                </div>
+                            </div>
+                        <% } %>
+                    </span>
+            </div>
+            <div class="post-content-body">
+                <div class="text-post-content">
+                    <%- post.content%>
+                </div>
             </div>
         </div>
     </div>
+    -->
+
+    <div class="sigle-header">
+        <h1>大标题</h1>
+        <h2>副标题</h2>
+    </div>
+
+    <div class="content">
+        <h2 class="content-subhead">小标题1</h2>
+        <p>
+            To use this layout, you can just copy paste the HTML, along with the CSS in <a href="/css/layouts/side-menu.css" alt="Side Menu CSS">side-menu.css</a>, and the JavaScript in <a href="/js/ui.js">ui.js</a>. The JS file uses vanilla JavaScript
+            to simply toggle an <code>active</code> class that makes the menu responsive.
+        </p>
+
+        <h2 class="content-subhead">小标题2</h2>
+        <p>
+            <%- post.content%>
+        </p>
+
+        <div class="pure-g">
+            <div class="pure-u-1-4">
+                <img class="pure-img-responsive" src="http://farm3.staticflickr.com/2875/9069037713_1752f5daeb.jpg" alt="Peyto Lake">
+            </div>
+            <div class="pure-u-1-4">
+                <img class="pure-img-responsive" src="http://farm3.staticflickr.com/2813/9069585985_80da8db54f.jpg" alt="Train">
+            </div>
+            <div class="pure-u-1-4">
+                <img class="pure-img-responsive" src="http://farm6.staticflickr.com/5456/9121446012_c1640e42d0.jpg" alt="T-Shirt Store">
+            </div>
+            <div class="pure-u-1-4">
+                <img class="pure-img-responsive" src="http://farm8.staticflickr.com/7357/9086701425_fda3024927.jpg" alt="Mountain">
+            </div>
+        </div>
+
+        <h2 class="content-subhead">小标题3</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+            in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+    </div>
+</div>
+
 </div>
