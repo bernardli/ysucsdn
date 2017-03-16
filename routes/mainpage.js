@@ -32,7 +32,7 @@ router.get('/', function(req, res, next) {
         })
         .then(function(incPv_result) {
             return Promise.all([
-                PostModel.getPostslimit(author, page, search),
+                PostModel.getPostspre(author, page, search),
                 PostModel.getannouncement()
             ]);
         })

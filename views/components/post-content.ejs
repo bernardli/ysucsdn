@@ -21,29 +21,26 @@
         <span class="post-footer-info">阅读(<%= post.pv%>)</span>
         <span class="post-footer-info">评论(<%= post.commentsCount%>)</span>
         
-        <!-- 下拉按钮 -->
-        <!--
         <span>
-            <% if (user && post.author._id && user._id.toString() === post.author._id.toString()) { %>
-                <div class="ui inline dropdown">
-                    <div class="text"></div>
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <div class="item"><a href="/posts/<%= post._id %>/edit">编辑</a></div>
-                        <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
-                    </div>
+            <div class="ui inline dropdown">
+                <div class="text"></div>
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                <% if (user && post.author._id && user._id.toString() === post.author._id.toString()) { %>
+                    <div class="item"><a href="/posts/<%= post._id %>/edit">编辑</a></div>
+                <% } %>
+                <% if (user && post.author._id && (user._id.toString() === post.author._id.toString() || user.identity.toString()==='admin')) { %>
+                    <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
+                <% } %>
+                <% if (user && user.identity.toString()==='admin'&&post.top==0) { %>
+                    <div class="item"><a href="/posts/<%= post._id %>/top">置顶</a></div>
+                <% } %>
+                <% if (user && user.identity.toString()==='admin'&&post.top==1) { %>
+                    <div class="item"><a href="/posts/<%= post._id %>/untop">取消置顶</a></div>
+                <% } %>
                 </div>
-            <% } %>
-            <% if (user && user.identity.toString()==='admin') { %>
-                <div class="ui inline dropdown">
-                    <div class="text"></div>
-                    <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
-                        </div>
-                </div>
-            <% } %>
+            </div>
+            
         </span>
-        -->
     </div>
 </section>
