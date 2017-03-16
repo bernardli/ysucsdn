@@ -14,15 +14,9 @@
                 <%- comment.content %>
             </div>
 
-            <% if ( user && comment.author._id && user._id.toString() === comment.author._id.toString() ) { %>
+            <% if ( user && comment.author._id && (user._id.toString() === comment.author._id.toString()||user.identity.toString()==='admin') ) { %>
                 <div class="actions">
-                    <a class="reply" href="/posts/<%= post._id %>/comment/<%= comment._id %>/remove">删除</a>
-                </div>
-            <% } %>
-            
-            <% if ( user && user.identity.toString()==='admin' ) { %>
-                <div class="actions">
-                    <a class="reply" href="/posts/<%= post._id %>/comment/<%= comment._id %>/remove">删除</a>
+                    <a class="reply" href="/posts/<%= comment.postId %>/comment/<%= comment._id %>/remove">删除</a>
                 </div>
             <% } %>
         </div>

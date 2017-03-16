@@ -5,7 +5,7 @@
 <%- include('components/user-info', { author: author }) %>
 
 <div class="limit-post-content">
-<%- include('components/limit-post-content', { posts: posts }) %>
+<%- include('components/limit-posts', { posts: posts }) %>
 </div>
 
 <% if(posts.length == 0 && page == 1) { %>

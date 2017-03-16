@@ -5,28 +5,61 @@ var PostModel = require('../models/posts');
 var UserModel = require('../models/users');
 var CommentModel = require('../models/comments');
 var checkLogin = require('../middlewares/check').checkLogin;
+var checkAdmin = require('../middlewares/check').checkAdmin;
 
-// GET /posts 所有用户的文章页
-//   eg: GET /posts?search=xxx
+// GET /posts 文章页
+//   eg: GET /posts?page=***
 router.get('/', function(req, res, next) {
+    var page = req.query.page || 1;
+    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+
+    if (parseInt(page) == 1) {
+        Promise.all([
+                PostModel.getrecentPosts(page),
+                PostModel.gettopPosts()
+            ])
+            .then(function(results) {
+                posts = results[0];
+                tops = results[1];
+                res.render('posts', {
+                    posts: posts,
+                    tops: tops,
+                    ip: ip
+                });
+            })
+            .catch(next);
+    } else {
+        PostModel.getrecentPosts(page)
+            .then(function(posts) {
+                res.render('components/recent-posts', {
+                    posts: posts
+                });
+            })
+            .catch(next);
+    }
+});
+
+// GET /posts 搜索页
+//   eg: GET /posts/s?search=***
+router.get('/s', function(req, res, next) {
     var author = req.query.author;
     var search = req.query.search;
     var page = req.query.page || 1;
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
     if (parseInt(page) == 1) {
-        PostModel.getPostspre(author, page, search)
+        PostModel.getresults(author, page, search)
             .then(function(posts) {
-                res.render('posts', {
+                res.render('search', {
                     posts: posts,
                     ip: ip
                 });
             })
             .catch(next);
     } else {
-        PostModel.getPostspre(author, page, search)
+        PostModel.getresults(author, page, search)
             .then(function(posts) {
-                res.render('components/limit-post-content', {
+                res.render('components/limit-posts', {
                     posts: posts
                 });
             })
@@ -42,34 +75,31 @@ router.get('/user', function(req, res, next) {
     var page = req.query.page || 1;
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
-    UserModel.getUserById(author)
-        .then(function(author) {
-            if (!author) {
-                req.flash('error', '没有这个用户');
-                return res.redirect('/posts');
-            }
-        })
-
     if (parseInt(page) == 1) {
         Promise.all([
-                PostModel.getPostspre(author, page, search),
+                PostModel.getresults(author, page, search),
                 UserModel.getUserById(author)
             ])
             .then(function(results) {
                 var posts = results[0];
                 var author = results[1];
-                res.render('user_posts', {
-                    posts: posts,
-                    author: author,
-                    ip: ip,
-                    page: page
-                });
+                if (!author) {
+                    req.flash('error', '没有这个用户');
+                    return res.redirect('/posts');
+                } else {
+                    res.render('user_posts', {
+                        posts: posts,
+                        author: author,
+                        ip: ip,
+                        page: page
+                    });
+                }
             })
             .catch(next);
     } else {
-        PostModel.getPostspre(author, page, search)
+        PostModel.getresults(author, page, search)
             .then(function(posts) {
-                res.render('components/limit-post-content', {
+                res.render('components/limit-posts', {
                     posts: posts,
                     page: page
                 });
@@ -110,7 +140,8 @@ router.post('/', checkLogin, function(req, res, next) {
         author: author,
         title: title,
         content: content,
-        pv: 0
+        pv: 0,
+        top: 0
     };
 
     PostModel.create(post)
@@ -161,18 +192,9 @@ router.get('/:postId', function(req, res, next) {
             })
             .catch(next);
     } else {
-        Promise.all([
-                PostModel.getPostById(postId), // 获取文章信息
-                CommentModel.getCommentslimit(postId, page) // 获取该文章留言
-            ])
-            .then(function(results) {
-                var post = results[0];
-                var comments = results[1];
-                if (!post) {
-                    throw new Error('该文章不存在');
-                }
+        CommentModel.getCommentslimit(postId, page) // 获取该文章留言
+            .then(function(comments) {
                 res.render('components/limit-comments', {
-                    post: post,
                     comments: comments,
                     page: page
                 });
@@ -243,6 +265,26 @@ router.get('/:postId/remove', checkLogin, function(req, res, next) {
             })
             .catch(next);
     }
+});
+
+// GET /posts/:postId/top 置顶或取消置顶一篇文章
+router.get('/:postId/top', checkAdmin, function(req, res, next) {
+    var t=parseInt(req.query.t);
+    var postId = req.params.postId;
+    var author = req.session.user._id;
+
+    PostModel.admintopPostById(postId ,t)
+        .then(function() {
+            if(t==0){
+                req.flash('success', '取消置顶文章成功');
+            }
+            if(t==1){
+                req.flash('success', '置顶文章成功');
+            }
+            // 置顶或取消置顶成功后跳转到主页
+            res.redirect('/posts');
+        })
+        .catch(next);
 });
 
 // POST /posts/:postId/comment 创建一条留言

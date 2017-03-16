@@ -8,6 +8,7 @@
     <!-- 置顶部分 -->
     <div class="posts">
         <h1 class="content-subhead">置顶文章</h1>
+        <!--
         <section class="post">
             <header class="post-header">
                 <img width="48" height="48" alt="Tilo Mitra&#x27;s avatar" class="post-avatar" src="img/common/tilo-avatar.png">
@@ -19,17 +20,18 @@
 
             <div class="post-description">
                 <div class="post-content">
-                    Yesterday at CSSConf, we launched Pure – a new CSS library. Phew! Here are the <a href="https://speakerdeck.com/tilomitra/pure-bliss">slides from the presentation</a>. Although it looks pretty minimalist, we’ve been working
-                    on Pure for several months. After many iterations, we have released Pure as a set of small, responsive, CSS modules that you can use in every web project.
+                   
                 </div>
             </div>
         </section>
+        -->
+        <%- include('components/limit-posts', { posts: tops }) %>
     </div>
 
     <!-- 最新部分 -->   
     <div class="posts limit-post-content">
         <h1 class="content-subhead">最新文章</h1>
-        <%- include('components/limit-post-content', { posts: posts }) %>
+        <%- include('components/limit-posts', { posts: posts }) %>
     </div>
    
     <% if(posts.length==5){ %>

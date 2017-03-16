@@ -77,7 +77,7 @@ module.exports = {
         return Post.create(post).exec();
     },
 
-    // 通过文章 id 获取一篇文章
+    // 通过文章 id 获取一篇html文章
     getPostById: function getPostById(postId) {
         return Post
             .findOne({ _id: postId })
@@ -88,8 +88,8 @@ module.exports = {
             .exec();
     },
 
-    //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章的摘要
-    getPostspre: function getPostspre(author, page, search) {
+    //获取搜索结果或用户文章
+    getresults: function getresults(author, page, search) {
         var query = {};
         if (author) {
             query.author = author;
@@ -109,27 +109,10 @@ module.exports = {
             .exec();
     },
 
-    //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章的摘要
-    getannouncement: function getannouncement() {
+    //获取最新文章的摘要
+    getrecentPosts: function getrecentPosts(page) {
         return Post
-            .findOne({ author: config.admin_id })
-            .populate({ path: 'author', model: 'User' })
-            .addCreatedAt()
-            .addCommentsCount()
-            .contentToHtml()
-            .exec();
-    },
-
-    //按创建时间降序获取所有用户文章或者某个特定用户的固定数量文章
-    getPostslimit: function getPostslimit(author, page, search) {
-        var query = {};
-        if (author) {
-            query.author = author;
-        } else if (search) {
-            query = { $or: ([{ author: { $regex: String(search) } }, { title: { $regex: String(search) } }, { content: { $regex: String(search) } }]) };
-        }
-        return Post
-            .find(query)
+            .find({ top: 0 })
             .skip((page - 1) * 5)
             .limit(5)
             .populate({ path: 'author', model: 'User' })
@@ -137,6 +120,20 @@ module.exports = {
             .addCreatedAt()
             .addCommentsCount()
             .contentToHtml()
+            .pre()
+            .exec();
+    },
+
+    //获取置顶文章的摘要
+    gettopPosts: function gettopPosts() {
+        return Post
+            .find({ top: 1 })
+            .populate({ path: 'author', model: 'User' })
+            .sort({ _id: -1 })
+            .addCreatedAt()
+            .addCommentsCount()
+            .contentToHtml()
+            .pre()
             .exec();
     },
 
@@ -147,7 +144,7 @@ module.exports = {
             .exec();
     },
 
-    // 通过文章 id 获取一篇原生文章（编辑文章）
+    // 通过文章 id 获取一篇原生markdown文章
     getRawPostById: function getRawPostById(postId) {
         return Post
             .findOne({ _id: postId })
@@ -173,7 +170,7 @@ module.exports = {
     },
 
     //管理员删除文章
-    admindelPostById: function delPostById(postId) {
+    admindelPostById: function admindelPostById(postId) {
         return Post.remove({ _id: postId })
             .exec()
             .then(function(res) {
@@ -182,5 +179,10 @@ module.exports = {
                     return CommentModel.delCommentsByPostId(postId);
                 }
             });
+    },
+
+    //管理员置顶或取消置顶文章
+    admintopPostById: function admintopPostById(postId,t) {
+        return Post.update({ _id: postId }, { $set: { top: t } }).exec();
     }
 };
