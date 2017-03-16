@@ -267,29 +267,21 @@ router.get('/:postId/remove', checkLogin, function(req, res, next) {
     }
 });
 
-// GET /posts/:postId/top 置顶一篇文章
+// GET /posts/:postId/top 置顶或取消置顶一篇文章
 router.get('/:postId/top', checkAdmin, function(req, res, next) {
+    var t=parseInt(req.query.t);
     var postId = req.params.postId;
     var author = req.session.user._id;
 
-    PostModel.admintopPostById(postId)
+    PostModel.admintopPostById(postId ,t)
         .then(function() {
-            req.flash('success', '置顶文章成功');
-            // 删除成功后跳转到主页
-            res.redirect('/posts');
-        })
-        .catch(next);
-});
-
-// GET /posts/:postId/untop 取消置顶一篇文章
-router.get('/:postId/untop', checkAdmin, function(req, res, next) {
-    var postId = req.params.postId;
-    var author = req.session.user._id;
-
-    PostModel.untopPostById(postId)
-        .then(function() {
-            req.flash('success', '取消置顶文章成功');
-            // 删除成功后跳转到主页
+            if(t==0){
+                req.flash('success', '取消置顶文章成功');
+            }
+            if(t==1){
+                req.flash('success', '置顶文章成功');
+            }
+            // 置顶或取消置顶成功后跳转到主页
             res.redirect('/posts');
         })
         .catch(next);

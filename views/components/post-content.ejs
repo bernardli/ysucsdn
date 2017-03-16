@@ -33,10 +33,10 @@
                     <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
                 <% } %>
                 <% if (user && user.identity.toString()==='admin'&&post.top==0) { %>
-                    <div class="item"><a href="/posts/<%= post._id %>/top">置顶</a></div>
+                    <div class="item"><a href="/posts/<%= post._id %>/top?t=1">置顶</a></div>
                 <% } %>
                 <% if (user && user.identity.toString()==='admin'&&post.top==1) { %>
-                    <div class="item"><a href="/posts/<%= post._id %>/untop">取消置顶</a></div>
+                    <div class="item"><a href="/posts/<%= post._id %>/top?t=0">取消置顶</a></div>
                 <% } %>
                 </div>
             </div>

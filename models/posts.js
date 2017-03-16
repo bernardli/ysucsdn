@@ -181,13 +181,8 @@ module.exports = {
             });
     },
 
-    //管理员置顶文章
-    admintopPostById: function admintopPostById(postId) {
-        return Post.update({ _id: postId }, { $set: { top: 1 } }).exec();
-    },
-
-    //管理员取消置顶文章
-    untopPostById: function untopPostById(postId) {
-        return Post.update({ _id: postId }, { $set: { top: 0 } }).exec();
+    //管理员置顶或取消置顶文章
+    admintopPostById: function admintopPostById(postId,t) {
+        return Post.update({ _id: postId }, { $set: { top: t } }).exec();
     }
 };
