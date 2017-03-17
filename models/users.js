@@ -1,9 +1,15 @@
 var User = require('../lib/mongo').User;
+var Forgot=require('../lib/mongo').Forgot;
 
 module.exports = {
     // 注册一个用户
     create: function create(user) {
         return User.create(user).exec();
+    },
+
+    // 创建忘记密码随机字段
+    createForgot: function createForgot(forgot) {
+        return Forgot.create(forgot).exec();
     },
 
     // 通过 用户名 获取用户信息
