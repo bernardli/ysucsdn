@@ -1,5 +1,5 @@
 var User = require('../lib/mongo').User;
-var Forgot=require('../lib/mongo').Forgot;
+var Forgot = require('../lib/mongo').Forgot;
 
 module.exports = {
     // 注册一个用户
@@ -17,6 +17,13 @@ module.exports = {
         return User
             .findOne({ name: name })
             .addCreatedAt()
+            .exec();
+    },
+
+    // 通过 随机字段 获取忘记密码
+    getForgotByrandom: function getUserByName(random) {
+        return Forgot
+            .findOne({ random: random })
             .exec();
     },
 
