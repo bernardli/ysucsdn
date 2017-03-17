@@ -7,3 +7,4 @@ logs/*
 !logs/nothing.*
 .vscode
 test
+npm-debug.log

@@ -1,5 +1,7 @@
-<%- include('header') %>
-
+<%- include('blog-header') %>
+    <link rel="stylesheet" href="css/blog.css">
+    <link rel="stylesheet" href="css/blog-sign.css">
+    <!--
     <div class="ui grid">
         <div class="four wide column"></div>
         <div class="eight wide column">
@@ -40,5 +42,37 @@
             </form>
         </div>
     </div>
+    -->
 
-<%- include('footer') %>
+    <div class="pure-u-1 pure-u-md-3-4 main">
+        <div class="signup-header">
+            <h1>YSUCSDN</h1>
+            <h2>加入我们，一起瞎掰</h2>
+        </div>
+        <div class="content">
+            <form method="post" enctype="multipart/form-data">
+                <input placeholder="用户名"  type="text" class="input-text-long ma-signup" name="name">
+                <input placeholder="邮箱"  type="email" class="input-text-long ma-signup" name="email">
+                <input placeholder="密码"  type="password" class="input-text-long ma-signup" name="password">
+                <input placeholder="重复密码"  type="password" class="input-text-long ma-signup" name="repassword">
+                <select class="form-select" name="gender">
+                    <option value="m">男</option>
+                    <option value="f">女</option>
+                    <option value="x">保密</option>
+                </select>
+                <div class="box-avatar">
+                    <label class="form-label">头像(可不填)</label>
+                    <input type="file" name="avatar" class="input-file">
+                </div>
+                <div class="box-textarea">
+                    <label for="" class="form-label">个人简介(可不填)</label>
+                    <textarea name="bio" v-model="user.bio" class="form-textarea"></textarea>
+                </div>
+                <input type="submit" class="input-btn-long ma-signup" value="注册">
+            </form>
+            <form class="" method="post" action="/signin/forget">
+                <input type="submit" class="input-btn-long ma-signup" value="找回密码">
+            </form>
+        </div>
+    </div>
+<%- include('blog-footer') %>
