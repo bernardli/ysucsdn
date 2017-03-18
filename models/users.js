@@ -12,6 +12,11 @@ module.exports = {
         return Forgot.create(forgot).exec();
     },
 
+    // 创建忘记密码随机字段
+    delForgotByAuthor: function delForgot(author) {
+        return Forgot.remove({ author: author }).exec();
+    },
+
     // 通过 用户名 获取用户信息
     getUserByName: function getUserByName(name) {
         return User
@@ -20,10 +25,25 @@ module.exports = {
             .exec();
     },
 
+    // 通过 用户名和邮箱 获取用户信息
+    getUserByNameAndEmail: function getUserByName(name, email) {
+        return User
+            .findOne({ name: name, email: email })
+            .addCreatedAt()
+            .exec();
+    },
+
     // 通过 随机字段 获取忘记密码
     getForgotByrandom: function getUserByName(random) {
         return Forgot
             .findOne({ random: random })
+            .exec();
+    },
+
+    // 通过 author 获取忘记密码
+    getForgotByAuthor: function getForgotByAuthor(author) {
+        return Forgot
+            .findOne({ author: author })
             .exec();
     },
 
