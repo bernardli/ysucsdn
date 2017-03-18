@@ -1,30 +1,99 @@
-<%- include('header') %>
+<!DOCTYPE html>
+<html lang="en">
 
-<link rel="stylesheet" href="/editormd/css/editormd.min.css">
-<script src="/editormd/editormd.min.js"></script>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A layout example with a side menu that hides on mobile, just like the Pure website.">
+    <title>Responsive Side Menu &ndash; Layout Examples &ndash; Pure</title>
 
-<script type="text/javascript">
-    $(function() {
-        var editor = editormd("editormd", {
-            path : "/editormd/lib/"
+    <link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-" crossorigin="anonymous">
+
+
+
+    <!--[if lte IE 8]>
+            <link rel="stylesheet" href="css/side-menu-old-ie.css">
+        <![endif]-->
+    <!--[if gt IE 8]><!-->
+    <link rel="stylesheet" href="../css/side-menu.css">
+    <!--<![endif]-->
+    <link rel="stylesheet" href="/editormd/css/editormd.min.css">
+    <link rel="stylesheet" href="../css/blog-writing.css">
+    <script src="/js/jquery-3.1.1.min.js"></script>
+    <script src="/editormd/editormd.min.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        $(function() {
+            var editor = editormd("editormd", {
+                path: "/editormd/lib/"
+            });
         });
-    });
-</script>
+    </script>
+    <div id="layout">
+        <!-- Menu toggle -->
+        <a href="#menu" id="menuLink" class="menu-link">
+            <!--悬浮按钮-->
+            <span></span>
+        </a>
 
-    <div class="ui grid panel-writing">
-        <div class="sixteen wide column">
-            <form class="ui form segment form-writing" method="post" action="/posts">
-                <div class="field required">
-                    <label>标题</label>
-                    <input type="text" name="title">
+        <div id="menu">
+            <div class="pure-menu">
+                <a class="pure-menu-heading" href="/posts">YSUCSDN</a>
+
+                <ul class="pure-menu-list">
+                    <% if(user) { %>
+                        <li class="pure-menu-item">
+                            <a href="/posts/user?author=<%= user._id %>" class="pure-menu-link">个人主页</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a href="/setting?name=<%= user.name %>" class="pure-menu-link">账号设置</a>
+                        </li>
+                        <li class="pure-menu-item" class="menu-item-divided pure-menu-selected">
+                            <a href="/signout" class="pure-menu-link">登出</a>
+                        </li>
+                    <% } else { %>
+                        <li class="pure-menu-item">
+                            <a href="/signin" class="pure-menu-link">登录</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a href="/signup" class="pure-menu-link">注册</a>
+                        </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+
+        <div id="main">
+            <form class="form-writing" method="post" action="/posts" id="form1">
+                <div class="box-title">
+                    <label class="text-label">标题:</label>
+                    <input type="text" name="title" class="input-text-long">
                 </div>
-                <div id="editormd" class="field required text-writing">
-                    <label>内容</label>
+                <div id="editormd" class="text-writing">     
                     <textarea name="content" style="display:none;">### Hello Editor.md !</textarea>
                 </div>
-                <input type="submit" class="ui button button-publish" value="发布">
+                <input type="submit" class="input-btn-long" value="发布">
+            </form>
+            <form class="form-writing" method="post" action="/posts" id="form2">
+                <div class="box-title">
+                    <label class="text-label">标题:</label>
+                    <input type="text" name="title" class="input-text-long">
+                </div>
+                <div id="editornormal" class="text-writing">
+                    <textarea name="content" id="" class="textarea-writing">### Hello Editor.md</textarea>
+                </div>
+                <input type="submit" class="input-btn-long" value="发布">
             </form>
         </div>
     </div>
 
-<%- include('footer') %>
+
+
+
+    <script src="/js/ui.js"></script>
+
+</body>
+
+</html>
