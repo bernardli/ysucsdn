@@ -1,5 +1,9 @@
-<%- include('header') %>
+<%- include('blog-header') %>
 
+<link rel="stylesheet" href="/css/blog.css">
+<link rel="stylesheet" href="/css/blog-user.css">
+
+<!--
 <link rel="stylesheet" href="../css/posts.css">
 
 <%- include('components/user-info', { author: author }) %>
@@ -27,7 +31,63 @@
     </div>
 </div>
 <% } %>
+-->
 
-<%- include('components/back-to-top') %>
+<div class="pure-u-1 pure-u-md-3-4 content">       
 
-<%- include('footer') %>
+    <div class="user-info">
+        <div class="user-info-avatar">
+            <div class="avatar-center">
+                <img  alt="Eric Ferraiuolo&#x27;s avatar" class="img-info-avatar pure-img" src="/img/users_avatar/<%= author.avatar %>">
+            </div>
+        </div>
+        <div class="user-info-namegender center">
+            <span><%= author.name%></span>
+            <span>|</span>
+            <% if( author.gender == 'f') { %>
+                <span>♀</span>
+            <% } else { %>
+                <span>♂</span>
+            <% } %>
+        </div>
+        <div class="user-info-bio">
+            <p class="text-biotitle">关于我:</p>
+            <% if(author.bio) { %>
+                <p class="text-bio">
+                    <%= author.bio%>
+                </p>
+            <% } else { %>
+                <p class="text-bio">
+                    改用户很懒，什么简介都没写
+                </p>
+            <% }　%>
+        </div>
+    </div>
+
+    <!-- 草稿部分 -->
+    <div class="posts">
+        <h1 class="content-subhead">未发布文章</h1>
+    </div>
+
+    <!-- 已发布部分 -->   
+    <div class="posts limit-post-content">
+        <h1 class="content-subhead">最新文章</h1>
+        <%- include('components/limit-posts', { posts: posts }) %>
+    </div>
+   
+    <% if(posts.length==5){ %>
+        <div class="menu-load">
+            <div class="item-load center" id="loadmore_posts">
+                <span class="text-load">----- 点击获取人生经验 ヾ(≧O≦)〃吼不吼啊~ -----</span>
+            </div>
+        </div>
+    <% } else { %>
+        <div class="menu-load">
+            <div class="item-load center" id="no_posts">
+                <span class="text-load">----- 没有文章了/(ㄒoㄒ)/~~ -----</span>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<%- include('blog-footer') %>

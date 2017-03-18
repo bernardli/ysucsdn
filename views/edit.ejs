@@ -69,7 +69,7 @@
             <form class="form-writing" method="post" action="/posts/<%= post._id %>/edit" id="form1">
                 <div class="box-title">
                     <label class="text-label">标题:</label>
-                    <input type="text" name="title" class="input-text-long">
+                    <input type="text" name="title" class="input-text-long" value="<%= post.title %>">
                 </div>
                 <div id="editormd" class="text-writing">     
                     <textarea name="content" style="display:none;"><%= post.content %></textarea>

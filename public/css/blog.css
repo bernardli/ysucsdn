@@ -94,9 +94,10 @@ h3 {
 }
 
 .post-avatar {
-    border-radius: 50px;
+    border-radius: 50%;
     float: right;
     margin-left: 1em;
+    /*border: 2px solid #26a69a;*/
 }
 
 .post-description {
