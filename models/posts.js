@@ -137,6 +137,21 @@ module.exports = {
             .exec();
     },
 
+    //获取我的文章的摘要
+    getMyPosts: function getMyPosts(author,publish) {
+        return Post
+            .find({ author:author,published: publish })
+            .skip((page - 1) * 5)
+            .limit(5)
+            .populate({ path: 'author', model: 'User' })
+            .sort({ _id: -1 })
+            .addCreatedAt()
+            .addCommentsCount()
+            .contentToHtml()
+            .pre()
+            .exec();
+    },
+
     // 通过文章 id 给 pv 加 1
     incPv: function incPv(postId, w_pv) {
         return Post
