@@ -12,8 +12,10 @@ var saltRounds = 10;
 //GET /setting 用户设置页面
 router.get('/', function(req, res, next) {
     var name = req.query.name;
+    var email = null;
+    var id = null;
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
-    UserModel.getUserByName(name)
+    UserModel.getUser(name, email, id)
         .then(function(user) {
             res.render('setting', {
                 user: user,
@@ -82,8 +84,10 @@ router.post('/password', checkLogin, function(req, res, next) {
     var oldpassword = req.fields.oldpassword;
     var newpassword = req.fields.newpassword;
     var newrepassword = req.fields.newrepassword;
+    var email = null;
+    var id = null;
 
-    UserModel.getUserByName(userName)
+    UserModel.getUser(userName, email, id)
         .then(function(user) {
             return bcrypt.compare(oldpassword, user.password);
         })

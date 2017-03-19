@@ -18,17 +18,19 @@ module.exports = {
     },
 
     // 通过 用户名 获取用户信息
-    getUserByName: function getUserByName(name) {
+    getUser: function getUser(name, email, id) {
+        var query = {};
+        if (name) {
+            query.name = name;
+        }
+        if (email) {
+            query.email = email;
+        }
+        if (id) {
+            query._id = id;
+        }
         return User
-            .findOne({ name: name })
-            .addCreatedAt()
-            .exec();
-    },
-
-    // 通过 用户名和邮箱 获取用户信息
-    getUserByNameAndEmail: function getUserByName(name, email) {
-        return User
-            .findOne({ name: name, email: email })
+            .findOne(query)
             .addCreatedAt()
             .exec();
     },
@@ -44,14 +46,6 @@ module.exports = {
     getForgotByAuthor: function getForgotByAuthor(author) {
         return Forgot
             .findOne({ author: author })
-            .exec();
-    },
-
-    // 通过 用户ID 获取用户信息
-    getUserById: function getUserById(id) {
-        return User
-            .findOne({ _id: id })
-            .addCreatedAt()
             .exec();
     },
 

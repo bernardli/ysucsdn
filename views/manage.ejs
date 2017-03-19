@@ -3,14 +3,13 @@
             <!-- 草稿部分 -->
             <div class="posts">
                 <h1 class="content-subhead">未发布文章</h1>
+                <%- include('components/limit-posts', { posts: drafts }) %>
             </div>
 
             <!-- 已发布部分 -->   
             <div class="posts limit-post-content">
-                <h1 class="content-subhead">最新文章</h1>
-                <!--
+                <h1 class="content-subhead">以发布文章</h1>
                 <%- include('components/limit-posts', { posts: posts }) %>
-                -->  
             </div>
    
             <% if(posts.length==5){ %>
