@@ -17,8 +17,8 @@ router.get('/', function(req, res, next) {
 
     if (parseInt(page) == 1) {
         Promise.all([
-                PostModel.getPostsLimit(author, page, search, 0, 1), //获取最新的文章，不包括置顶
-                PostModel.getPosts(author, search, 1, 1) //获取置顶文章
+                PostModel.getPostsLimit(author, page, search, 'n', 'y'), //获取最新的文章，不包括置顶
+                PostModel.getPosts(author, search, 'y', 'y') //获取置顶文章
             ])
             .then(function(results) {
                 posts = results[0];
@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
             })
             .catch(next);
     } else {
-        PostModel.getPostsLimit(author, page, search, 0, 1) //获取最新的文章，不包括置顶
+        PostModel.getPostsLimit(author, page, search, 'n', 'y') //获取最新的文章，不包括置顶
             .then(function(posts) {
                 res.render('components/recent-posts', {
                     posts: posts
@@ -51,7 +51,7 @@ router.get('/s', function(req, res, next) {
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
     if (parseInt(page) == 1) {
-        PostModel.getPostsLimit(author, page, search, top, 1)
+        PostModel.getPostsLimit(author, page, search, top, 'y')
             .then(function(posts) {
                 res.render('search', {
                     posts: posts,
@@ -60,7 +60,7 @@ router.get('/s', function(req, res, next) {
             })
             .catch(next);
     } else {
-        PostModel.getPostsLimit(author, page, search, top, 1)
+        PostModel.getPostsLimit(author, page, search, top, 'y')
             .then(function(posts) {
                 res.render('components/limit-posts', {
                     posts: posts
@@ -83,7 +83,7 @@ router.get('/user', function(req, res, next) {
 
     if (parseInt(page) == 1) {
         Promise.all([
-                PostModel.getPostsLimit(author, page, search, top, 1),
+                PostModel.getPostsLimit(author, page, search, top, 'y'),
                 UserModel.getUser(name, email, author)
             ])
             .then(function(results) {
@@ -103,7 +103,7 @@ router.get('/user', function(req, res, next) {
             })
             .catch(next);
     } else {
-        PostModel.getPostsLimit(author, page, search, top, 1)
+        PostModel.getPostsLimit(author, page, search, top, 'y')
             .then(function(posts) {
                 res.render('components/limit-posts', {
                     posts: posts,
@@ -128,6 +128,7 @@ router.post('/', checkLogin, function(req, res, next) {
     var author = req.session.user._id;
     var title = req.fields.title;
     var content = req.fields.content;
+    var p = req.query.p;
 
     // 校验参数
     try {
@@ -147,7 +148,8 @@ router.post('/', checkLogin, function(req, res, next) {
         title: title,
         content: content,
         pv: 0,
-        top: 0
+        top: 'n',
+        published: p
     };
 
     PostModel.create(post)
@@ -239,8 +241,22 @@ router.post('/:postId/edit', checkLogin, function(req, res, next) {
     //获取修改页面表格传来的 title,content 的数据
     var title = req.fields.title;
     var content = req.fields.content;
+    var p = req.query.p;
 
-    PostModel.updatePostById(postId, author, { title: title, content: content })
+    // 校验参数
+    try {
+        if (!title.length) {
+            throw new Error('请填写标题');
+        }
+        if (!content.length) {
+            throw new Error('请填写内容');
+        }
+    } catch (e) {
+        req.flash('error', e.message);
+        return res.redirect('back');
+    }
+
+    PostModel.updatePostById(postId, author, { title: title, content: content, published: p })
         .then(function() {
             req.flash('success', '编辑文章成功');
             // 编辑成功后跳转到上一页
@@ -275,7 +291,7 @@ router.get('/:postId/remove', checkLogin, function(req, res, next) {
 
 // GET /posts/:postId/top 置顶或取消置顶一篇文章
 router.get('/:postId/top', checkAdmin, function(req, res, next) {
-    var t = parseInt(req.query.t);
+    var t = req.query.t;
     var postId = req.params.postId;
     var author = req.session.user._id;
 

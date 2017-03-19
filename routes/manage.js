@@ -18,8 +18,8 @@ router.get('/', function(req, res, next) {
 
     if (parseInt(page) == 1) {
         Promise.all([
-                PostModel.getPostsLimit(author, page, search, top, 0),
-                PostModel.getPostsLimit(author, page, search, top, 1)
+                PostModel.getPostsLimit(author, page, search, top, 'n'),
+                PostModel.getPostsLimit(author, page, search, top, 'y')
             ])
             .then(function(results) {
                 drafts = results[0];
@@ -32,7 +32,7 @@ router.get('/', function(req, res, next) {
             })
             .catch(next);
     } else {
-        PostModel.getPostsLimit(author, page, search, 0, 1)
+        PostModel.getPostsLimit(author, page, search, top, 'y')
             .then(function(posts) {
                 res.render('components/recent-posts', {
                     posts: posts

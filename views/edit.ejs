@@ -9,8 +9,8 @@
                 <div id="editormd" class="text-writing">     
                     <textarea name="content" style="display:none;"><%= post.content %></textarea>
                 </div>
-                <input type="submit" class="input-btn-long" value="保存">
-                <input type="submit" class="input-btn-long" value="发布">
+                <input type="button" class="input-btn-long" value="保存" onclick="$('#form1').attr('action', '/posts/<%= post._id %>/edit?p=n').submit()">
+                <input type="button" class="input-btn-long" value="发布" onclick="$('#form1').attr('action', '/posts/<%= post._id %>/edit?p=y').submit()">
             </form>
             <form class="form-writing" method="post" action="/posts/<%= post._id %>/edit" id="form2">
                 <div class="box-title">
@@ -20,8 +20,8 @@
                 <div id="editornormal" class="text-writing">
                     <textarea name="content" id="" class="textarea-writing"><%= post.content %></textarea>
                 </div>
-                <input type="submit" class="input-btn-long" value="保存">
-                <input type="submit" class="input-btn-long" value="发布">
+                <input type="button" class="input-btn-long" value="保存" onclick="$('#form2').attr('action', '/posts/<%= post._id %>/edit?p=n').submit()">
+                <input type="button" class="input-btn-long" value="发布" onclick="$('#form2').attr('action', '/posts/<%= post._id %>/edit?p=y').submit()">
             </form>
         </div>
 <%- include('manage-footer') %>
