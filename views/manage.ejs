@@ -1,16 +1,22 @@
 <%- include('manage-header') %>
-        <div id="main">
+        <link rel="stylesheet" href="/css/blog-user.css">
+        <div id="main" class="main">
             <!-- 草稿部分 -->
             <div class="posts">
                 <h1 class="content-subhead">未发布文章</h1>
+                <div class="pure-g">
+                    <!-- 未发布 -->
+                </div>
             </div>
 
             <!-- 已发布部分 -->   
             <div class="posts limit-post-content">
                 <h1 class="content-subhead">最新文章</h1>
-                <!--
-                <%- include('components/limit-posts', { posts: posts }) %>
-                -->  
+                <div class="pure-g">
+                    <% posts.forEach(function (post) { %>
+                        <%- include('components/posts-content--user', { post: post }) %>
+                    <% }) %>
+                </div>
             </div>
    
             <% if(posts.length==5){ %>
