@@ -8,6 +8,7 @@
                 <div id="editormd" class="text-writing">     
                     <textarea name="content" style="display:none;"><%= post.content %></textarea>
                 </div>
+                <input type="submit" class="input-btn-long" value="保存">
                 <input type="submit" class="input-btn-long" value="发布">
             </form>
             <form class="form-writing" method="post" action="/posts/<%= post._id %>/edit" id="form2">
