@@ -20,9 +20,11 @@ router.get('/', checkNotLogin, function(req, res, next) {
 // POST /signin 用户登录
 router.post('/', checkNotLogin, function(req, res, next) {
     var name = req.fields.name.toString();
+    var id = null;
+    var email = null;
     var password = req.fields.password;
 
-    UserModel.getUserByName(name)
+    UserModel.getUser(name, email, id)
         .then(function(user) {
             if (!user) {
                 req.flash('error', '用户不存在');
@@ -61,13 +63,14 @@ router.post('/forget', checkNotLogin, function(req, res, next) {
     var data = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
     var name = req.fields.name.toString();
     var email = req.fields.email.toString();
+    var id = null;
 
-    UserModel.getUserByNameAndEmail(name, email)
-    .then(function(user) {
+    UserModel.getUser(name, email, id)
+        .then(function(user) {
             if (!user) {
                 req.flash('error', '用户或邮箱不正确');
                 return res.redirect('back');
-            }else{
+            } else {
                 return Promise.all([
                     UserModel.getForgotByAuthor(user._id),
                     user
@@ -75,12 +78,12 @@ router.post('/forget', checkNotLogin, function(req, res, next) {
             }
         })
         .then(function(results) {
-            var forgot=results[0];
-            var user=results[1];
+            var forgot = results[0];
+            var user = results[1];
             if (forgot) {
                 req.flash('success', '请5分钟后再试');
                 return res.redirect('back');
-            }else{
+            } else {
                 return user;
             }
         })
@@ -148,6 +151,8 @@ router.post('/password', checkNotLogin, function(req, res, next) {
     var random = req.query.r;
     var newpassword = req.fields.password;
     var newrepassword = req.fields.repassword;
+    var email = null;
+    var name = null;
 
     UserModel.getForgotByrandom(random)
         .then(function(forget) {
@@ -156,7 +161,7 @@ router.post('/password', checkNotLogin, function(req, res, next) {
                 return res.redirect('back');
             }
             // 返回用户信息
-            return UserModel.getUserById(forget.author);
+            return UserModel.getUser(name, email, forget.author);
         })
         .then(function(user) {
             if (newpassword.length < 6) {

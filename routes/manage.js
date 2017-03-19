@@ -12,35 +12,34 @@ var checkAdmin = require('../middlewares/check').checkAdmin;
 router.get('/', function(req, res, next) {
     var page = req.query.page || 1;
     var author = req.query.author;
+    var search = req.query.search;
+    var top = null;
     var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
-    res.render('manage');
-
-
-    /*if (parseInt(page) == 1) {
+    if (parseInt(page) == 1) {
         Promise.all([
-                PostModel.getrecentPosts(page),
-                PostModel.gettopPosts()
+                PostModel.getPostsLimit(author, page, search, top, 0),
+                PostModel.getPostsLimit(author, page, search, top, 1)
             ])
             .then(function(results) {
-                posts = results[0];
-                tops = results[1];
-                res.render('posts', {
+                drafts = results[0];
+                posts = results[1];
+                res.render('manage', {
                     posts: posts,
-                    tops: tops,
+                    drafts: drafts,
                     ip: ip
                 });
             })
             .catch(next);
     } else {
-        PostModel.getrecentPosts(page)
+        PostModel.getPostsLimit(author, page, search, 0, 1)
             .then(function(posts) {
                 res.render('components/recent-posts', {
                     posts: posts
                 });
             })
             .catch(next);
-    }*/
+    }
 });
 
 

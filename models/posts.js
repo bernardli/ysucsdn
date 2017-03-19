@@ -88,13 +88,20 @@ module.exports = {
             .exec();
     },
 
-    //获取搜索结果或用户文章
-    getresults: function getresults(author, page, search) {
+    //获取一部分搜索结果或用户文章摘要
+    getPostsLimit: function getPostsLimit(author, page, search, top, published) {
         var query = {};
         if (author) {
             query.author = author;
-        } else if (search) {
-            query = { $or: ([{ author: { $regex: String(search) } }, { title: { $regex: String(search) } }, { content: { $regex: String(search) } }]) };
+        }
+        if (top) {
+            query.top = top;
+        }
+        if (published) {
+            query.published = published;
+        }
+        if (search) {
+            query.$or = [{ author: { $regex: String(search) } }, { title: { $regex: String(search) } }, { content: { $regex: String(search) } }];
         }
         return Post
             .find(query)
@@ -109,40 +116,23 @@ module.exports = {
             .exec();
     },
 
-    //获取最新文章的摘要
-    getrecentPosts: function getrecentPosts(page) {
+    //获取全部搜索结果或用户文章摘要
+    getPosts: function getPosts(author, search, top, published) {
+        var query = {};
+        if (author) {
+            query.author = author;
+        }
+        if (top) {
+            query.top = top;
+        }
+        if (published) {
+            query.published = published;
+        }
+        if (search) {
+            query.$or = [{ author: { $regex: String(search) } }, { title: { $regex: String(search) } }, { content: { $regex: String(search) } }];
+        }
         return Post
-            .find({ top: 0 })
-            .skip((page - 1) * 5)
-            .limit(5)
-            .populate({ path: 'author', model: 'User' })
-            .sort({ _id: -1 })
-            .addCreatedAt()
-            .addCommentsCount()
-            .contentToHtml()
-            .pre()
-            .exec();
-    },
-
-    //获取置顶文章的摘要
-    gettopPosts: function gettopPosts() {
-        return Post
-            .find({ top: 1 })
-            .populate({ path: 'author', model: 'User' })
-            .sort({ _id: -1 })
-            .addCreatedAt()
-            .addCommentsCount()
-            .contentToHtml()
-            .pre()
-            .exec();
-    },
-
-    //获取我的文章的摘要
-    getMyPosts: function getMyPosts(author,publish) {
-        return Post
-            .find({ author:author,published: publish })
-            .skip((page - 1) * 5)
-            .limit(5)
+            .find(query)
             .populate({ path: 'author', model: 'User' })
             .sort({ _id: -1 })
             .addCreatedAt()
@@ -197,7 +187,7 @@ module.exports = {
     },
 
     //管理员置顶或取消置顶文章
-    admintopPostById: function admintopPostById(postId,t) {
+    admintopPostById: function admintopPostById(postId, t) {
         return Post.update({ _id: postId }, { $set: { top: t } }).exec();
     }
 };
