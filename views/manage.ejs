@@ -5,8 +5,9 @@
             <div class="posts">
                 <h1 class="content-subhead">未发布文章</h1>
                 <div class="pure-g">
-                    <!-- 未发布 -->
-                    <%- include('components/posts-content--user', { posts: drafts }) %>
+                    <% drafts.forEach(function (post) { %>
+                        <%- include('components/posts-content--user', { post: post }) %>
+                    <% }) %>
                 </div>
 
             </div>
