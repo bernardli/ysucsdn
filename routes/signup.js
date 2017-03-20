@@ -5,7 +5,6 @@ var saltRounds = 10;
 var express = require('express');
 var router = express.Router();
 var config = require('config-lite');
-var nodemailer = require('nodemailer');
 
 var UserModel = require('../models/users');
 var checkNotLogin = require('../middlewares/check').checkNotLogin;
@@ -28,7 +27,6 @@ router.post('/', checkNotLogin, function(req, res, next) {
     var password = req.fields.password;
     var repassword = req.fields.repassword;
     var email = req.fields.email;
-    var transporter = nodemailer.createTransport(config.transporter);
 
     // 校验参数
     try {
@@ -98,12 +96,7 @@ router.post('/', checkNotLogin, function(req, res, next) {
                 text: '欢迎', // 内容
                 html: '<b>welcome</b>' // html
             };
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    return console.log(error);
-                }
-                console.log('Message %s sent: %s', info.messageId, info.response);
-            });
+            EmailModel.email(mailOptions);
         })
         .catch(function(e) {
             // 注册失败，异步删除上传的头像

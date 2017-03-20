@@ -3,11 +3,11 @@ var saltRounds = 10;
 var express = require('express');
 var router = express.Router();
 var config = require('config-lite');
-var nodemailer = require('nodemailer');
+var email_adress = config.transporter.auth.user;
 
 var UserModel = require('../models/users');
+var EmailModel = require('../models/sendEmail');
 var checkNotLogin = require('../middlewares/check').checkNotLogin;
-var email_adress = config.transporter.auth.user;
 
 // GET /signin 登录页
 router.get('/', checkNotLogin, function(req, res, next) {
@@ -108,7 +108,9 @@ router.post('/forget', checkNotLogin, function(req, res, next) {
             var user = results[1];
             var random = forgot.random;
             var email = user.email;
-            var transporter = nodemailer.createTransport(config.transporter);
+
+            req.flash('success', '邮件已发送,请在5分钟内修改密码');
+            res.redirect('back');
 
             var mailOptions = {
                 from: email_adress, // 发件人
@@ -117,15 +119,7 @@ router.post('/forget', checkNotLogin, function(req, res, next) {
                 text: "http://ysucsdn.cn/signin/password?r=" + random, // 内容
                 html: "<a href=http://ysucsdn.cn/signin/password?r=" + random + ">点击找回密码</a>" // html
             };
-
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    return console.log(error);
-                }
-                console.log('Message %s sent: %s', info.messageId, info.response);
-            });
-            req.flash('success', '邮件已发送,请在5分钟内修改密码');
-            res.redirect('back');
+            EmailModel.email(mailOptions);
         })
         .catch(next);
 });
@@ -192,7 +186,10 @@ router.post('/password', checkNotLogin, function(req, res, next) {
         .then(function(results) {
             var user = results[2];
             var email = user.email;
-            var transporter = nodemailer.createTransport(config.transporter);
+
+            req.flash('success', '修改密码成功');
+            // 跳转到主页
+            res.redirect('/signin');
 
             var mailOptions = {
                 from: email_adress, // 发件人
@@ -201,16 +198,7 @@ router.post('/password', checkNotLogin, function(req, res, next) {
                 text: "如果不是您本人操作，那我也没办法  ┑(￣Д ￣)┍" // 内容
                     //html: '<b>random</b>' // html
             };
-
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    return console.log(error);
-                }
-                console.log('Message %s sent: %s', info.messageId, info.response);
-            });
-            req.flash('success', '修改密码成功');
-            // 跳转到主页
-            res.redirect('/signin');
+            EmailModel.email(mailOptions);
         })
         .catch(next);
 });
