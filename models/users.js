@@ -49,18 +49,8 @@ module.exports = {
             .exec();
     },
 
-    //通过用户 ID 和用户 name 更新 用户 bio
-    updateBioById: function updateBioById(userId, userName, data) {
-        return User.update({ _id: userId, name: userName }, { $set: data }).exec();
-    },
-
-    //通过用户 ID 和用户 name 更新 用户 avatar
-    updateAvatarById: function updateAvatarById(userId, userName, data) {
-        return User.update({ _id: userId, name: userName }, { $set: data }).exec();
-    },
-
-    //通过用户 ID 和用户 name 更新 用户 password
-    updatePasswordById: function updatePasswordById(userId, userName, data) {
+    //通过用户 ID 和用户 name 更新 用户
+    updateUser: function updateUser(userId, userName, data) {
         return User.update({ _id: userId, name: userName }, { $set: data }).exec();
     }
 };

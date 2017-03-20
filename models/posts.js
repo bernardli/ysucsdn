@@ -6,8 +6,6 @@ var Post = require('../lib/mongo').Post;
 
 var CommentModel = require('./comments');
 
-var config = require('config-lite');
-
 // 给 post 添加留言数 commentsCount
 Post.plugin('addCommentsCount', {
     afterFind: function(posts) {

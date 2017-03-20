@@ -5,11 +5,11 @@ var saltRounds = 10;
 var express = require('express');
 var router = express.Router();
 var config = require('config-lite');
-var nodemailer = require('nodemailer');
+var email_adress = config.transporter.auth.user;
 
 var UserModel = require('../models/users');
+var EmailModel = require('../models/sendEmail');
 var checkNotLogin = require('../middlewares/check').checkNotLogin;
-var email_adress=config.transporter.auth.user;
 
 // GET /signup 注册页
 router.get('/', checkNotLogin, function(req, res, next) {
@@ -28,7 +28,6 @@ router.post('/', checkNotLogin, function(req, res, next) {
     var password = req.fields.password;
     var repassword = req.fields.repassword;
     var email = req.fields.email;
-    var transporter = nodemailer.createTransport(config.transporter);
 
     // 校验参数
     try {
@@ -48,22 +47,24 @@ router.post('/', checkNotLogin, function(req, res, next) {
             throw new Error('两次输入密码不一致');
         }
     } catch (e) {
-        // 注册失败，异步删除上传的头像
-        fs.unlink(req.files.avatar.path);
         req.flash('error', e.message);
         return res.redirect('/signup');
+    }
+    try {
+        //分配默认头像
+        if (!req.files.avatar.name) {
+            throw new Error('无头像');
+        }
+    } catch (e) {
+        // 注册失败，异步删除上传的头像
+        fs.unlink(req.files.avatar.path);
+        //设置默认头像
+        avatar = "../local/defaultAvatar.png";
     }
 
     // 明文密码加密
     bcrypt.hash(password, saltRounds)
         .then(function(password) {
-            //分配默认头像
-            if (!req.files.avatar.name) {
-                //异步删除上传的头像
-                fs.unlink(req.files.avatar.path);
-                //设置默认头像
-                avatar = "../local/defaultAvatar.png";
-            }
             // 待写入数据库的用户信息
             var user = {
                 name: name,
@@ -92,18 +93,13 @@ router.post('/', checkNotLogin, function(req, res, next) {
             res.redirect('/posts');
             //发送欢迎邮件
             var mailOptions = {
-                from: '"welcome" '+email_adress+'', // 发件人
+                from: '"welcome" ' + email_adress + '', // 发件人
                 to: user.email, // 收件人
                 subject: '欢迎' + user.name, // 标题
                 text: '欢迎', // 内容
                 html: '<b>welcome</b>' // html
             };
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    return console.log(error);
-                }
-                console.log('Message %s sent: %s', info.messageId, info.response);
-            });
+            EmailModel.email(mailOptions);
         })
         .catch(function(e) {
             // 注册失败，异步删除上传的头像
