@@ -178,7 +178,7 @@ router.post('/password', checkNotLogin, function(req, res, next) {
             var userId = user._id;
             var userName = user.name;
             return Promise.all([
-                UserModel.updatePasswordById(userId, userName, { password: password }),
+                UserModel.updateUser(userId, userName, { password: password }),
                 UserModel.delForgotByAuthor(userId),
                 user
             ]);

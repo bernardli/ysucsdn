@@ -36,9 +36,29 @@ router.post('/bio', checkLogin, function(req, res, next) {
         req.flash('error', '个人简介请限制在 1-30 个字符');
         return res.redirect('/setting' + '?name=' + userName);
     }
-    UserModel.updateBioById(userId, userName, { bio: bio })
+    UserModel.updateUser(userId, userName, { bio: bio })
         .then(function() {
             req.flash('success', '修改介绍成功');
+            // 编辑成功后跳转到上一页
+            res.redirect('/setting' + '?name=' + userName);
+        })
+        .catch(next);
+});
+
+//POST /setting/gender 修改用户性别
+router.post('/gender', checkLogin, function(req, res, next) {
+    //从session中获取用户 id
+    var userId = req.session.user._id;
+    //从session中获取用户 name
+    var userName = req.session.user.name;
+    var gender = req.fields.gender;
+    if (['m', 'f', 'x'].indexOf(gender) === -1) {
+        req.flash('error', '性别只能是 m、f 或 x');
+        return res.redirect('/setting' + '?name=' + userName);
+    }
+    UserModel.updateUser(userId, userName, { gender: gender })
+        .then(function() {
+            req.flash('success', '修改性别成功');
             // 编辑成功后跳转到上一页
             res.redirect('/setting' + '?name=' + userName);
         })
@@ -62,7 +82,7 @@ router.post('/avatar', checkLogin, function(req, res, next) {
         return res.redirect('/setting' + '?name=' + userName);
     }
 
-    UserModel.updateAvatarById(userId, userName, { avatar: newAvatar })
+    UserModel.updateUser(userId, userName, { avatar: newAvatar })
         .then(function() {
             req.flash('success', '修改成功');
             //删除旧的头像(先判断是否是默认头像)
@@ -75,6 +95,7 @@ router.post('/avatar', checkLogin, function(req, res, next) {
         .catch(next);
 });
 
+// POST /setting/password 修改密码
 router.post('/password', checkLogin, function(req, res, next) {
     //从session中获取用户 id
     var userId = req.session.user._id;
@@ -108,7 +129,7 @@ router.post('/password', checkLogin, function(req, res, next) {
             }
         })
         .then(function(newpassword) {
-            return UserModel.updatePasswordById(userId, userName, { password: newpassword });
+            return UserModel.updateUser(userId, userName, { password: newpassword });
         })
         .then(function() {
             req.flash('success', '修改密码成功');
