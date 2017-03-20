@@ -46,8 +46,10 @@
             <span>|</span>
             <% if( author.gender == 'f') { %>
                 <span>♀</span>
-            <% } else { %>
+            <% } else if( author.gender == 'm') { %>
                 <span>♂</span>
+            <% } else {%>
+                <span>性别保密哦~</span>
             <% } %>
         </div>
         <div class="user-info-bio">

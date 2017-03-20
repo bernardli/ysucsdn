@@ -25,8 +25,15 @@
 
 <body>
     <div id="layout" class="pure-g">
+        <%- include('components/notification') %>
         <div class="sidebar pure-u-1 pure-u-md-1-4">
             <div class="header">
+                <div class="post-search">
+                    <form class="pure-form" method="get" action="/posts/s">
+                        <input type="text" name="search" class="input-search">
+                        <button type="submit" class="pure-button" value="">Search</button>
+                    </form>
+                </div>
                 <span class="text-title">ysucsdn</span>
                 <span class="text-tagline">瞎扯淡的地方</span>
 

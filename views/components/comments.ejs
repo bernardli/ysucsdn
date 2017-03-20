@@ -3,10 +3,12 @@
         <span class="text-comment">留言</span>
     </div>
 
-    <div class="comment-body ui minimal comments">
+    <div class="comment-body">
+
         <div class=limit-comments>
             <%- include('limit-comments') %>
         </div>
+
         <% if(comments.length==0&&page==1){ %>
         <div class="menu-load">
             <div class="item-load--nomore center" id="no_comments">
@@ -36,5 +38,6 @@
                 <input type="submit" class="ui icon button" value="留言" />
             </form>
         <% } %>
+
     </div>
 </div>

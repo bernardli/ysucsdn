@@ -1,18 +1,15 @@
-<div class="ui grid ">
-    <div class="four wide column"></div>
-    <div class="eight wide column">
-
+<% if (success || error ) { %>    
+    <div class="notice">
         <% if (success) { %>
-        <div class="ui success message notice">
-            <p><%= success %></p>
+        <div class="success-message">
+            <span class="text-notice"><%= success %></span>
         </div>
         <% } %>
 
         <% if (error) { %>
-        <div class="ui error message notice">
-            <p><%= error %></p>
+        <div class="error-message">
+            <span class="text-notice"><%= error %></span>
         </div>
         <% } %>
-
     </div>
-</div>
+<% } %>
