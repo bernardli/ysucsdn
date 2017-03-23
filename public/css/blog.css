@@ -288,9 +288,49 @@ h3 {
     display: inline;
 }
 
+.post-search {
+    margin: 5% 2em 0;
+    text-align: right;
+}
+
 .input-search {
+    display: inline-block;
     border-radius: 5%;
-    width: 50%;
-    padding: .5em 1em;
+    width: 77%;
+    /*min-width: 100px;*/
+    height: 30px;
+    padding: 0px;
+    margin: 0px !important;
+    /*padding: .5em 1em;*/
     color: black;
+}
+
+.btn-search {
+    /*min-width: 45px;*/
+    width: 20%;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: inherit;
+    font-size: 100%;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 3%;
+    color: white;
+    /*border: 1px solid #999;*/
+    border: transparent;
+    background-color: #426A89;
+    text-decoration: none;
+    border-radius: 2px;
+}
+
+.form-search {
+    display: flex;
+    opacity: 0.3;
+    transition: all 1s;
+}
+
+.form-search:hover {
+    opacity: 1;
 }
