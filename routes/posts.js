@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
+var config = require('config-lite');
+var email_adress = config.transporter.auth.user;
 
 var PostModel = require('../models/posts');
+var EmailModel = require('../models/sendEmail');
 var UserModel = require('../models/users');
 var CommentModel = require('../models/comments');
 var checkLogin = require('../middlewares/check').checkLogin;
@@ -320,11 +323,28 @@ router.post('/:postId/comment', checkLogin, function(req, res, next) {
         content: content
     };
 
-    CommentModel.create(comment)
-        .then(function() {
+    Promise.all([
+            CommentModel.create(comment),
+            PostModel.getPostById(postId)
+        ])
+        .then(function(results) {
+            var post = results[1];
+            var email = post.author.email;
+            var title = post.title;
             req.flash('success', '留言成功');
             // 留言成功后跳转到上一页
             res.redirect('back');
+            if (req.session.user.name != post.author.name) {
+                var mailOptions = {
+                    from: email_adress, // 发件人
+                    to: email, // 收件人
+                    subject: '您的文章有了新的评论', // 标题
+                    text: "用户： " + req.session.user.name + " 在您的文章《" + title + "》中评论到： “" + content + "”", // 内容
+                    //html: "<a href=http://ysucsdn.cn/signin/password?r=" + random + ">点击找回密码</a>" // html
+                };
+                EmailModel.email(mailOptions);
+            }
+
         })
         .catch(next);
 });
