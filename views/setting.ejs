@@ -25,12 +25,10 @@
                     </form>
                 </div>
             </div>
-            <form class="ui form " method="post" action="/setting/bio">
-                <div class="field required">
-                    <label>用户介绍</label>
-                    <textarea name="bio" rows="15"><%= user.bio %></textarea>
-                </div>
-                <input type="submit" class="ui button" value="修改">
+            <form class="form-bio" method="post" action="/setting/bio">
+                <label>用户介绍</label>
+                <textarea name="bio" rows="15"><%= user.bio %></textarea>
+                <input type="submit" class="ui button input-bio--submit" value="修改">
             </form>
         </div>
 <%- include('manage-footer') %>

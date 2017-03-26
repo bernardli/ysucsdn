@@ -83,7 +83,7 @@
 
 .user-password {
     max-width: 400px;
-    height: 300px;
+    height: auto;
     margin: 0px 20px;
 }
 
@@ -119,6 +119,53 @@
     border-radius: .28571429rem;
     background: #FFF;
     box-shadow: 0 0 0 0 rgba(34, 36, 38, .35) inset;
+}
+
+.form-bio {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-bio label {
+    font-size: 20px;
+    color: #4fc08d;
+    align-self: flex-start;
+    display: block;
+    margin: 5px 0;
+}
+
+.form-bio textarea {
+    width: 98%;
+    min-height: 300px;
+    height: 100%;
+    margin: 0 auto;
+    overflow-y: hidden;
+    padding: .8rem 0 1.6rem 0;
+    resize: none;
+    min-height: 6rem;
+    background-color: transparent;
+    border: 1px solid rgba(34, 36, 38, .15);
+    /*border-bottom: 1px solid #9e9e9e;*/
+    border-radius: 1%;
+    outline: none;
+    font-size: 1rem;
+    padding: 5px;
+    box-shadow: none;
+    box-sizing: content-box;
+    transition: all 0.3s;
+}
+
+.input-bio--submit {
+    width: 50%;
+    margin: 10px 0 0 auto;
+    height: 35px;
+    border: none;
+    text-decoration: none;
+    color: #fff;
+    background-color: #26a69a;
+    text-align: center;
+    letter-spacing: .5px;
+    transition: .2s ease-out;
 }
 
 @media (min-width: 48em) {

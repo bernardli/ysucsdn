@@ -59,3 +59,23 @@ p {
 footer.page-footer {
     margin: 0;
 }
+
+.pic-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pic-item {
+    max-width: 240px;
+}
+
+.h-head {
+    color: black;
+    margin: 5px 0 20px 0;
+}
+
+.img-show {
+    /*min-height: 200px;*/
+    /*width: 90%;*/
+    margin: 10px 0;
+}
