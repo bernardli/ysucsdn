@@ -150,6 +150,7 @@ router.post('/', checkLogin, function(req, res, next) {
         author: author,
         title: title,
         content: content,
+        tags:[],
         pv: 0,
         top: 'n',
         published: p
@@ -191,6 +192,9 @@ router.get('/:postId', function(req, res, next) {
             .then(function(results) {
                 var post = results[0];
                 var comments = results[1];
+                var tag0=post.tags[0];
+                var tag1=post.tags[1];
+                var tag2=post.tags[2];
                 if (!post) {
                     throw new Error('该文章不存在');
                 }
