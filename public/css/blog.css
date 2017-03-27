@@ -216,6 +216,7 @@ h3 {
     justify-content: center;
     align-content: center;
     background-color: #26a69a;
+    cursor: pointer;
 }
 
 .menu {
@@ -225,9 +226,14 @@ h3 {
     display: none;
 }
 
-.dropdown:hover .menu {
+.menu-show {
     display: block;
 }
+
+
+/*.dropdown:hover .menu {
+    display: block;
+}*/
 
 .item {
     width: 100%;

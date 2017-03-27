@@ -22,7 +22,7 @@
             <span>
                 <% if (user && post.author._id && (user._id.toString() === post.author._id.toString() || user.identity.toString()==='admin')) { %>
                     <div class="dropdown">
-                        <div class="dropdown-text">
+                        <div class="dropdown-text" onclick="dropmenu(this.nextElementSibling)">
                             <span>设置</span>
                         </div>
                         <div class="menu">

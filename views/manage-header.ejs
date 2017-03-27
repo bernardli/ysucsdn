@@ -56,7 +56,11 @@
                             <a href="/setting/email?name=<%= user.name %>" class="pure-menu-link">邮箱订阅设置</a>
                         </li>
                         <li class="pure-menu-item">
-                            <a href="/setting/email?name=<%= user.name %>" class="pure-menu-link">搜索</a>
+                            <a href="javascript:" class="pure-menu-link" id="search" onclick="dropmenu(this.nextElementSibling)">搜索</a>
+                            <form class="form-search" method="get" action="/posts/s">
+                                <input type="text" name="search" class="input-search">
+                                <button type="submit" class="btn-search" value="">搜索</button>
+                            </form>
                         </li>
                         <li class="pure-menu-item" class="menu-item-divided pure-menu-selected">
                             <a href="/signout" class="pure-menu-link">登出</a>
