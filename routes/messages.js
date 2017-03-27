@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
     } else {
         MessageModel.getMessagesLimit(page, search)
             .then(function(messages) {
-                res.render('components/recent-posts', {
+                res.render('components/limit-posts', {
                     messages: messages
                 });
             })

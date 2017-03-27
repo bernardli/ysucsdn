@@ -6,7 +6,7 @@
                 <h1 class="content-subhead">未发布文章</h1>
                 <div class="pure-g">
                     <% drafts.forEach(function (post) { %>
-                        <%- include('components/posts-content--user', { post: post }) %>
+                        <%- include('components/posts-content--user', { post: post,publish:0 }) %>
                     <% }) %>
                 </div>
 
@@ -17,7 +17,7 @@
                 <h1 class="content-subhead">最新文章</h1>
                 <div class="pure-g">
                     <% posts.forEach(function (post) { %>
-                        <%- include('components/posts-content--user', { post: post }) %>
+                        <%- include('components/posts-content--user', { post: post,publish:1 }) %>
                     <% }) %>
                 </div>
             </div>

@@ -1,7 +1,11 @@
 <div class="pure-u-1 pure-u-sm-1-2 pure-u-md-3-1">
     <section class="post">
         <header class="post-header">
+            <%if(publish==0){%>
+            <a href="/posts/<%= post._id%>/edit" class="link-post-title">
+            <%}else{%>
             <a href="/posts/<%= post._id%>" class="link-post-title">
+            <%}%>
                 <h2 class="post-title"><%= post.title%></h2>
             </a>
             <p class="post-meta">

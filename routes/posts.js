@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
     } else {
         PostModel.getPostsLimit(author, page, search, 'n', 'y') //获取最新的文章，不包括置顶
             .then(function(posts) {
-                res.render('components/recent-posts', {
+                res.render('components/limit-posts', {
                     posts: posts
                 });
             })
