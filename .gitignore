@@ -9,3 +9,4 @@ logs/*
 test
 npm-debug.log
 yarn.lock
+.eslintrc.json
