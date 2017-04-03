@@ -10,9 +10,9 @@ const router = express.Router();
 
 // GET /setting 用户设置页面
 router.get('/', (req, res, next) => {
-  const name = req.query.name;
+  const name = null;
   const email = null;
-  const id = null;
+  const id = req.session.user._id;
   const ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
   UserModel.getUser(name, email, id)
         .then((user) => {
