@@ -6,6 +6,7 @@ const config = require('config-lite');
 const UserModel = require('../models/users');
 const EmailModel = require('../models/sendEmail');
 const checkNotLogin = require('../middlewares/check').checkNotLogin;
+const NoticeModel = require('../models/ysuNotice');
 
 const saltRounds = 10;
 const router = express.Router();
@@ -29,7 +30,7 @@ router.post('/', checkNotLogin, (req, res, next) => {
   const repassword = req.fields.repassword;
   const email = req.fields.email;
 
-    // 校验参数
+  // 校验参数
   try {
     if (!(name.length >= 1 && name.length <= 10)) {
       throw new Error('名字请限制在 1-10 个字符');
@@ -51,64 +52,78 @@ router.post('/', checkNotLogin, (req, res, next) => {
     return res.redirect('/signup');
   }
   try {
-        // 分配默认头像
+    // 分配默认头像
     if (!req.files.avatar.name) {
       throw new Error('无头像');
     }
   } catch (e) {
-        // 注册失败，异步删除上传的头像
+    // 注册失败，异步删除上传的头像
     fs.unlink(req.files.avatar.path);
-        // 设置默认头像
+    // 设置默认头像
     avatar = '../local/defaultAvatar.png';
   }
 
-    // 明文密码加密
+  // 明文密码加密
   bcrypt.hash(password, saltRounds)
-        .then((password) => {
-            // 待写入数据库的用户信息
-          const user = {
-            name,
-            password,
-            identity: 'normal',
-            gender,
-            bio,
-            avatar,
-            email,
-            point: 0,
-          };
-          return user;
-        })
-        .then(user => UserModel.create(user)) // 用户信息写入数据库
-        .then((result) => {
-            // 此 user 是插入 mongodb 后的值，包含 _id
-          const user = result.ops[0];
-            // 将用户信息存入 session
-          delete user.password;
-          req.session.user = user;
-            // 写入 flash
-          req.flash('success', '注册成功');
-            // 跳转到首页
-          res.redirect('/posts');
-            // 发送欢迎邮件
-          const mailOptions = {
-            from: `"welcome" ${EmailAdress}`, // 发件人
-            to: user.email, // 收件人
-            subject: `欢迎${user.name}`, // 标题
-            text: '欢迎', // 内容
-            html: '<b>welcome</b>', // html
-          };
-          EmailModel.email(mailOptions);
-        })
-        .catch((e) => {
-            // 注册失败，异步删除上传的头像
-          fs.unlink(req.files.avatar.path);
-            // 用户名被占用则跳回注册页，而不是错误页
-          if (e.message.match('E11000 duplicate key')) {
-            req.flash('error', '用户名已被占用');
-            return res.redirect('/signup');
-          }
-          next(e);
-        });
+    .then((password) => {
+      // 待写入数据库的用户信息
+      const user = {
+        name,
+        password,
+        identity: 'normal',
+        gender,
+        bio,
+        avatar,
+        email,
+        point: 0,
+      };
+      return user;
+    })
+    .then(user => Promise.all([
+      UserModel.create(user), // 用户信息写入数据库
+      NoticeModel.getNotice('notice'),
+    ]))
+    .then(([result, notice]) => {
+      const emails = notice[0].emails;
+      const set = new Set(emails);
+      set.add(email);
+      return Promise.all([
+        result,
+        NoticeModel.updateNoticeByName('notice', {
+          emails: [...set],
+        }),
+      ]);
+    })
+    .then(([result]) => {
+      // 此 user 是插入 mongodb 后的值，包含 _id
+      const user = result.ops[0];
+      // 将用户信息存入 session
+      delete user.password;
+      req.session.user = user;
+      // 写入 flash
+      req.flash('success', '注册成功');
+      // 跳转到首页
+      res.redirect('/posts');
+      // 发送欢迎邮件
+      const mailOptions = {
+        from: `"welcome" ${EmailAdress}`, // 发件人
+        to: user.email, // 收件人
+        subject: `欢迎${user.name}`, // 标题
+        text: '', // 内容
+        html: '<b>welcome</b>', // html
+      };
+      EmailModel.email(mailOptions);
+    })
+    .catch((e) => {
+      // 注册失败，异步删除上传的头像
+      fs.unlink(req.files.avatar.path);
+      // 用户名被占用则跳回注册页，而不是错误页
+      if (e.message.match('E11000 duplicate key')) {
+        req.flash('error', '用户名已被占用');
+        return res.redirect('/signup');
+      }
+      next(e);
+    });
 });
 
 module.exports = router;

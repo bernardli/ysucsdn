@@ -53,7 +53,7 @@ module.exports = {
   sendMeRes: function sendMeRes(res, text) {
     const mailOptions = {
       from: EmailAdress, // 发件人
-      to: adminEmail, // 收件人
+      to: [adminEmail], // 收件人
       subject: 'ysunotice', // 标题
       text: text + res, // 内容
       html: '', // html
