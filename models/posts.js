@@ -141,9 +141,9 @@ module.exports = {
   },
 
     // 通过文章 id 给 pv 加 1
-  incPv: function incPv(postId, w_pv) {
+  incPv: function incPv(postId, wPv) {
     return Post
-            .update({ _id: postId }, { $inc: { pv: parseInt(w_pv) } })
+            .update({ _id: postId }, { $inc: { pv: parseInt(wPv) } })
             .exec();
   },
 

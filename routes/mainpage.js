@@ -1,19 +1,19 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
 
-var PostModel = require('../models/posts');
+const router = express.Router();
+const PostModel = require('../models/posts');
 
-//获取解析后的主页页面
-router.get('/', function(req, res, next) {
-    var author = req.query.author;
-    var page = 1;
-    var search = req.query.search;
-    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+// 获取解析后的主页页面
+router.get('/', (req, res, next) => {
+  const author = req.query.author;
+  const page = 1;
+  const search = req.query.search;
+  const ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
-    res.render('mainpage');
+  res.render('mainpage');
 
 
-    /*PostModel.getannouncement()
+    /* PostModel.getannouncement()
         .then(function(announcement) {
             //增加点击量
             var postId;

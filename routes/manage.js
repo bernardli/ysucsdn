@@ -1,80 +1,73 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const PostModel = require('../models/posts');
+const checkLogin = require('../middlewares/check').checkLogin;
 
-var PostModel = require('../models/posts');
-var UserModel = require('../models/users');
-var CommentModel = require('../models/comments');
-var checkLogin = require('../middlewares/check').checkLogin;
-var checkAdmin = require('../middlewares/check').checkAdmin;
+const router = express.Router();
 
 // GET /manage 后台管理
 //   eg: GET /manage?author=***
-router.get('/',checkLogin, function(req, res, next) {
-    var page = req.query.page || 1;
-    var author = req.query.author;
-    var search = req.query.search;
-    var top = null;
-    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+router.get('/', checkLogin, (req, res, next) => {
+  const page = req.query.page || 1;
+  const author = req.query.author;
+  const search = req.query.search;
+  const top = null;
+  const ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
-    if (parseInt(page) == 1) {
-        Promise.all([
-                PostModel.getPostsLimit(author, page, search, top, 'n'),
-                PostModel.getPostsLimit(author, page, search, top, 'y')
-            ])
-            .then(function(results) {
-                drafts = results[0];
-                posts = results[1];
-                res.render('manage', {
-                    posts: posts,
-                    drafts: drafts,
-                    ip: ip
-                });
+  if (parseInt(page) === 1) {
+    Promise.all([
+      PostModel.getPostsLimit(author, page, search, top, 'n'),
+      PostModel.getPostsLimit(author, page, search, top, 'y'),
+    ])
+            .then(([drafts, posts]) => {
+              res.render('manage', {
+                posts,
+                drafts,
+                ip,
+              });
             })
             .catch(next);
-    } else {
-        PostModel.getPostsLimit(author, page, search, top, 'y')
-            .then(function(posts) {
-                res.render('components/posts-content--user', {
-                    posts: posts
-                });
+  } else {
+    PostModel.getPostsLimit(author, page, search, top, 'y')
+            .then((posts) => {
+              res.render('components/posts-content--user', {
+                posts,
+              });
             })
             .catch(next);
-    }
+  }
 });
 
 // GET /manage 搜索页
 //   eg: GET /manage/s?search=***?page=***
-router.get('/s',checkLogin, function(req, res, next) {
-    var author = req.session.user._id;
-    var search = req.query.search;
-    var page = req.query.page || 1;
-    var top = null;
-    var ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+router.get('/s', checkLogin, (req, res, next) => {
+  const author = req.session.user._id;
+  const search = req.query.search;
+  const page = req.query.page || 1;
+  const top = null;
+  const ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
-    if (parseInt(page) == 1) {
-        Promise.all([
-                PostModel.getPostsLimit(author, page, search, top, 'n'),
-                PostModel.getPostsLimit(author, page, search, top, 'y')
-            ])
-            .then(function(results) {
-                drafts = results[0];
-                posts = results[1];
-                res.render('manage', {
-                    posts: posts,
-                    drafts: drafts,
-                    ip: ip
-                });
+  if (parseInt(page) === 1) {
+    Promise.all([
+      PostModel.getPostsLimit(author, page, search, top, 'n'),
+      PostModel.getPostsLimit(author, page, search, top, 'y'),
+    ])
+            .then(([drafts, posts]) => {
+              res.render('manage', {
+                posts,
+                drafts,
+                ip,
+              });
             })
             .catch(next);
-    } else {
-        PostModel.getPostsLimit(author, page, search, top, 'y')
-            .then(function(posts) {
-                res.render('components/posts-content--user', {
-                    posts: posts
-                });
+  } else {
+    PostModel.getPostsLimit(author, page, search, top, 'y')
+            .then((posts) => {
+              res.render('components/posts-content--user', {
+                posts,
+              });
             })
             .catch(next);
-    }
+  }
 });
 
 module.exports = router;
