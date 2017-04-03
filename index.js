@@ -8,6 +8,7 @@ const routes = require('./routes');
 const pkg = require('./package');
 const winston = require('winston');
 const expressWinston = require('express-winston');
+const spider = require('./spider/notice');
 
 const app = express();
 
@@ -90,3 +91,5 @@ app.use((err, req, res, next) => {
 app.listen(config.port, () => {
   console.log(`${pkg.name} listening on port ${config.port}`);
 });
+
+spider.spiderNotice();

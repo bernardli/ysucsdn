@@ -6,11 +6,12 @@ const adminEmail = config.adminEmail;
 const EmailModel = require('../models/sendEmail');
 const NoticeModel = require('../models/ysuNotice');
 
-function newNotice(notice, $, i) {
-  const href = $('li a').eq(i).attr('href');
-  const time = $('li a span').eq(i).text();
-  const title = $('li a').eq(i).attr('title');
-  NoticeModel.oneETag(`http://notice.ysu.edu.cn${href}`)
+exports.spiderNotice = () => {
+  function newNotice(notice, $, i) {
+    const href = $('li a').eq(i).attr('href');
+    const time = $('li a span').eq(i).text();
+    const title = $('li a').eq(i).attr('title');
+    NoticeModel.oneETag(`http://notice.ysu.edu.cn${href}`)
     .then((etag) => {
       if (i === 6) {
         stopNotice();
@@ -33,12 +34,12 @@ function newNotice(notice, $, i) {
       NoticeModel.sendMeRes(err, '');
       console.log(err);
     });
-}
+  }
 
-console.log('系统启动成功');
+  console.log('系统启动成功');
 
-function notice() {
-  NoticeModel.getNotice('notice')
+  function notice() {
+    NoticeModel.getNotice('notice')
     .then((result) => {
       const notice = result[0];
       if (!notice) {
@@ -84,14 +85,11 @@ function notice() {
       NoticeModel.sendMeRes(err, '');
       console.log(err);
     });
-}
+  }
 
-const flag = setInterval(notice, 1000);
+  const flag = setInterval(notice, 600000);
 
-/* exports.spiderNotice = function spiderNotice() {
-  const flag = setInterval(notice, 1000);
-};*/
-
-function stopNotice() {
-  clearInterval(flag);
-}
+  function stopNotice() {
+    clearInterval(flag);
+  }
+};
