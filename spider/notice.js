@@ -36,7 +36,7 @@ exports.spiderNotice = () => {
     });
   }
 
-  console.log('系统启动成功');
+  console.log('通知监控系统启动成功');
 
   function notice() {
     NoticeModel.getNotice('notice')

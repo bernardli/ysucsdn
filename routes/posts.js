@@ -126,6 +126,7 @@ router.post('/', checkLogin, (req, res, next) => {
   const author = req.session.user._id;
   const title = req.fields.title;
   const content = req.fields.content;
+  const tags = req.fields.tags.split(' ');   // 使用空格把字符串分割为数组
   const p = req.query.p;
 
     // 校验参数
@@ -145,7 +146,7 @@ router.post('/', checkLogin, (req, res, next) => {
     author,
     title,
     content,
-    tags: [],
+    tags,
     pv: 0,
     top: 'n',
     published: p,
@@ -183,9 +184,6 @@ router.get('/:postId', (req, res, next) => {
               CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
             ]))
             .then(([post, comments]) => {
-              const tag0 = post.tags[0];
-              const tag1 = post.tags[1];
-              const tag2 = post.tags[2];
               if (!post) {
                 throw new Error('该文章不存在');
               }
@@ -239,6 +237,7 @@ router.post('/:postId/edit', checkLogin, (req, res, next) => {
     // 获取修改页面表格传来的 title,content 的数据
   const title = req.fields.title;
   const content = req.fields.content;
+  const tags = req.fields.tags.split(' ');   // 使用空格把字符串分割为数组
   const p = req.query.p;
 
     // 校验参数
@@ -254,7 +253,7 @@ router.post('/:postId/edit', checkLogin, (req, res, next) => {
     return res.redirect('back');
   }
 
-  PostModel.updatePostById(postId, author, { title, content, published: p })
+  PostModel.updatePostById(postId, author, { title, content, published: p, tags })
         .then(() => {
           req.flash('success', '编辑文章成功');
             // 编辑成功后跳转到上一页

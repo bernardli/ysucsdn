@@ -6,6 +6,10 @@
                     <label class="text-label">标题:</label>
                     <input type="text" name="title" class="input-text-long" value="<%= post.title %>">
                 </div>
+                <div class="box-title">
+                    <label class="text-label">标签:</label>
+                    <input type="text" name="tags" class="input-text-long" value="<%= post.tags.join(' ') %>">
+                </div>
                 <div id="editormd" class="text-writing">     
                     <textarea name="content" style="display:none;"><%= post.content %></textarea>
                 </div>
@@ -15,7 +19,11 @@
             <form class="form-writing" method="post" action="/posts/<%= post._id %>/edit" id="form2">
                 <div class="box-title">
                     <label class="text-label">标题:</label>
-                    <input type="text" name="title" class="input-text-long">
+                    <input type="text" name="title" class="input-text-long" value="<%= post.title %>">
+                </div>
+                <div class="box-title">
+                    <label class="text-label">标签:</label>
+                    <input type="text" name="tags" class="input-text-long" value="<%= post.tags.join(' ') %>">
                 </div>
                 <div id="editornormal" class="text-writing">
                     <textarea name="content" id="" class="textarea-writing"><%= post.content %></textarea>
