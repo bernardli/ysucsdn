@@ -23,22 +23,22 @@ router.get('/', (req, res, next) => {
       PostModel.getPostsLimit(author, page, search, 'n', 'y'), // 获取最新的文章，不包括置顶
       PostModel.getPosts(author, search, 'y', 'y'), // 获取置顶文章
     ])
-            .then(([posts, tops]) => {
-              res.render('posts', {
-                posts,
-                tops,
-                ip,
-              });
-            })
-            .catch(next);
+      .then(([posts, tops]) => {
+        res.render('posts', {
+          posts,
+          tops,
+          ip,
+        });
+      })
+      .catch(next);
   } else {
     PostModel.getPostsLimit(author, page, search, 'n', 'y') // 获取最新的文章，不包括置顶
-            .then((posts) => {
-              res.render('components/limit-posts', {
-                posts,
-              });
-            })
-            .catch(next);
+      .then((posts) => {
+        res.render('components/limit-posts', {
+          posts,
+        });
+      })
+      .catch(next);
   }
 });
 
@@ -53,21 +53,21 @@ router.get('/s', (req, res, next) => {
 
   if (parseInt(page) === 1) {
     PostModel.getPostsLimit(author, page, search, top, 'y')
-            .then((posts) => {
-              res.render('search', {
-                posts,
-                ip,
-              });
-            })
-            .catch(next);
+      .then((posts) => {
+        res.render('search', {
+          posts,
+          ip,
+        });
+      })
+      .catch(next);
   } else {
     PostModel.getPostsLimit(author, page, search, top, 'y')
-            .then((posts) => {
-              res.render('components/limit-posts', {
-                posts,
-              });
-            })
-            .catch(next);
+      .then((posts) => {
+        res.render('components/limit-posts', {
+          posts,
+        });
+      })
+      .catch(next);
   }
 });
 
@@ -87,28 +87,28 @@ router.get('/user', (req, res, next) => {
       PostModel.getPostsLimit(author, page, search, top, 'y'),
       UserModel.getUser(name, email, author),
     ])
-            .then(([posts, author]) => {
-              if (!author) {
-                req.flash('error', '没有这个用户');
-                return res.redirect('/posts');
-              }
-              res.render('user_posts', {
-                posts,
-                author,
-                ip,
-                page,
-              });
-            })
-            .catch(next);
+      .then(([posts, author]) => {
+        if (!author) {
+          req.flash('error', '没有这个用户');
+          return res.redirect('/posts');
+        }
+        res.render('user_posts', {
+          posts,
+          author,
+          ip,
+          page,
+        });
+      })
+      .catch(next);
   } else {
     PostModel.getPostsLimit(author, page, search, top, 'y')
-            .then((posts) => {
-              res.render('components/limit-posts', {
-                posts,
-                page,
-              });
-            })
-            .catch(next);
+      .then((posts) => {
+        res.render('components/limit-posts', {
+          posts,
+          page,
+        });
+      })
+      .catch(next);
   }
 });
 
@@ -126,10 +126,10 @@ router.post('/', checkLogin, (req, res, next) => {
   const author = req.session.user._id;
   const title = req.fields.title;
   const content = req.fields.content;
-  const tags = req.fields.tags.split(' ');   // 使用空格把字符串分割为数组
+  const tags = req.fields.tags.split(' '); // 使用空格把字符串分割为数组
   const p = req.query.p;
 
-    // 校验参数
+  // 校验参数
   try {
     if (!title.length) {
       throw new Error('请填写标题');
@@ -153,14 +153,14 @@ router.post('/', checkLogin, (req, res, next) => {
   };
 
   PostModel.create(post)
-        .then((result) => {
-            // 此 post 是插入 mongodb 后的值，包含 _id
-          post = result.ops[0];
-          req.flash('success', '发表成功');
-            // 发表成功后跳转到该文章页
-          res.redirect(`/posts/${post._id}`);
-        })
-        .catch(next);
+    .then((result) => {
+      // 此 post 是插入 mongodb 后的值，包含 _id
+      post = result.ops[0];
+      req.flash('success', '发表成功');
+      // 发表成功后跳转到该文章页
+      res.redirect(`/posts/${post._id}`);
+    })
+    .catch(next);
 });
 
 // GET /posts/:postId 单独一篇的文章页
@@ -177,33 +177,33 @@ router.get('/:postId', (req, res, next) => {
     wPv = 0;
   }
   if (parseInt(page) === 1) {
-        // pv 加 1   浏览量
+    // pv 加 1   浏览量
     PostModel.incPv(postId, wPv)
-            .then(incPvResult => Promise.all([
-              PostModel.getPostById(postId), // 获取文章信息
-              CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
-            ]))
-            .then(([post, comments]) => {
-              if (!post) {
-                throw new Error('该文章不存在');
-              }
-              res.render('post', {
-                post,
-                comments,
-                ip,
-                page,
-              });
-            })
-            .catch(next);
+      .then(incPvResult => Promise.all([
+        PostModel.getPostById(postId), // 获取文章信息
+        CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
+      ]))
+      .then(([post, comments]) => {
+        if (!post) {
+          throw new Error('该文章不存在');
+        }
+        res.render('post', {
+          post,
+          comments,
+          ip,
+          page,
+        });
+      })
+      .catch(next);
   } else {
     CommentModel.getCommentslimit(postId, page) // 获取该文章留言
-            .then((comments) => {
-              res.render('components/limit-comments', {
-                comments,
-                page,
-              });
-            })
-            .catch(next);
+      .then((comments) => {
+        res.render('components/limit-comments', {
+          comments,
+          page,
+        });
+      })
+      .catch(next);
   }
 });
 
@@ -213,34 +213,34 @@ router.get('/:postId/edit', checkLogin, (req, res, next) => {
   const author = req.session.user._id;
   const ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
   PostModel.getRawPostById(postId)
-        .then((post) => {
-          if (!post) {
-            throw new Error('该文章不存在');
-          }
-          if (author.toString() !== post.author._id.toString()) {
-            throw new Error('权限不足');
-          }
-          res.render('edit', {
-            post,
-            ip,
-          });
-        })
-        .catch(next);
+    .then((post) => {
+      if (!post) {
+        throw new Error('该文章不存在');
+      }
+      if (author.toString() !== post.author._id.toString()) {
+        throw new Error('权限不足');
+      }
+      res.render('edit', {
+        post,
+        ip,
+      });
+    })
+    .catch(next);
 });
 
 // POST /posts/:postId/edit 更新一篇文章
 router.post('/:postId/edit', checkLogin, (req, res, next) => {
-    // 通过占位符获取文章ID
+  // 通过占位符获取文章ID
   const postId = req.params.postId;
-    // 从session中获取用户ID
+  // 从session中获取用户ID
   const author = req.session.user._id;
-    // 获取修改页面表格传来的 title,content 的数据
+  // 获取修改页面表格传来的 title,content 的数据
   const title = req.fields.title;
   const content = req.fields.content;
-  const tags = req.fields.tags.split(' ');   // 使用空格把字符串分割为数组
+  const tags = req.fields.tags.split(' '); // 使用空格把字符串分割为数组
   const p = req.query.p;
 
-    // 校验参数
+  // 校验参数
   try {
     if (!title.length) {
       throw new Error('请填写标题');
@@ -253,13 +253,18 @@ router.post('/:postId/edit', checkLogin, (req, res, next) => {
     return res.redirect('back');
   }
 
-  PostModel.updatePostById(postId, author, { title, content, published: p, tags })
-        .then(() => {
-          req.flash('success', '编辑文章成功');
-            // 编辑成功后跳转到上一页
-          res.redirect(`/posts/${postId}`);
-        })
-        .catch(next);
+  PostModel.updatePostById(postId, author, {
+    title,
+    content,
+    published: p,
+    tags,
+  })
+    .then(() => {
+      req.flash('success', '编辑文章成功');
+      // 编辑成功后跳转到上一页
+      res.redirect(`/posts/${postId}`);
+    })
+    .catch(next);
 });
 
 // GET /posts/:postId/remove 删除一篇文章
@@ -269,20 +274,20 @@ router.get('/:postId/remove', checkLogin, (req, res, next) => {
 
   if (req.session.user.identity.toString() === 'admin') {
     PostModel.admindelPostById(postId)
-            .then(() => {
-              req.flash('success', '删除文章成功');
-                // 删除成功后跳转到主页
-              res.redirect('/posts');
-            })
-            .catch(next);
+      .then(() => {
+        req.flash('success', '删除文章成功');
+        // 删除成功后跳转到主页
+        res.redirect('/posts');
+      })
+      .catch(next);
   } else {
     PostModel.delPostById(postId, author)
-            .then(() => {
-              req.flash('success', '删除文章成功');
-                // 删除成功后跳转到主页
-              res.redirect('/posts');
-            })
-            .catch(next);
+      .then(() => {
+        req.flash('success', '删除文章成功');
+        // 删除成功后跳转到主页
+        res.redirect('/posts');
+      })
+      .catch(next);
   }
 });
 
@@ -293,17 +298,17 @@ router.get('/:postId/top', checkAdmin, (req, res, next) => {
   const author = req.session.user._id;
 
   PostModel.admintopPostById(postId, t)
-        .then(() => {
-          if (t === 0) {
-            req.flash('success', '取消置顶文章成功');
-          }
-          if (t === 1) {
-            req.flash('success', '置顶文章成功');
-          }
-            // 置顶或取消置顶成功后跳转到主页
-          res.redirect('/posts');
-        })
-        .catch(next);
+    .then(() => {
+      if (t === 0) {
+        req.flash('success', '取消置顶文章成功');
+      }
+      if (t === 1) {
+        req.flash('success', '置顶文章成功');
+      }
+      // 置顶或取消置顶成功后跳转到主页
+      res.redirect('/posts');
+    })
+    .catch(next);
 });
 
 // POST /posts/:postId/comment 创建一条留言
@@ -318,27 +323,27 @@ router.post('/:postId/comment', checkLogin, (req, res, next) => {
   };
 
   Promise.all([
-    CommentModel.create(comment),
     PostModel.getPostById(postId),
+    CommentModel.create(comment),
   ])
-        .then(([, post]) => {
-          const email = post.author.email;
-          const title = post.title;
-          req.flash('success', '留言成功');
-            // 留言成功后跳转到上一页
-          res.redirect('back');
-          if (req.session.user.name !== post.author.name) {
-            const mailOptions = {
-              from: EmailAdress, // 发件人
-              to: email, // 收件人
-              subject: '您的文章有了新的评论', // 标题
-              text: `用户： ${req.session.user.name} 在您的文章《${title}》中评论到： “${content}”`, // 内容
-                    //html: "<a href=http://ysucsdn.cn/signin/password?r=" + random + ">点击找回密码</a>" // html
-            };
-            EmailModel.email(mailOptions);
-          }
-        })
-        .catch(next);
+    .then(([post]) => {
+      const email = post.author.email;
+      const title = post.title;
+      req.flash('success', '留言成功');
+      // 留言成功后跳转到上一页
+      res.redirect('back');
+      if (req.session.user.name !== post.author.name) {
+        const mailOptions = {
+          from: EmailAdress, // 发件人
+          to: email, // 收件人
+          subject: '您的文章有了新的评论', // 标题
+          text: `用户： ${req.session.user.name} 在您的文章《${title}》中评论到： “${content}”`, // 内容
+          //html: "<a href=http://ysucsdn.cn/signin/password?r=" + random + ">点击找回密码</a>" // html
+        };
+        EmailModel.email(mailOptions);
+      }
+    })
+    .catch(next);
 });
 
 // GET /posts/:postId/comment/:commentId/remove 删除一条留言
@@ -348,20 +353,20 @@ router.get('/:postId/comment/:commentId/remove', checkLogin, (req, res, next) =>
 
   if (req.session.user.identity.toString() === 'admin') {
     CommentModel.admindelCommentById(commentId)
-            .then(() => {
-              req.flash('success', '删除留言成功');
-                // 删除成功后跳转到上一页
-              res.redirect('back');
-            })
-            .catch(next);
+      .then(() => {
+        req.flash('success', '删除留言成功');
+        // 删除成功后跳转到上一页
+        res.redirect('back');
+      })
+      .catch(next);
   } else {
     CommentModel.delCommentById(commentId, author)
-            .then(() => {
-              req.flash('success', '删除留言成功');
-                // 删除成功后跳转到上一页
-              res.redirect('back');
-            })
-            .catch(next);
+      .then(() => {
+        req.flash('success', '删除留言成功');
+        // 删除成功后跳转到上一页
+        res.redirect('back');
+      })
+      .catch(next);
   }
 });
 

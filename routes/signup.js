@@ -6,7 +6,7 @@ const config = require('config-lite');
 const UserModel = require('../models/users');
 const EmailModel = require('../models/sendEmail');
 const checkNotLogin = require('../middlewares/check').checkNotLogin;
-const NoticeModel = require('../models/ysuNotice');
+const NoticeModel = require('../models/emailNotice');
 
 const saltRounds = 10;
 const router = express.Router();
@@ -77,26 +77,21 @@ router.post('/', checkNotLogin, (req, res, next) => {
         email,
         point: 0,
       };
-      return user;
+      return UserModel.create(user); // 用户信息写入数据库
     })
-    .then(user => Promise.all([
-      UserModel.create(user), // 用户信息写入数据库
-      NoticeModel.getNotice('notice'),
-    ]))
-    .then(([result, notice]) => {
-      const emails = notice[0].emails;
-      const set = new Set(emails);
-      set.add(email);
-      return Promise.all([
-        result,
-        NoticeModel.updateNoticeByName('notice', {
-          emails: [...set],
-        }),
-      ]);
-    })
-    .then(([result]) => {
+    .then((result) => {
       // 此 user 是插入 mongodb 后的值，包含 _id
       const user = result.ops[0];
+      const notice = {
+        user: user._id,
+        ysuNotice: 'y',
+      };
+      return Promise.all([
+        user,
+        NoticeModel.create(notice),
+      ]);
+    })
+    .then(([user]) => {
       // 将用户信息存入 session
       delete user.password;
       req.session.user = user;

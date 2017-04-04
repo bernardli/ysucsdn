@@ -38,7 +38,7 @@ router.get('/', checkLogin, (req, res, next) => {
   }
 });
 
-// GET /manage 后台管理
+/*// GET /manage 后台管理
 //   eg: GET /manage/email
 router.get('/email', checkLogin, (req, res, next) => {
   const ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
@@ -66,6 +66,6 @@ router.post('/email', checkLogin, (req, res, next) => {
       res.redirect('back');
     })
     .catch(next);
-});
+});*/
 
 module.exports = router;

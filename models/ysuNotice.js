@@ -2,25 +2,24 @@ const YsuNotice = require('../lib/mongo').YsuNotice;
 const cheerio = require('cheerio');
 const request = require('request-promise');
 const config = require('config-lite');
+const EmailModel = require('../models/sendEmail');
 
 const EmailAdress = config.transporter.auth.user;
 const adminEmail = config.adminEmail;
 
-const EmailModel = require('../models/sendEmail');
-
 module.exports = {
-    // 创建一条记录
+  // 创建一条记录
   create: function create(notice) {
     return YsuNotice
-            .create(notice)
-            .exec();
+      .create(notice)
+      .exec();
   },
 
 
   getNotice: function getNotice(name) {
     return YsuNotice
-            .find({ name })
-            .exec();
+      .find({ name })
+      .exec();
   },
 
 
@@ -28,18 +27,18 @@ module.exports = {
     return YsuNotice.update({ name }, { $set: data }).exec();
   },
 
-    // 获取网页的ETag
-  oneETag: function oneETag(url) {
+  // 获取网页的ETag
+  oneHeader: function oneHeader(url) {
     const options = {
       uri: url,
       transform(body, response, resolveWithFullResponse) {
-        return response.headers.etag;
+        return response.headers;
       },
     };
     return request(options);
   },
 
-    // 获取网页的html
+  // 获取网页的html
   oneHtml: function oneHtml(url) {
     const options = {
       uri: url,
