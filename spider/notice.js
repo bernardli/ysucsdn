@@ -17,18 +17,22 @@ exports.spiderNotice = () => {
       `http://notice.ysu.edu.cn${href}`,
     ])
       .then(([header, $, href]) => {
-        if (i === 6) {
-          stopNotice();
+        if (!(header && $ && href)) {
+          throw new Error('网站访问出错');
+        } else if (i === 6) {
+          NoticeModel.updateNoticeByName();
           NoticeModel.sendMeRes('系统侦测到严重漏洞，已启动自毁程序', '');
           console.log('系统侦测到严重漏洞，已启动自毁程序');
+          stopNotice();
         } else if (notice.firstETag !== header.etag) {
-          let { 'last-modified': time } = header;          // 必须是let
+          let {
+            'last-modified': time,
+          } = header; // 必须是let
           time = moment(time).format('YYYY-MM-DD，H:mm:ss');
           const title = $('td .titlestyle50830').text().trim();
-          const query = {
+          EmailNoticeModel.getNotice({
             ysuNotice: 'y',
-          };
-          EmailNoticeModel.getNotice(query)
+          })
             .then((users) => {
               const emails = new Set();
               users.forEach(user => emails.add(user.user.email));
@@ -50,6 +54,39 @@ exports.spiderNotice = () => {
               NoticeModel.sendMeRes(err, '');
               console.log(err);
             });
+          if (i === 0) {
+            const data = {
+              firstETag: header.etag,
+            };
+            NoticeModel.updateNoticeByName('notice', data);
+          }
+        }
+      })
+      .catch((err) => {
+        NoticeModel.sendMeRes(err, '');
+        console.log(err);
+      });
+  }
+
+  // 防止通知被删除导致逻辑错误，先检索一遍
+  function preNotice(notice, $$, i) {
+    const href = $$('li a').eq(i).attr('href');
+    Promise.all([
+      NoticeModel.oneHeader(`http://notice.ysu.edu.cn${href}`),
+      NoticeModel.oneHtml(`http://notice.ysu.edu.cn${href}`),
+      `http://notice.ysu.edu.cn${href}`,
+    ])
+      .then(([header, $, href]) => {
+        if (!(header && $ && href)) {
+          throw new Error('网站访问出错');
+        } else if (i === 6) {
+          NoticeModel.updateNoticeByName();
+          NoticeModel.sendMeRes('可能有通知被删除', '');
+          console.log('可能有通知被删除');
+        } else if (notice.firstETag !== header.etag) {
+          preNotice(notice, $$, i + 1);
+        } else if (notice.firstETag === header.etag) {
+          newNotice(notice, $, 0);
         }
       })
       .catch((err) => {
@@ -102,7 +139,9 @@ exports.spiderNotice = () => {
               ]);
             })
             .then(([$, header, href]) => {
-              let { 'last-modified': time } = header;         // 必须是let
+              let {
+                'last-modified': time,
+              } = header; // 必须是let
               time = moment(time).format('YYYY-MM-DD，H:mm:ss');
               const title = $('td .titlestyle50830').text().trim();
 
@@ -123,18 +162,7 @@ exports.spiderNotice = () => {
         } else {
           NoticeModel.oneHtml('http://notice.ysu.edu.cn/')
             .then(($) => {
-              const href = $('li a').eq(0).attr('href');
-              return Promise.all([
-                `http://notice.ysu.edu.cn${href}`,
-                newNotice(notice, $, 0),
-              ]);
-            })
-            .then(([href]) => NoticeModel.oneHeader(href))
-            .then((header) => {
-              const data = {
-                firstETag: header.etag,
-              };
-              NoticeModel.updateNoticeByName('notice', data);
+              preNotice(notice, $, 0);
             })
             .catch((err) => {
               NoticeModel.sendMeRes(err, '');
