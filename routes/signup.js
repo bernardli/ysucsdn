@@ -111,7 +111,9 @@ router.post('/', checkNotLogin, (req, res, next) => {
     })
     .catch((e) => {
       // 注册失败，异步删除上传的头像
-      fs.unlink(req.files.avatar.path);
+      if (req.files.avatar.name) {
+        fs.unlink(req.files.avatar.path);
+      }
       // 用户名被占用则跳回注册页，而不是错误页
       if (e.message.match('E11000 duplicate key')) {
         req.flash('error', '用户名已被占用');
