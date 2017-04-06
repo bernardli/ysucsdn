@@ -3,7 +3,6 @@ const cheerio = require('cheerio');
 const request = require('request-promise');
 const config = require('config-lite');
 const EmailModel = require('../models/sendEmail');
-const NoticeModel = require('../models/ysuNotice');
 
 const EmailAdress = config.transporter.auth.user;
 const adminEmail = config.adminEmail;
@@ -59,22 +58,5 @@ module.exports = {
       html: '', // html
     };
     EmailModel.email(mailOptions);
-  },
-
-  updateNoticeByHtml: function updateNoticeByHtml() {
-    NoticeModel.oneHtml('http://notice.ysu.edu.cn/')
-    .then(($) => {
-      const href = $('li a').eq(0).attr('href');
-      return NoticeModel.oneHeader(`http://notice.ysu.edu.cn${href}`);
-    })
-    .then((header) => {
-      const data = {
-        firstETag: header.etag,
-      };
-      NoticeModel.updateNoticeByName('notice', data);
-    })
-    .catch((err) => {
-      NoticeModel.sendMeRes(err, '');
-    });
   },
 };
