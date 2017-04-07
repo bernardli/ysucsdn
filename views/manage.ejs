@@ -13,12 +13,10 @@
             </div>
 
             <!-- 已发布部分 -->   
-            <div class="posts limit-post-content">
+            <div class="posts">
                 <h1 class="content-subhead">最新文章</h1>
-                <div class="pure-g">
-                    <% posts.forEach(function (post) { %>
-                        <%- include('components/posts-content--user', { post: post,publish:1 }) %>
-                    <% }) %>
+                <div class="pure-g limit-post-content">
+                    <%- include('components/limit-posts-user', { posts: posts }) %>
                 </div>
             </div>
    
