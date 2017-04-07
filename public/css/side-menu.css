@@ -383,3 +383,34 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     width: 100%;
     height: 100%;
 }
+
+.menu-load {
+    width: 100%;
+    height: 30px;
+}
+
+.item-load {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    transition: all 1s;
+    font-size: 20px;
+    color: #c1c1cb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-load:hover {
+    background-color: #f7f4f4;
+}
+
+.item-load--nomore {
+    width: 100%;
+    height: 100%;
+    font-size: 20px;
+    color: #c1c1cb;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

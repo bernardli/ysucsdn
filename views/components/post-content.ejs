@@ -7,7 +7,7 @@
             <h2 class="post-title"><%= post.title%></h2>
         </a>
         <p class="post-meta">
-            By <a class="post-author" href="#"><%= post.author.name%></a>
+            By <a class="post-author" href="/posts/user?author=<%= post.author.id %>"><%= post.author.name%></a>
         </p>
     </header>
     <div class="post-description">

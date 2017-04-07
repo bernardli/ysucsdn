@@ -14,7 +14,7 @@ $(document).ready(function() {
             //追加更新
             $('.limit-post-content').append(data);
             //改变“加载更多”
-            if (!data || (data&&data.match(/body-article-item/g).length != 5)) {
+            if (!data || (data && data.match(/body-article-item/g).length != 5)) {
                 $('.text-load').text('----- 没有文章了/(ㄒoㄒ)/~~ -----');
                 $('.item-load').attr('id', 'no_posts');
                 $('#no_posts').unbind();
@@ -30,7 +30,7 @@ $(document).ready(function() {
             //追加更新
             $('.limit-post-content').append(data);
             //改变“加载更多”
-            if (!data || (data&&data.match(/body-article-item/g).length != 5)) {
+            if (!data || (data && data.match(/body-article-item/g).length != 5)) {
                 $('.text-load').text('----- 人呐就是不知道 (っ*´Д`)っ 已经没有更多文章了 -----');
                 $('.item-load').attr('id', 'no_user');
                 $('#no_user').unbind();
@@ -47,7 +47,7 @@ $(document).ready(function() {
             //追加更新
             $('.limit-comments').append(data);
             //改变“加载更多”
-            if (!data || (data&&data.match(/comment comment-single/g).length != 5)) {
+            if (!data || (data && data.match(/comment comment-single/g).length != 5)) {
                 $('.text-load').text('----- 更多的评论 (＠_＠;) 不存在的ヽ(*´Д｀*)ﾉ -----');
                 $('.item-load').attr('id', 'no_comments');
                 $('#no_comments').unbind();

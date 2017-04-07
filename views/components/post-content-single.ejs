@@ -65,7 +65,9 @@
         <%- post.content%>
     </div>
 
-    <%- include('../components/comments') %>
+    <% if (post.published != 'n') { %>
+        <%- include('../components/comments') %>
+    <% } %>
 </div>
 
 </div>
