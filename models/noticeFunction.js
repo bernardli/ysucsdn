@@ -17,11 +17,11 @@ module.exports = {
                 firstETag: header.etag,
               };
               NoticeModel.updateNoticeByName('notice', data);
-              NoticeModel.sendMeRes('发生错误，已自动更新数据库为最新记录。错误可能有：1.可能有通知被删除。2.可能段时间发表大量文章。3.其他异常。', '');
+              NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//发生错误，已自动更新数据库为最新记录。错误可能有：1.可能有通知被删除。2.可能段时间发表大量文章。3.其他异常。`);
               console.log('发生错误，已自动更新数据库为最新记录。错误可能有：1.可能有通知被删除。2.可能段时间发表大量文章。3.其他异常。');
             })
             .catch((err) => {
-              NoticeModel.sendMeRes(err, '');
+              NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//${err}`);
             });
   },
 
@@ -33,9 +33,9 @@ module.exports = {
     const nightE = moment('22:10:00', 'H:mm:ss');
     const timeNow = moment(new Date(), 'H:mm:ss');
     if (timeNow > morningB && timeNow < morningE) {
-      NoticeModel.sendMeRes('大佬早上好哟，通知系统今天也是元气满满的呢', '');
+      NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//大佬早上好哟，通知系统今天也是元气满满的呢`);
     } else if (timeNow > nightB && timeNow < nightE) {
-      NoticeModel.sendMeRes('大佬晚安啦，通知系统晚上也是元气满满的呢', '');
+      NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//大佬晚安啦，通知系统晚上也是元气满满的呢`);
     }
   },
 };
