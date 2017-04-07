@@ -16,7 +16,7 @@ router.get('/', checkLogin, (req, res, next) => {
 
   if (parseInt(page) === 1) {
     Promise.all([
-      PostModel.getPostsLimit(author, page, search, top, 'n'),
+      PostModel.getPosts(author, search, top, 'n'),
       PostModel.getPostsLimit(author, page, search, top, 'y'),
     ])
       .then(([drafts, posts]) => {
