@@ -60,6 +60,7 @@ body {
     align-content: center;
     width: 100%;
     margin-left: auto;
+    margin-top: 5px;
     height: 35px;
     border: none;
     text-decoration: none;
@@ -68,6 +69,7 @@ body {
     text-align: center;
     letter-spacing: .5px;
     transition: .2s ease-out;
+    cursor: pointer;
 }
 
 .box-title {

@@ -273,12 +273,12 @@ h3 {
     height: 100%;
     margin: 0 auto;
     background-color: #FCFFF5;
-    color: #2C662D;
+    color: #51BA52;
     display: flex;
     justify-content: center;
     align-content: center;
-    /*border-radius: 5%;*/
-    border: 3px solid #2C662D;
+    border-radius: 10px;
+    border: 2px solid #51BA52;
 }
 
 .error-message {
@@ -286,16 +286,24 @@ h3 {
     height: 100%;
     margin: 0 auto;
     background-color: #FCFFF5;
-    color: #b51f1f;
+    color: #ee2c2c;
     display: flex;
     justify-content: center;
     align-content: center;
-    /*border-radius: 5%;*/
-    border: 3px solid #b51f1f;
+    border-radius: 10px;
+    border: 2px solid #ee2c2c;
 }
 
 .text-notice {
     margin: auto;
+}
+
+@media (max-width: 48em) {
+    /*大屏幕的时候*/
+    .success-message,
+    .error-message {
+        width: 80%;
+    }
 }
 
 
@@ -336,6 +344,7 @@ h3 {
     background-color: #426A89;
     text-decoration: none;
     border-radius: 2px;
+    cursor: pointer;
 }
 
 .form-search {
