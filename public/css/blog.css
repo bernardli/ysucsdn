@@ -255,6 +255,9 @@ h3 {
     color: black;
 }
 
+
+/*提示框*/
+
 .notice {
     position: fixed;
     width: 100%;
@@ -266,7 +269,7 @@ h3 {
 }
 
 .success-message {
-    width: 50%;
+    width: 40%;
     height: 100%;
     margin: 0 auto;
     background-color: #FCFFF5;
@@ -274,25 +277,29 @@ h3 {
     display: flex;
     justify-content: center;
     align-content: center;
-    border: 1px solid #2C662D;
+    /*border-radius: 5%;*/
+    border: 3px solid #2C662D;
 }
 
 .error-message {
-    width: 50%;
+    width: 40%;
     height: 100%;
     margin: 0 auto;
     background-color: #FCFFF5;
-    color: #db2222;
+    color: #b51f1f;
     display: flex;
     justify-content: center;
     align-content: center;
-    border: 1px solid #db2222;
+    /*border-radius: 5%;*/
+    border: 3px solid #b51f1f;
 }
 
 .text-notice {
-    width: auto;
-    display: inline;
+    margin: auto;
 }
+
+
+/*提示框*/
 
 .post-search {
     margin: 5% 2em 0;

@@ -1,5 +1,7 @@
 $(document).ready(function() {
     setTimeout(function() {
-        $('.notice').css('display', 'none');
-    }, 5000);
+        $('.notice').hide(2000, function() {
+            this.css('display', 'none');
+        });
+    }, 3000);
 });
