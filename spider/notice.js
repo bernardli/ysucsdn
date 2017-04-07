@@ -55,14 +55,14 @@ exports.spiderNotice = () => {
                 to: set, // 收件人
                 subject: 'ysunotice', // 标题
                 text: '', // 内容
-                html: `<p>有新通知啦，${time}发表了《${title}》</p><a href='${href}'>${href}</a>`, // html
+                html: `<p>通知监控系统发现新通知，${time}发表了《${title}》</p><a href='${href}'>${href}</a>`, // html
               };
               EmailModel.email(mailOptions);
-              console.log(`有新通知啦，${time}发表了《${title}》${href}`);
+              console.log(`通知监控系统发现新通知，${time}发表了《${title}》${href}`);
               newNotice(notice, $$, i + 1);
             })
             .catch((err) => {
-              NoticeModel.sendMeRes(err, '');
+              NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//${err}`);
               console.log(err);
             });
           if (i === 0) {
@@ -74,7 +74,7 @@ exports.spiderNotice = () => {
         }
       })
       .catch((err) => {
-        NoticeModel.sendMeRes(err, '');
+        NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//${err}`);
         console.log(err);
       });
   }
@@ -107,7 +107,7 @@ exports.spiderNotice = () => {
         }
       })
       .catch((err) => {
-        NoticeModel.sendMeRes(err, '');
+        NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//${err}`);
         console.log(err);
       });
   }
@@ -115,6 +115,7 @@ exports.spiderNotice = () => {
   console.log('通知监控系统启动成功');
 
   function Notice() {
+    console.log('通知监控系统运行正常');
     NoticeFuncModel.stateNotice();
     NoticeModel.getNotice('notice')
       .then((result) => {
@@ -170,7 +171,7 @@ exports.spiderNotice = () => {
               console.log(`数据库初始化成功，最新文章为${time}发表的《${title}》 ${href}`);
             })
             .catch((err) => {
-              NoticeModel.sendMeRes(err, '数据库初始化失败：');
+              NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//数据库初始化失败：${err}`);
               console.log(err);
             });
         } else {
@@ -179,13 +180,13 @@ exports.spiderNotice = () => {
               preNotice(notice, $, 0);
             })
             .catch((err) => {
-              NoticeModel.sendMeRes(err, '');
+              NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//${err}`);
               console.log(err);
             });
         }
       })
       .catch((err) => {
-        NoticeModel.sendMeRes(err, '');
+        NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//${err}`);
         console.log(err);
       });
   }
@@ -196,7 +197,7 @@ exports.spiderNotice = () => {
 
   function stopNotice() {
     clearInterval(flag);
-    NoticeModel.sendMeRes('系统侦测到严重漏洞，已启动自毁程序', '');
+    NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//系统侦测到严重漏洞，已启动自毁程序`);
     console.log('系统侦测到严重漏洞，已启动自毁程序');
   }
 };
