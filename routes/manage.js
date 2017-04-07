@@ -30,7 +30,7 @@ router.get('/', checkLogin, (req, res, next) => {
   } else {
     PostModel.getPostsLimit(author, page, search, top, 'y')
       .then((posts) => {
-        res.render('components/posts-content--user', {
+        res.render('components/limit-posts-user', {
           posts,
         });
       })
