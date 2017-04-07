@@ -55,7 +55,7 @@ exports.spiderNotice = () => {
                 to: set, // 收件人
                 subject: 'ysunotice', // 标题
                 text: '', // 内容
-                html: `<p>通知监控系统发现新通知，${time}发表了《${title}》</p><a href='${href}'>${href}</a>`, // html
+                html: `<p>通知监控系统发现新通知！</p><p>${time}发表了《${title}》</p><p>如果你对这个通知不感兴趣，请无视，如果感兴趣，请点击下方链接：</p><a href='${href}'>${href}</a>`, // html
               };
               EmailModel.email(mailOptions);
               console.log(`通知监控系统发现新通知，${time}发表了《${title}》${href}`);
