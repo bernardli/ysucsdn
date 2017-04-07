@@ -1,28 +1,31 @@
 //loadmore
 $(document).ready(function() {
     var page = 2;
-    $('#loadmore_posts').on('click', function(e) {
-        if (getUrlParam('search') == null) {
-            var url = window.location.pathname + '?page=' + page;
-        } else {
-            var search = getUrlParam('search');
-            var url = window.location.pathname + '?page=' + page + '&search=' + search;
-        }
-        //alert(url);
-        $.get(url, function(data) {
-            //alert(num_post);
-            //追加更新
-            $('.limit-post-content').append(data);
-            //改变“加载更多”
-            if (!data || (data && data.match(/body-article-item/g).length != 5)) {
-                $('.text-load').text('----- 没有文章了/(ㄒoㄒ)/~~ -----');
-                $('.item-load').attr('id', 'no_posts');
-                $('#no_posts').unbind();
-                $('#no_posts').removeClass('item-load');
-                $('#no_posts').addClass('item-load--nomore');
+    // $('#loadmore_posts').on('click', function(e) {
+    $(window).scroll(function() {
+        if ($(document).scrollTop() >= $(document).height() - $(window).height()) {
+            if (getUrlParam('search') == null) {
+                var url = window.location.pathname + '?page=' + page;
+            } else {
+                var search = getUrlParam('search');
+                var url = window.location.pathname + '?page=' + page + '&search=' + search;
             }
-            page = parseInt(page) + 1;
-        });
+            //alert(url);
+            $.get(url, function(data) {
+                //alert(num_post);
+                //追加更新
+                $('.limit-post-content').append(data);
+                //改变“加载更多”
+                if (!data || (data && data.match(/body-article-item/g).length != 5)) {
+                    $('.text-load').text('----- 没有文章了/(ㄒoㄒ)/~~ -----');
+                    $('.item-load').attr('id', 'no_posts');
+                    $('#no_posts').unbind();
+                    $('#no_posts').removeClass('item-load');
+                    $('#no_posts').addClass('item-load--nomore');
+                }
+                page = parseInt(page) + 1;
+            });
+        }
     });
     $('#loadmore_user').on('click', function(e) {
         var url = window.location.pathname + window.location.search + '&page=' + page;
@@ -40,6 +43,7 @@ $(document).ready(function() {
             page = parseInt(page) + 1;
         });
     });
+
     $('#loadmore_comments').on('click', function(e) {
         var url = window.location.pathname + '?page=' + page;
         //alert(url);
