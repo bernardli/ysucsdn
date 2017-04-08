@@ -225,6 +225,19 @@ a.author:hover {
     resize: none;
 }
 
+.btn-comment {
+    width: 100%;
+    margin: 10px 0 0 auto;
+    height: 35px;
+    border: none;
+    text-decoration: none;
+    color: #fff;
+    background-color: #26a69a;
+    text-align: center;
+    letter-spacing: .5px;
+    transition: .2s ease-out;
+}
+
 @media (min-width: 48em) {
     .sigle-header,
     .content {
