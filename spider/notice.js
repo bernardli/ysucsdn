@@ -45,24 +45,21 @@ exports.spiderNotice = () => {
             ysuNotice: 'y',
           })
             .then((users) => {
-              const emails = new Set();
-              users.forEach(user => emails.add(user.user.email));
-              return [...emails];
-            })
-            .then((set) => {
-              const mailOptions = {
-                from: EmailAdress, // 发件人
-                to: set, // 收件人
-                subject: 'ysunotice', // 标题
-                text: '', // 内容
-                html: `<p>通知监控系统发现新通知！</p><p>${time}发表了《${title}》</p><p>如果你对这个通知不感兴趣，请无视，如果感兴趣，请点击下方链接：</p><a href='${href}'>${href}</a>`, // html
-              };
-              EmailModel.email(mailOptions);
+              users.forEach((user) => {
+                const mailOptions = {
+                  from: EmailAdress, // 发件人
+                  to: user.user.email, // 收件人
+                  subject: '通知监控系统发现新通知!', // 标题
+                  text: '', // 内容
+                  html: `<p>通知监控系统发现新通知！</p><p>${time}发表了《${title}》</p><p>如果你对这个通知不感兴趣，请无视，如果感兴趣，请点击下方链接：</p><a href='${href}'>${href}</a>`, // html
+                };
+                EmailModel.email(mailOptions);
+              });
               console.log(`通知监控系统发现新通知，${time}发表了《${title}》${href}`);
               newNotice(notice, $$, i + 1);
             })
             .catch((err) => {
-              NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//${err}`);
+              NoticeModel.sendMeRes(`<p>${err}</p>`);
               console.log(err);
             });
           if (i === 0) {
@@ -74,7 +71,7 @@ exports.spiderNotice = () => {
         }
       })
       .catch((err) => {
-        NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//${err}`);
+        NoticeModel.sendMeRes(`<p>${err}</p>`);
         console.log(err);
       });
   }
@@ -107,7 +104,7 @@ exports.spiderNotice = () => {
         }
       })
       .catch((err) => {
-        NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//${err}`);
+        NoticeModel.sendMeRes(`<p>${err}</p>`);
         console.log(err);
       });
   }
@@ -160,18 +157,11 @@ exports.spiderNotice = () => {
               ]);
             })
             .then(([href, time, title]) => {
-              const mailOptions = {
-                from: EmailAdress, // 发件人
-                to: [adminEmail], // 收件人
-                subject: 'ysunotice', // 标题
-                text: '', // 内容
-                html: `<p>数据库初始化成功，最新文章为 ${time} 发表的《${title}》</p><a href='${href}'>${href}</a>`, // html
-              };
-              EmailModel.email(mailOptions);
+              NoticeModel.sendMeRes(`<p>数据库初始化成功，最新文章为 ${time} 发表的《${title}》</p><a href='${href}'>${href}</a>`);
               console.log(`数据库初始化成功，最新文章为${time}发表的《${title}》 ${href}`);
             })
             .catch((err) => {
-              NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//数据库初始化失败：${err}`);
+              NoticeModel.sendMeRes(`<p>数据库初始化失败：<p>${err}</p></p>`);
               console.log(err);
             });
         } else {
@@ -180,13 +170,13 @@ exports.spiderNotice = () => {
               preNotice(notice, $, 0);
             })
             .catch((err) => {
-              NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//${err}`);
+              NoticeModel.sendMeRes(`<p>${err}</p>`);
               console.log(err);
             });
         }
       })
       .catch((err) => {
-        NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//${err}`);
+        NoticeModel.sendMeRes(`<p>${err}</p>`);
         console.log(err);
       });
   }
@@ -197,7 +187,7 @@ exports.spiderNotice = () => {
 
   function stopNotice() {
     clearInterval(flag);
-    NoticeModel.sendMeRes(`${moment(new Date()).format('H:mm:ss')}//系统侦测到严重漏洞，已启动自毁程序`);
+    NoticeModel.sendMeRes('<p>系统侦测到严重漏洞，已启动自毁程序</p>');
     console.log('系统侦测到严重漏洞，已启动自毁程序');
   }
 };

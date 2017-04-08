@@ -3,6 +3,7 @@ const cheerio = require('cheerio');
 const request = require('request-promise');
 const config = require('config-lite');
 const EmailModel = require('../models/sendEmail');
+const moment = require('moment');
 
 const EmailAdress = config.transporter.auth.user;
 const adminEmail = config.adminEmail;
@@ -53,9 +54,9 @@ module.exports = {
     const mailOptions = {
       from: EmailAdress, // 发件人
       to: [adminEmail], // 收件人
-      subject: 'ysunotice', // 标题
-      text: res, // 内容
-      html: '', // html
+      subject: '通知监控系统消息', // 标题
+      text: '', // 内容
+      html: `<div><p>${moment(new Date()).format('H:mm:ss')}:</p>${res}</div>`, // html
     };
     EmailModel.email(mailOptions);
   },
