@@ -37,6 +37,7 @@ router.post('/bio', checkLogin, (req, res, next) => {
   }
   UserModel.updateUser(userId, userName, { bio })
         .then(() => {
+          req.session.user.bio = bio;
           req.flash('success', '修改介绍成功');
             // 编辑成功后跳转到上一页
           res.redirect(`/setting?name${userName}`);
@@ -57,6 +58,7 @@ router.post('/gender', checkLogin, (req, res, next) => {
   }
   UserModel.updateUser(userId, userName, { gender })
         .then(() => {
+          req.session.user.gender = gender;
           req.flash('success', '修改性别成功');
             // 编辑成功后跳转到上一页
           res.redirect(`/setting?name${userName}`);
@@ -83,6 +85,7 @@ router.post('/avatar', checkLogin, (req, res, next) => {
 
   UserModel.updateUser(userId, userName, { avatar: newAvatar })
         .then(() => {
+          req.session.user.avatar = newAvatar;
           req.flash('success', '修改成功');
             // 删除旧的头像(先判断是否是默认头像)
           if (oldAvatar !== '../local/defaultAvatar.png') {
