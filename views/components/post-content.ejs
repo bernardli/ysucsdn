@@ -34,10 +34,10 @@
                         <% if (user && post.author._id && (user._id.toString() === post.author._id.toString() || user.identity.toString()==='admin')) { %>
                             <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
                         <% } %>
-                        <% if (user && user.identity.toString()==='admin'&&post.top==0) { %>
+                        <% if (user && user.identity.toString()==='admin'&&post.top==='n') { %>
                             <div class="item"><a href="/posts/<%= post._id %>/top?t=y">置顶</a></div>
                         <% } %>
-                        <% if (user && user.identity.toString()==='admin'&&post.top==1) { %>
+                        <% if (user && user.identity.toString()==='admin'&&post.top==='y') { %>
                             <div class="item"><a href="/posts/<%= post._id %>/top?t=n">取消置顶</a></div>
                         <% } %>
                     </div>

@@ -50,7 +50,7 @@
 
     <div class="sigle-header">
         <h1><%- post.title%></h1>
-        <% if (post.published == 'n') { %>
+        <% if (post.published === 'n') { %>
             <h2>草稿</h2>
         <% } %>
         <div class="box-user-info">
@@ -65,7 +65,7 @@
         <%- post.content%>
     </div>
 
-    <% if (post.published != 'n') { %>
+    <% if (post.published !== 'n') { %>
         <%- include('../components/comments') %>
     <% } %>
 </div>
