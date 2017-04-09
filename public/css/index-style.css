@@ -40,11 +40,23 @@ p {
     #index-banner .section {
         top: 10%;
     }
+    .teal-text {
+        font-size: 50px;
+    }
+    .logo-show {
+        display: none;
+    }
 }
 
 @media only screen and (max-width: 600px) {
     #index-banner .section {
         top: 0;
+    }
+    .teal-text {
+        font-size: 40px;
+    }
+    .logo-show {
+        display: none;
     }
 }
 
@@ -78,4 +90,20 @@ footer.page-footer {
     /*min-height: 200px;*/
     /*width: 90%;*/
     margin: 10px 0;
+}
+
+.logo-container {
+    height: 100%;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 !important;
+}
+
+.logo-show {
+    max-height: 80%;
+    margin-top: 7px;
+    margin-right: 5px;
+    /*height: 100%;*/
 }
