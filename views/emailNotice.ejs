@@ -9,13 +9,24 @@
         </div>
         <div class="content">
             <% if(notice.ysuNotice==='y') { %>
-            <form method="post" action="/manage/email?n=n">
+            <form method="post" action="/manage/email?ysu=n">
                 <p>您已订阅，如果取消订阅，您将无法享受燕山大学通知监控服务。</p>
                 <input type="submit" class="input-btn-long ma-signin" value="取消订阅">
             </form>
-            <% } else if(notice.ysuNotice==='n') { %>
-            <form method="post" action="/manage/email?n=y">
+            <% } else { %>
+            <form method="post" action="/manage/email?ysu=y">
                 <p>您还未订阅，订阅后您将享受到燕山大学通知监控服务。</p>
+                <input type="submit" class="input-btn-long ma-signin" value="订阅">
+            </form>
+            <% } %>
+            <% if(notice.replyNotice==='y') { %>
+            <form method="post" action="/manage/email?reply=n">
+                <p>您已订阅，如果取消订阅，您的文章被评论时，您将无法第一时间获取通知。</p>
+                <input type="submit" class="input-btn-long ma-signin" value="取消订阅">
+            </form>
+            <% } else { %>
+            <form method="post" action="/manage/email?reply=y">
+                <p>您还未订阅，订阅后您将在第一时间获取别人对您的文章的评论。</p>
                 <input type="submit" class="input-btn-long ma-signin" value="订阅">
             </form>
             <% } %>

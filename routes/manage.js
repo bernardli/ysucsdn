@@ -59,16 +59,25 @@ router.get('/email', checkLogin, (req, res, next) => {
 // GET /manage 后台管理
 //   eg: GET /manage/email
 router.post('/email', checkLogin, (req, res, next) => {
-  const ysuNotice = req.query.n;
-  const data = {
-    ysuNotice,
-  };
+  const ysuNotice = req.query.ysu;
+  const replyNotice = req.query.reply;
+  const data = {};
+  if (ysuNotice) {
+    data.ysuNotice = ysuNotice;
+  }
+  if (replyNotice) {
+    data.replyNotice = replyNotice;
+  }
 
   NoticeModel.updateNoticeByName(req.session.user._id, data)
     .then(() => {
       if (ysuNotice === 'n') {
         req.flash('success', '取消订阅成功');
       } else if (ysuNotice === 'y') {
+        req.flash('success', '订阅成功');
+      } else if (replyNotice === 'n') {
+        req.flash('success', '取消订阅成功');
+      } else if (replyNotice === 'y') {
         req.flash('success', '订阅成功');
       }
       // 编辑成功后跳转到上一页

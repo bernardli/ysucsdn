@@ -6,6 +6,7 @@ const UserModel = require('../models/users');
 const CommentModel = require('../models/comments');
 const checkLogin = require('../middlewares/check').checkLogin;
 const checkAdmin = require('../middlewares/check').checkAdmin;
+const NoticeModel = require('../models/emailNotice');
 
 const EmailAdress = config.transporter.auth.user;
 const router = express.Router();
@@ -179,7 +180,7 @@ router.get('/:postId', (req, res, next) => {
   if (parseInt(page) === 1) {
     // pv 加 1   浏览量
     PostModel.incPv(postId, wPv)
-      .then(incPvResult => Promise.all([
+      .then(() => Promise.all([
         PostModel.getPostById(postId), // 获取文章信息
         CommentModel.getCommentslimit(postId, page), // 获取该文章所有留言
       ]))
@@ -295,7 +296,6 @@ router.get('/:postId/remove', checkLogin, (req, res, next) => {
 router.get('/:postId/top', checkAdmin, (req, res, next) => {
   const t = req.query.t;
   const postId = req.params.postId;
-  const author = req.session.user._id;
 
   PostModel.admintopPostById(postId, t)
     .then(() => {
@@ -326,13 +326,19 @@ router.post('/:postId/comment', checkLogin, (req, res, next) => {
     PostModel.getPostById(postId),
     CommentModel.create(comment),
   ])
-    .then(([post]) => {
+    .then(([post]) => Promise.all([
+      post,
+      NoticeModel.getNotice({
+        user: post.author._id,
+      }),
+    ]))
+    .then(([post, [notice]]) => {
       const email = post.author.email;
       const title = post.title;
       req.flash('success', '留言成功');
       // 留言成功后跳转到上一页
       res.redirect('back');
-      if (req.session.user.name !== post.author.name) {
+      if (req.session.user.name !== post.author.name && notice.replyNotice === 'y') {
         const mailOptions = {
           from: {
             name: 'YSUCSDN',
