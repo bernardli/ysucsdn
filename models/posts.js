@@ -99,7 +99,7 @@ module.exports = {
       query.published = published;
     }
     if (search) {
-      query.$or = [{ author: { $regex: String(search) } }, { title: { $regex: String(search) } }, { content: { $regex: String(search) } }];
+      query.$or = [{ tags: { $regex: String(search) } }, { title: { $regex: String(search) } }, { content: { $regex: String(search) } }];
     }
     return Post
             .find(query)
@@ -127,7 +127,7 @@ module.exports = {
       query.published = published;
     }
     if (search) {
-      query.$or = [{ author: { $regex: String(search) } }, { title: { $regex: String(search) } }, { content: { $regex: String(search) } }];
+      query.$or = [{ tags: { $regex: String(search) } }, { title: { $regex: String(search) } }, { content: { $regex: String(search) } }];
     }
     return Post
             .find(query)

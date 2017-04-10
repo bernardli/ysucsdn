@@ -334,11 +334,14 @@ router.post('/:postId/comment', checkLogin, (req, res, next) => {
       res.redirect('back');
       if (req.session.user.name !== post.author.name) {
         const mailOptions = {
-          from: EmailAdress, // 发件人
+          from: {
+            name: 'YSUCSDN',
+            address: EmailAdress,
+          }, // 发件人
           to: email, // 收件人
           subject: '您的文章有了新的评论', // 标题
-          text: `用户： ${req.session.user.name} 在您的文章《${title}》中评论到： “${content}”`, // 内容
-          //html: "<a href=http://ysucsdn.cn/signin/password?r=" + random + ">点击找回密码</a>" // html
+          text: '', // 内容
+          html: `<p>用户： ${req.session.user.name} 在您的文章《${title}》中评论到： “${content}”</p><p>点击链接查看：</p><a href='http://ysucsdn.cn/posts/${postId}'>http://ysucsdn.cn/posts/${postId}</a>`, // html
         };
         EmailModel.email(mailOptions);
       }

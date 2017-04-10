@@ -47,9 +47,12 @@ exports.spiderNotice = () => {
             .then((users) => {
               users.forEach((user) => {
                 const mailOptions = {
-                  from: EmailAdress, // 发件人
+                  from: {
+                    name: 'YSUCSDN',
+                    address: EmailAdress,
+                  }, // 发件人
                   to: user.user.email, // 收件人
-                  subject: '通知监控系统发现新通知!', // 标题
+                  subject: '燕山大学通知监控服务发现新通知!', // 标题
                   text: '', // 内容
                   html: `<p>通知监控系统发现新通知！</p><p>${time}发表了《${title}》</p><p>如果你对这个通知不感兴趣，请无视，如果感兴趣，请点击下方链接：</p><a href='${href}'>${href}</a>`, // html
                 };

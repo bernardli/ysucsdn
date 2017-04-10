@@ -52,9 +52,12 @@ module.exports = {
 
   sendMeRes: function sendMeRes(res) {
     const mailOptions = {
-      from: EmailAdress, // 发件人
+      from: {
+        name: 'YSUCSDN',
+        address: EmailAdress,
+      }, // 发件人
       to: [adminEmail], // 收件人
-      subject: '通知监控系统消息', // 标题
+      subject: '燕山大学通知监控服务消息', // 标题
       text: '', // 内容
       html: `<div><p>${moment(new Date()).format('H:mm:ss')}:</p>${res}</div>`, // html
     };

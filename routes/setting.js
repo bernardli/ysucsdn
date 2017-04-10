@@ -140,11 +140,14 @@ router.post('/password', checkLogin, (req, res, next) => {
             // 编辑成功后跳转到上一页
             res.redirect('back');
             const mailOptions = {
-              from: EmailAdress, // 发件人
+              from: {
+                name: 'YSUCSDN',
+                address: EmailAdress,
+              }, // 发件人
               to: req.session.user.email, // 收件人
               subject: '您正在修改密码', // 标题
               text: '', // 内容
-              html: '<p>您正在修改密码，如果不是您本人操作，那我也没办法 ╮（╯＿╰）╭ </p>', // html
+              html: '<p>您正在修改密码，如果不是您本人操作，那我也没办法 ╮（╯＿╰）╭ </p><p>欢迎访问：</p><a href="http://ysucsdn.cn/">http://ysucsdn.cn/</a>', // html
             };
             EmailModel.email(mailOptions);
           })
