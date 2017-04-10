@@ -105,7 +105,7 @@ router.post('/', checkNotLogin, (req, res, next) => {
         to: user.email, // 收件人
         subject: `欢迎${user.name}`, // 标题
         text: '', // 内容
-        html: '<b>welcome</b>', // html
+        html: '<b>欢迎 (๑•̀ㅂ•́)و✧ </b><p>欢迎来到燕山大学CSDN俱乐部社区网站</p><p>你可以在这里畅所欲言。 ╰(￣▽￣)╭ </p><p>同时，你也会享受我们提供的燕大通知监控服务，当燕山大学通知系统有更新时，我们会发邮件提醒您。 *´∀`)´∀`)*´∀`)*´∀`) </p><p>什么？你不想被打扰？关闭通知功能还在开发，你先忍忍。 ╮（╯＿╰）╭ </p>', // html
       };
       EmailModel.email(mailOptions);
     })
