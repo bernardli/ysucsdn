@@ -1,7 +1,7 @@
 const express = require('express');
 const PostModel = require('../models/posts');
 const checkLogin = require('../middlewares/check').checkLogin;
-const NoticeModel = require('../models/ysuNotice');
+const NoticeModel = require('../models/emailNotice');
 
 const router = express.Router();
 
@@ -38,34 +38,43 @@ router.get('/', checkLogin, (req, res, next) => {
   }
 });
 
-/*// GET /manage 后台管理
+// GET /manage 后台管理
 //   eg: GET /manage/email
 router.get('/email', checkLogin, (req, res, next) => {
   const ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+  const query = {
+    user: req.session.user._id,
+  };
 
-  res.render('emailNotice', {
-    ip,
-  });
+  NoticeModel.getNotice(query)
+    .then(([notice]) => {
+      res.render('emailNotice', {
+        notice,
+        ip,
+      });
+    })
+    .catch(next);
 });
 
 // GET /manage 后台管理
 //   eg: GET /manage/email
 router.post('/email', checkLogin, (req, res, next) => {
-  const email = req.fields.email;
+  const ysuNotice = req.query.n;
+  const data = {
+    ysuNotice,
+  };
 
-  NoticeModel.getNotice('notice')
-  .then((notice) => {
-    const emails = notice[0].emails;
-    const set = new Set(emails);
-    set.add(email);
-    return NoticeModel.updateNoticeByName('notice', { emails: [...set] });
-  })
+  NoticeModel.updateNoticeByName(req.session.user._id, data)
     .then(() => {
-      req.flash('success', '成功');
+      if (ysuNotice === 'n') {
+        req.flash('success', '取消订阅成功');
+      } else if (ysuNotice === 'y') {
+        req.flash('success', '订阅成功');
+      }
       // 编辑成功后跳转到上一页
       res.redirect('back');
     })
     .catch(next);
-});*/
+});
 
 module.exports = router;
