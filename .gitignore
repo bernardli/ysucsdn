@@ -1,6 +1,6 @@
 node_modules
 config/*
-!config/nothing.*
+!config/example.*
 public/img/users_avatar/*
 !public/img/users_avatar/nothing.*
 logs/*
