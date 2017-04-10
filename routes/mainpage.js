@@ -5,12 +5,12 @@ const PostModel = require('../models/posts');
 
 // 获取解析后的主页页面
 router.get('/', (req, res, next) => {
-  const author = req.query.author;
-  const page = 1;
-  const search = req.query.search;
-  const ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
+    const author = req.query.author;
+    const page = 1;
+    const search = req.query.search;
+    const ip = req.ip.match(/\d+\.\d+\.\d+\.\d+/);
 
-  res.render('mainpage');
+    res.render('mainpage');
 
 
     /* PostModel.getannouncement()
