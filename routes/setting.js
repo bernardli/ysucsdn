@@ -80,7 +80,7 @@ router.post('/avatar', checkLogin, (req, res, next) => {
   // 从session中获取用户 name
   const userName = req.session.user.name;
 
-  const oldAvatar = req.query.avatarId;
+  const oldAvatar = req.session.user.avatar;
 
   const newAvatar = req.files.avatar.path.split(path.sep).pop();
 
@@ -156,6 +156,27 @@ router.post('/password', checkLogin, (req, res, next) => {
         req.flash('error', '两次密码不一致');
         return res.redirect('back');
       }
+    })
+    .catch(next);
+});
+
+// POST /setting/remove 删除账号
+router.post('/remove', checkLogin, (req, res, next) => {
+  // 从session中获取用户 id
+  const userId = req.session.user._id;
+  // 从session中获取用户 name
+  const userName = req.session.user.name;
+  const avatar = req.session.user.avatar;
+
+  UserModel.delUser(userId, userName)
+    .then(() => {
+      if (avatar !== '../local/defaultAvatar.png') {
+        fs.unlink(`public/img/users_avatar/${avatar}`);
+      }
+      req.session.user = null;
+      req.flash('success', '走好');
+      // 编辑成功后跳转到上一页
+      res.redirect('/posts');
     })
     .catch(next);
 });

@@ -4,7 +4,7 @@
             <div class="setting-box--large">
                 <div class="setting-box--small">
                     <div class="user-avatar">
-                        <form class="ui form form-avatar" method="post" action="/setting/avatar?avatarId=<%= user.avatar %>" enctype="multipart/form-data">
+                        <form class="ui form form-avatar" method="post" action="/setting/avatar" enctype="multipart/form-data">
                             <span class="text-avatar">当前头像:</span>
                             <img class="img-setting-avatar" src="/img/users_avatar/<%= user.avatar %>">
                             <input type="file" name="avatar" class="input-avatar--file" value="选择新头像">
@@ -38,6 +38,9 @@
                     <option value="x" <% if(user.gender==='x'){ %> selected = "selected" <% } %>>保密</option>
                 </select>
                 <input type="submit" class="ui button input-gender--submit" value="修改">
+            </form>
+            <form class="form-remove" method="post" action="/setting/remove">
+                <input type="submit" class="ui button input-remove--submit" value="删除账号">
             </form>
         </div>
 <%- include('manage-footer') %>
