@@ -61,6 +61,14 @@ router.get('/email', checkLogin, (req, res, next) => {
 router.post('/email', checkLogin, (req, res, next) => {
   const ysuNotice = req.query.ysu;
   const replyNotice = req.query.reply;
+  if (ysuNotice && ['y', 'n'].includes(ysuNotice) === false) {
+    req.flash('error', '参数错误');
+    return res.redirect('back');
+  }
+  if (replyNotice && ['y', 'n'].includes(replyNotice) === false) {
+    req.flash('error', '参数错误');
+    return res.redirect('back');
+  }
   const data = {};
   if (ysuNotice) {
     data.ysuNotice = ysuNotice;

@@ -36,7 +36,7 @@ router.post('/bio', checkLogin, (req, res, next) => {
   const bio = req.fields.bio;
   if (!(bio.length >= 0 && bio.length <= 30)) {
     req.flash('error', '个人简介请限制在 1-30 个字符');
-    return res.redirect(`/setting?name${userName}`);
+    return res.redirect('back');
   }
   UserModel.updateUser(userId, userName, {
     bio,
@@ -45,7 +45,7 @@ router.post('/bio', checkLogin, (req, res, next) => {
       req.session.user.bio = bio;
       req.flash('success', '修改介绍成功');
       // 编辑成功后跳转到上一页
-      res.redirect(`/setting?name${userName}`);
+      res.redirect('back');
     })
     .catch(next);
 });
@@ -57,9 +57,9 @@ router.post('/gender', checkLogin, (req, res, next) => {
   // 从session中获取用户 name
   const userName = req.session.user.name;
   const gender = req.fields.gender;
-  if (['m', 'f', 'x'].indexOf(gender) === -1) {
+  if (['m', 'f', 'x'].includes(gender) === false) {
     req.flash('error', '性别只能是 m、f 或 x');
-    return res.redirect(`/setting?name${userName}`);
+    return res.redirect('back');
   }
   UserModel.updateUser(userId, userName, {
     gender,
@@ -68,7 +68,7 @@ router.post('/gender', checkLogin, (req, res, next) => {
       req.session.user.gender = gender;
       req.flash('success', '修改性别成功');
       // 编辑成功后跳转到上一页
-      res.redirect(`/setting?name${userName}`);
+      res.redirect('back');
     })
     .catch(next);
 });
@@ -87,7 +87,7 @@ router.post('/avatar', checkLogin, (req, res, next) => {
   if (!req.files.avatar.name) {
     req.flash('error', '缺少头像');
     fs.unlink(req.files.avatar.path);
-    return res.redirect(`/setting?name${userName}`);
+    return res.redirect('back');
   }
 
   UserModel.updateUser(userId, userName, {
@@ -101,7 +101,7 @@ router.post('/avatar', checkLogin, (req, res, next) => {
         fs.unlink(`public/img/users_avatar/${oldAvatar}`);
       }
       // 编辑成功后跳转到上一页
-      res.redirect(`/setting?name${userName}`);
+      res.redirect('back');
     })
     .catch(next);
 });

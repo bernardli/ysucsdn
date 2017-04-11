@@ -138,6 +138,9 @@ router.post('/', checkLogin, (req, res, next) => {
     if (!content.length) {
       throw new Error('请填写内容');
     }
+    if (['y', 'n'].includes(p) === false) {
+      throw new Error('参数错误');
+    }
   } catch (e) {
     req.flash('error', e.message);
     return res.redirect('back');
@@ -296,13 +299,17 @@ router.get('/:postId/remove', checkLogin, (req, res, next) => {
 router.get('/:postId/top', checkAdmin, (req, res, next) => {
   const t = req.query.t;
   const postId = req.params.postId;
+  if (['y', 'n'].includes(t) === false) {
+    req.flash('error', '参数错误');
+    return res.redirect('back');
+  }
 
   PostModel.admintopPostById(postId, t)
     .then(() => {
-      if (t === 0) {
+      if (t === 'n') {
         req.flash('success', '取消置顶文章成功');
       }
-      if (t === 1) {
+      if (t === 'y') {
         req.flash('success', '置顶文章成功');
       }
       // 置顶或取消置顶成功后跳转到主页

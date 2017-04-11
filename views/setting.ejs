@@ -30,5 +30,14 @@
                 <textarea name="bio" rows="15"><%= user.bio %></textarea>
                 <input type="submit" class="ui button input-bio--submit" value="修改">
             </form>
+            <form class="form-gender" method="post" action="/setting/gender">
+                <label>性别</label>
+                <select class="form-select" name="gender">
+                    <option value="m" <% if(user.gender==='m'){ %> selected = "selected" <% } %>>男</option>
+                    <option value="f" <% if(user.gender==='f'){ %> selected = "selected" <% } %>>女</option>
+                    <option value="x" <% if(user.gender==='x'){ %> selected = "selected" <% } %>>保密</option>
+                </select>
+                <input type="submit" class="ui button input-gender--submit" value="修改">
+            </form>
         </div>
 <%- include('manage-footer') %>
