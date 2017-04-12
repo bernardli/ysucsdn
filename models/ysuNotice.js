@@ -19,35 +19,33 @@ module.exports = {
 
   getNotice: function getNotice(name) {
     return YsuNotice
-      .find({ name })
+      .find({
+        name,
+      })
       .exec();
   },
 
 
   updateNoticeByName: function updateNoticeByName(name, data) {
-    return YsuNotice.update({ name }, { $set: data }).exec();
+    return YsuNotice.update({
+      name,
+    }, {
+      $set: data,
+    }).exec();
   },
 
   // 获取网页的ETag
-  oneHeader: function oneHeader(url) {
+  requestOne: function oneHeader(url) {
     const options = {
       uri: url,
-      transform(body, response, resolveWithFullResponse) {
-        return response.headers;
-      },
+      simple: false,
+      resolveWithFullResponse: true,
     };
-    return request(options);
-  },
-
-  // 获取网页的html
-  oneHtml: function oneHtml(url) {
-    const options = {
-      uri: url,
-      transform(body) {
-        return cheerio.load(body);
-      },
-    };
-    return request(options);
+    return request(options)
+      .then(response => Promise.all([
+        cheerio.load(response.body),
+        response.headers,
+      ]));
   },
 
   sendMeRes: function sendMeRes(res) {

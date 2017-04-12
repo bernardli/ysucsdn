@@ -6,7 +6,6 @@ const NoticeFuncModel = require('../models/noticeFunction');
 const moment = require('moment');
 
 const EmailAdress = config.transporter.auth.user;
-const adminEmail = config.adminEmail;
 
 exports.spiderNotice = () => {
   // 递归发消息
@@ -22,11 +21,10 @@ exports.spiderNotice = () => {
         return `http://notice.ysu.edu.cn${href}`;
       })
       .then(href => Promise.all([
-        NoticeModel.oneHeader(href),
-        NoticeModel.oneHtml(href),
+        NoticeModel.requestOne(href),
         href,
       ]))
-      .then(([header, $, href]) => {
+      .then(([[$, header], href]) => {
         if (!(header && $ && href)) {
           throw new Error('网站访问出错');
         } else if (i === 6) {
@@ -91,18 +89,15 @@ exports.spiderNotice = () => {
         }
         return `http://notice.ysu.edu.cn${href}`;
       })
-      .then(href => Promise.all([
-        NoticeModel.oneHeader(href),
-        NoticeModel.oneHtml(href),
-      ]))
-      .then(([header, $]) => {
+      .then(href => NoticeModel.requestOne(href))
+      .then(([$, header]) => {
         if (!(header && $)) {
           throw new Error('网站访问出错');
         } else if (i === 6) {
           NoticeFuncModel.updateNoticeByHtml();
         } else if (notice.firstETag !== header.etag) {
           preNotice(notice, $$, i + 1);
-        } else if (notice.firstETag === header.etag) {
+        } else if (notice.firstETag === header.etag && i !== 0) {
           newNotice(notice, $$, 0);
         }
       })
@@ -116,13 +111,12 @@ exports.spiderNotice = () => {
 
   function Notice() {
     console.log('通知监控系统运行正常');
-    NoticeFuncModel.stateNotice();
     NoticeModel.getNotice('notice')
       .then((result) => {
         const notice = result[0];
         if (!notice) {
-          NoticeModel.oneHtml('http://notice.ysu.edu.cn/')
-            .then(($) => {
+          NoticeModel.requestOne('http://notice.ysu.edu.cn/')
+            .then(([$]) => {
               const href = $('li a').eq(0).attr('href');
               const patt = new RegExp('http://');
               if (patt.test(href)) {
@@ -131,11 +125,10 @@ exports.spiderNotice = () => {
               return `http://notice.ysu.edu.cn${href}`;
             })
             .then(href => Promise.all([
-              NoticeModel.oneHtml(href),
-              NoticeModel.oneHeader(href),
+              NoticeModel.requestOne(href),
               href,
             ]))
-            .then(([$, header, href]) => {
+            .then(([[$, header], href]) => {
               let {
                 'last-modified': time,
               } = header; // 必须是let
@@ -168,8 +161,8 @@ exports.spiderNotice = () => {
               console.log(err);
             });
         } else {
-          NoticeModel.oneHtml('http://notice.ysu.edu.cn/')
-            .then(($) => {
+          NoticeModel.requestOne('http://notice.ysu.edu.cn/')
+            .then(([$]) => {
               preNotice(notice, $, 0);
             })
             .catch((err) => {
