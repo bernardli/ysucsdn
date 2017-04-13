@@ -11,14 +11,14 @@ exports.spiderNotice = () => {
   // 递归发消息
   function newNotice(notice, $$, i) {
     Promise.all([
-      $$('li a').eq(i).attr('href'),
+      $$('a',`#lineu12_${i}`).attr('href'),
     ])
       .then(([href]) => {
         const patt = new RegExp('http://');
         if (patt.test(href)) {
           return href;
         }
-        return `http://notice.ysu.edu.cn${href}`;
+        return `http://notice.ysu.edu.cn/${href}`;
       })
       .then(href => Promise.all([
         NoticeModel.requestOne(href),
@@ -35,7 +35,7 @@ exports.spiderNotice = () => {
             'last-modified': time,
           } = header; // 必须是let
           time = moment(time).format('YYYY-MM-DD，H:mm:ss');
-          let title = $('td .titlestyle50830').text().trim();
+          let title = $('h3','.content-title').text().trim();
           if (!title) {
             title = '权限不足，无法访问';
           }
@@ -80,14 +80,14 @@ exports.spiderNotice = () => {
   // 防止通知被删除导致逻辑错误，先检索一遍
   function preNotice(notice, $$, i) {
     Promise.all([
-      $$('li a').eq(i).attr('href'),
+      $$('a',`#lineu12_${i}`).attr('href'),
     ])
       .then(([href]) => {
         const patt = new RegExp('http://');
         if (patt.test(href)) {
           return href;
         }
-        return `http://notice.ysu.edu.cn${href}`;
+        return `http://notice.ysu.edu.cn/${href}`;
       })
       .then(href => NoticeModel.requestOne(href))
       .then(([$, header]) => {
@@ -117,12 +117,12 @@ exports.spiderNotice = () => {
         if (!notice) {
           NoticeModel.requestOne('http://notice.ysu.edu.cn/')
             .then(([$]) => {
-              const href = $('li a').eq(0).attr('href');
+              const href = $('a','#lineu12_0').attr('href');
               const patt = new RegExp('http://');
               if (patt.test(href)) {
                 return href;
               }
-              return `http://notice.ysu.edu.cn${href}`;
+              return `http://notice.ysu.edu.cn/${href}`;
             })
             .then(href => Promise.all([
               NoticeModel.requestOne(href),
@@ -137,19 +137,15 @@ exports.spiderNotice = () => {
                 name: 'notice',
                 firstETag: header.etag,
               };
-              if ($('td .titlestyle50830').text().trim()) {
-                return Promise.all([
-                  href,
-                  time,
-                  $('td .titlestyle50830').text().trim(),
-                  NoticeModel.create(data),
-                ]);
+              let title = $('h3','.content-title').text().trim();
+              if (!title) {
+                title = '权限不足，无法访问';
               }
               return Promise.all([
                 href,
                 time,
-                '权限不足，无法访问',
-                NoticeModel.create(Notice),
+                title,
+                NoticeModel.create(data),
               ]);
             })
             .then(([href, time, title]) => {

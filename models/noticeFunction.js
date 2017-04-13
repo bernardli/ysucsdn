@@ -4,15 +4,18 @@ module.exports = {
   updateNoticeByHtml: function updateNoticeByHtml() {
     NoticeModel.requestOne('http://notice.ysu.edu.cn/')
       .then(([$]) => {
-        const href = $('li a').eq(0).attr('href');
+        const href = $('a', '#lineu12_0').attr('href');
         const patt = new RegExp('http://');
         if (patt.test(href)) {
           return NoticeModel.requestOne(href);
         }
-        return NoticeModel.requestOne(`http://notice.ysu.edu.cn${href}`);
+        return NoticeModel.requestOne(`http://notice.ysu.edu.cn/${href}`);
       })
       .then(([$, header]) => {
-        const title = $('td .titlestyle50830').text().trim();
+        let title = $('h3', '.content-title').text().trim();
+        if (!title) {
+          title = '权限不足，无法访问';
+        }
         const data = {
           firstETag: header.etag,
         };
