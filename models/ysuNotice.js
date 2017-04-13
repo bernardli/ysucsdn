@@ -35,7 +35,7 @@ module.exports = {
   },
 
   // 获取网页的ETag
-  requestOne: function oneHeader(url) {
+  requestOne: function requestOne(url) {
     const options = {
       uri: url,
       simple: false,
