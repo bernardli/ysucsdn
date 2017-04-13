@@ -7,6 +7,18 @@
     <script src="/js/ui.js"></script>
     <script src="/js/dropmenu.js"></script>
     <script src="/js/loadmore.js"></script>
+    <script src="/js/notice.js"></script>
+    <script>
+        function deleteConfirm(){
+            var result = confirm("确定要消除账户吗？这将清除您的账户的所有文章评论和头像，这一切讲无法恢复...");
+            if(result == true){
+                return true;
+            }else {
+                return false;
+            }
+            return false;       //点击其他部分时也返回false，预防手滑
+        }
+    </script>
 </body>
 
 </html>

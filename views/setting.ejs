@@ -13,33 +13,35 @@
                     </div>
                 </div>
                 <div class="user-password">
-                    <form class="ui form " method="post" action="/setting/password">
+                    <form class="ui form" method="post" action="/setting/password">
                         <span class="text-password">原密码:</span>
                         <input class="user-password-input" type="password" name="oldpassword">
                         <span class="text-password">新密码:</span>
                         <input class="user-password-input" type="password" name="newpassword">
                         <span class="text-password">确认新密码:</span>
                         <input class="user-password-input" type="password" name="newrepassword">
-                        <input type="submit" class="ui button input-password-submit" value="修改">
-                        <span class="text-password-forget">忘记密码</span>
+                        <input type="submit" class="ui button input-password-submit" value="修改密码">
                     </form>
                 </div>
             </div>
             <form class="form-bio" method="post" action="/setting/bio">
-                <label>用户介绍</label>
+                <label>用户介绍:</label>
                 <textarea name="bio" rows="15"><%= user.bio %></textarea>
-                <input type="submit" class="ui button input-bio--submit" value="修改">
+                <input type="submit" class="ui button input-bio--submit" value="修改介绍">
             </form>
             <form class="form-gender" method="post" action="/setting/gender">
-                <label>性别</label>
-                <select class="form-select" name="gender">
-                    <option value="m" <% if(user.gender==='m'){ %> selected = "selected" <% } %>>男</option>
-                    <option value="f" <% if(user.gender==='f'){ %> selected = "selected" <% } %>>女</option>
-                    <option value="x" <% if(user.gender==='x'){ %> selected = "selected" <% } %>>保密</option>
-                </select>
-                <input type="submit" class="ui button input-gender--submit" value="修改">
+                <label>性别:</label>
+                <div class="">
+                    <select class="form-select" name="gender">
+                        <option value="m" <% if(user.gender==='m'){ %> selected = "selected" <% } %>>男</option>
+                        <option value="f" <% if(user.gender==='f'){ %> selected = "selected" <% } %>>女</option>
+                        <option value="x" <% if(user.gender==='x'){ %> selected = "selected" <% } %>>保密</option>
+                    </select>
+                    <input type="submit" class="ui button input-gender--submit" value="修改">
+                </div>
             </form>
-            <form class="form-remove" method="post" action="/setting/remove">
+            <form class="form-remove" method="post" action="/setting/remove" onsubmit="return deleteConfirm()">
+                <label for="">销毁账号:</label>
                 <input type="submit" class="ui button input-remove--submit" value="删除账号">
             </form>
         </div>

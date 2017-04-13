@@ -414,3 +414,57 @@ Hides the menu at `48em`, but modify this based on your app's needs.
     justify-content: center;
     align-items: center;
 }
+
+
+/*提示框*/
+
+.notice {
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    margin: 0 auto;
+    display: flex;
+    top: 20px;
+    z-index: 99;
+}
+
+.success-message {
+    width: 40%;
+    height: 100%;
+    margin: 0 auto;
+    background-color: #FCFFF5;
+    color: #51BA52;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border-radius: 10px;
+    border: 2px solid #51BA52;
+}
+
+.error-message {
+    width: 40%;
+    height: 100%;
+    margin: 0 auto;
+    background-color: #FCFFF5;
+    color: #ee2c2c;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    border-radius: 10px;
+    border: 2px solid #ee2c2c;
+}
+
+.text-notice {
+    margin: auto;
+}
+
+@media (max-width: 48em) {
+    /*大屏幕的时候*/
+    .success-message,
+    .error-message {
+        width: 80%;
+    }
+}
+
+
+/*提示框*/

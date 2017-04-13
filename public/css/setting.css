@@ -83,6 +83,8 @@
 
 .user-password {
     max-width: 400px;
+    width: 100%;
+    /*min-width: 350px;*/
     height: auto;
     margin: 0px 20px;
 }
@@ -95,30 +97,24 @@
 }
 
 .user-password-input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
+    outline: none;
+    height: 3rem;
     width: 100%;
-    font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    margin: 0;
-    outline: 0;
-    -webkit-appearance: none;
-    tap-highlight-color: rgba(255, 255, 255, 0);
-    line-height: 1.2142em;
-    padding: .67861429em 1em;
-    font-size: 1em;
-    background: #FFF;
-    border: 1px solid rgba(34, 36, 38, .15);
-    color: rgba(0, 0, 0, .87);
-    border-radius: .28571429rem;
-    box-shadow: 0 0 0 0 transparent inset;
-    -webkit-transition: color .1s ease, border-color .1s ease;
-    transition: color .1s ease, border-color .1s ease;
+    font-size: 1rem;
+    padding: 0;
+    box-shadow: none;
+    box-sizing: content-box;
+    transition: all 0.3s;
+    display: block;
 }
 
 .user-password-input:focus {
-    color: rgba(0, 0, 0, .95);
-    border-color: #85B7D9;
-    border-radius: .28571429rem;
-    background: #FFF;
-    box-shadow: 0 0 0 0 rgba(34, 36, 38, .35) inset;
+    border-bottom: 1px solid #26a69a;
+    box-shadow: 0 1px 0 0 #26a69a;
 }
 
 .form-bio {
@@ -135,24 +131,29 @@
 }
 
 .form-bio textarea {
-    width: 98%;
-    min-height: 300px;
+    width: 100%;
     height: 100%;
-    margin: 0 auto;
+    max-height: 200px;
+    min-height: 100px;
     overflow-y: hidden;
     padding: .8rem 0 1.6rem 0;
     resize: none;
-    min-height: 6rem;
+    /*min-height: 6rem;*/
     background-color: transparent;
-    border: 1px solid rgba(34, 36, 38, .15);
-    /*border-bottom: 1px solid #9e9e9e;*/
-    border-radius: 1%;
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    border-radius: 0;
     outline: none;
     font-size: 1rem;
     padding: 5px;
     box-shadow: none;
     box-sizing: content-box;
     transition: all 0.3s;
+}
+
+.form-bio textarea:focus {
+    border-bottom: 1px solid #26a69a;
+    box-shadow: 0 1px 0 0 #26a69a;
 }
 
 .input-bio--submit {
@@ -166,6 +167,81 @@
     text-align: center;
     letter-spacing: .5px;
     transition: .2s ease-out;
+}
+
+.form-gender {
+    /*display: flex;*/
+    margin-top: 20px;
+}
+
+.form-gender label {
+    font-size: 20px;
+    color: #4fc08d;
+    align-self: flex-start;
+    display: block;
+    margin: 5px 0;
+}
+
+.form-gender select {
+    height: 35px;
+    width: 50%;
+    margin-right: auto;
+    cursor: pointer;
+}
+
+.form-gender input {
+    width: 40%;
+    height: 35px;
+    border: none;
+    text-decoration: none;
+    color: #fff;
+    background-color: #26a69a;
+    text-align: center;
+    letter-spacing: .5px;
+    transition: .2s ease-out;
+}
+
+.form-gender div {
+    display: flex;
+    flex-direction: row;
+}
+
+.form-remove {
+    margin-top: 20px;
+}
+
+.form-remove label {
+    font-size: 20px;
+    color: #4fc08d;
+    align-self: flex-start;
+    display: block;
+    margin: 5px 0;
+}
+
+.form-remove input {
+    width: 100%;
+    height: 35px;
+    margin: 10px 0;
+    border: none;
+    text-decoration: none;
+    color: #fff;
+    background-color: #e10f10;
+    text-align: center;
+    letter-spacing: .5px;
+    transition: .2s ease-out;
+}
+
+@media (max-width: 48em) {
+    .form-gender div {
+        flex-direction: column;
+    }
+    .form-gender select {
+        margin: 5px 0;
+        width: 80%;
+    }
+    .form-gender input {
+        width: 80%;
+    }
 }
 
 @media (min-width: 48em) {
