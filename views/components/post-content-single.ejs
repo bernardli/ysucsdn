@@ -58,6 +58,29 @@
             <span class="text-post-title">评论(<%= post.commentsCount%>)</span>
             <span class="text-post-title">阅读(<%= post.pv%>)</span>
             <span class="text-post-title"><%= post.created_at%></span>
+            <span>
+                <% if (user && post.author._id && (user._id.toString() === post.author._id.toString() || user.identity.toString()==='admin')) { %>
+                    <div class="dropdown">
+                        <div class="dropdown-text" onclick="dropmenu(this.nextElementSibling)">
+                            <span>设置</span>
+                        </div>
+                        <div class="menu">
+                            <% if (user && post.author._id && user._id.toString() === post.author._id.toString()) { %>
+                                <div class="item"><a href="/posts/<%= post._id %>/edit">编辑</a></div>
+                            <% } %>
+                            <% if (user && post.author._id && (user._id.toString() === post.author._id.toString() || user.identity.toString()==='admin')) { %>
+                                <div class="item"><a href="/posts/<%= post._id %>/remove">删除</a></div>
+                            <% } %>
+                            <% if (user && user.identity.toString()==='admin'&&post.top==='n') { %>
+                                <div class="item"><a href="/posts/<%= post._id %>/top?t=y">置顶</a></div>
+                            <% } %>
+                            <% if (user && user.identity.toString()==='admin'&&post.top==='y') { %>
+                                <div class="item"><a href="/posts/<%= post._id %>/top?t=n">取消置顶</a></div>
+                            <% } %>
+                        </div>
+                    </div>
+                <% } %>
+            </span>
         </div>
     </div>
 
