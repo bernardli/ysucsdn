@@ -160,7 +160,11 @@ router.post('/', checkLogin, (req, res, next) => {
     .then((result) => {
       // 此 post 是插入 mongodb 后的值，包含 _id
       post = result.ops[0];
-      req.flash('success', '发表成功');
+      if(p==='y'){
+        req.flash('success', '文章发表成功');
+      }else{
+        req.flash('success', '草稿保存成功');
+      }
       // 发表成功后跳转到该文章页
       res.redirect(`/posts/${post._id}`);
     })
@@ -264,7 +268,11 @@ router.post('/:postId/edit', checkLogin, (req, res, next) => {
     tags,
   })
     .then(() => {
-      req.flash('success', '编辑文章成功');
+      if(p==='y'){
+        req.flash('success', '文章编辑成功');
+      }else{
+        req.flash('success', '草稿编辑成功');
+      }
       // 编辑成功后跳转到上一页
       res.redirect(`/posts/${postId}`);
     })
