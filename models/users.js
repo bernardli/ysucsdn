@@ -1,6 +1,7 @@
 const User = require('../lib/mongo').User;
 const Forgot = require('../lib/mongo').Forgot;
 const PostModel = require('../models/posts');
+const NoticeModel = require('../models/emailNotice');
 
 module.exports = {
   // 注册一个用户
@@ -71,7 +72,10 @@ module.exports = {
       .exec()
       .then((res) => {
         if (res.result.ok && res.result.n > 0) {
-          return PostModel.delPostByAuthorId(userId);
+          return Promise.all([
+            PostModel.delPostByAuthorId(userId),
+            NoticeModel.delNotice(userId),
+          ]);
         }
       });
   },

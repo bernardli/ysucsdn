@@ -22,4 +22,8 @@ module.exports = {
     return EmailNotice.update({ user }, { $set: data }).exec();
   },
 
+  delNotice: function delNotice(userId) {
+    return EmailNotice.remove({ user:userId }).exec();
+  },
+
 };

@@ -1,10 +1,7 @@
 const marked = require('marked');
-
-const markdown = require('markdown').markdown;
-
 const Post = require('../lib/mongo').Post;
-
 const CommentModel = require('./comments');
+//const markdown = require('markdown').markdown;
 
 // 给 post 添加留言数 commentsCount
 Post.plugin('addCommentsCount', {

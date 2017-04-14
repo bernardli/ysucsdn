@@ -62,6 +62,11 @@
                                 <button type="submit" class="btn-search" value="">搜索</button>
                             </form>
                         </li>
+                        <% if(user && user.identity.toString()==='admin') { %>
+                        <li class="pure-menu-item">
+                            <a href="/manage/push" class="pure-menu-link">推送消息</a>
+                        </li>
+                        <% } %>
                         <li class="pure-menu-item" class="menu-item-divided pure-menu-selected">
                             <a href="/signout" class="pure-menu-link">登出</a>
                         </li>

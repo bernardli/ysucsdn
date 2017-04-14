@@ -30,6 +30,17 @@
                 <input type="submit" class="input-btn-long ma-signin" value="订阅">
             </form>
             <% } %>
+            <% if(notice.pushNotice==='y') { %>
+            <form method="post" action="/manage/email?push=n">
+                <p>您已订阅，如果取消订阅，您将无法获取推送。</p>
+                <input type="submit" class="input-btn-long ma-signin" value="取消订阅">
+            </form>
+            <% } else { %>
+            <form method="post" action="/manage/email?push=y">
+                <p>您还未订阅，订阅后您将获取推送。</p>
+                <input type="submit" class="input-btn-long ma-signin" value="订阅">
+            </form>
+            <% } %>
         </div>
     </div>
 <%- include('manage-footer') %>

@@ -1,0 +1,25 @@
+<%- include('manage-header') %>
+        <link rel="stylesheet" href="/css/blog-writing.css">
+        <div id="main">
+            <form class="form-writing" method="post" action="/manage/push" id="form1">
+                <div class="box-title">
+                    <label class="text-label">标题:</label>
+                    <input type="text" name="title" class="input-text-long">
+                </div>
+                <div id="editormd" class="text-writing">     
+                    <textarea name="content" style="display:none;">### Hello Editor.md !</textarea>
+                </div>
+                <input type="submit" class="input-btn-long" value="推送">
+            </form>
+            <form class="form-writing" method="post" action="/manage/push" id="form2">
+                <div class="box-title">
+                    <label class="text-label">标题:</label>
+                    <input type="text" name="title" class="input-text-long">
+                </div>
+                <div id="editornormal" class="text-writing">
+                    <textarea name="content" id="" class="textarea-writing">### Hello Editor.md</textarea>
+                </div>
+                <input type="submit" class="input-btn-long" value="推送">
+            </form>
+        </div>
+<%- include('manage-footer') %>

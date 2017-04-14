@@ -13,8 +13,8 @@
                 <div id="editormd" class="text-writing">     
                     <textarea name="content" style="display:none;">### Hello Editor.md !</textarea>
                 </div>
-                <input type="submit" class="input-btn-long" value="保存" onclick="$('#form1').attr('action', '/posts?p=n').submit()">
-                <input type="submit" class="input-btn-long" value="发布" onclick="$('#form1').attr('action', '/posts?p=y').submit()">
+                <input type="button" class="input-btn-long" value="保存" onclick="$('#form1').attr('action', '/posts?p=n').submit()">
+                <input type="button" class="input-btn-long" value="发布" onclick="$('#form1').attr('action', '/posts?p=y').submit()">
             </form>
             <form class="form-writing" method="post" action="/posts" id="form2">
                 <div class="box-title">
