@@ -17,7 +17,7 @@ $(document).ready(function() {
                     //追加更新
                     $('.limit-post-content').append(data);
                     //改变“加载更多”
-                    if (!data || (data && data.match(/body-article-item/g).length != 5)) {
+                    if (!data || (data && data.match(/body-article-item/g).length !== 6)) {
                         $('#loadmore_posts').text('----- 没有文章了/(ㄒoㄒ)/~~ -----');
                         $('#loadmore_posts').attr('id', 'no_posts');
                         $('#no_posts').unbind();
@@ -33,7 +33,7 @@ $(document).ready(function() {
                     //追加更新
                     $('.limit-post-content').append(data);
                     //改变“加载更多”
-                    if (!data || (data && data.match(/body-article-item/g).length != 5)) {
+                    if (!data || (data && data.match(/body-article-item/g).length !== 6)) {
                         $('.text-load').text('----- 人呐就是不知道 (っ*´Д`)っ 已经没有更多文章了 -----');
                         $('.item-load').attr('id', 'no_user');
                         $('#no_user').unbind();
@@ -59,7 +59,7 @@ $(document).ready(function() {
             //追加更新
             $('.limit-post-content').append(data);
             //改变“加载更多”
-            if (!data || (data && data.match(/body-article-item/g).length != 5)) {
+            if (!data || (data && data.match(/body-article-item/g).length !== 6)) {
                 $('#loadmore_posts').text('----- 没有文章了/(ㄒoㄒ)/~~ -----');
                 $('#loadmore_posts').attr('id', 'no_posts');
                 $('#no_posts').unbind();
@@ -76,7 +76,7 @@ $(document).ready(function() {
             //追加更新
             $('.limit-post-content').append(data);
             //改变“加载更多”
-            if (!data || (data && data.match(/body-article-item/g).length != 5)) {
+            if (!data || (data && data.match(/body-article-item/g).length !== 6)) {
                 $('.text-load').text('----- 人呐就是不知道 (っ*´Д`)っ 已经没有更多文章了 -----');
                 $('.item-load').attr('id', 'no_user');
                 $('#no_user').unbind();
@@ -115,7 +115,7 @@ function getUrlParam(name) {
 }
 
 //back to top
-$(function() {
+/*$(function() {
     var e = $("#rocket-to-top"),
         t = $(document).scrollTop(),
         n,
@@ -174,4 +174,4 @@ $(function() {
             n = setInterval(t, 50),
                 $("html,body").animate({ scrollTop: 0 }, "slow");
         });
-});
+});*/

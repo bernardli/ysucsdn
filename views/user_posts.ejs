@@ -2,37 +2,6 @@
 
 <link rel="stylesheet" href="/css/blog.css">
 <link rel="stylesheet" href="/css/blog-user-show.css">
-
-<!--
-<link rel="stylesheet" href="../css/posts.css">
-
-<%- include('components/user-info', { author: author }) %>
-
-<div class="limit-post-content">
-<%- include('components/limit-posts', { posts: posts }) %>
-</div>
-
-<% if(posts.length == 0 && page == 1) { %>
-        <div class="eight wide column">
-            <div class="ui segment">
-                该用户毛都没写/(ㄒoㄒ)/~~
-            </div>
-        </div>
-<% } else if (posts.length == 5){ %>
-<div class="menu-load">
-    <div class="item-load center" id="loadmore_user">
-        <span class="text-load">----- 你觉得再看几篇吼不吼啊o(￣ε￣*) -----</span>
-    </div>
-</div>
-<% } else{ %>
-<div class="menu-load">
-    <div class="item-load center" id="no_user">
-        <span class="text-load">----- 人呐就是不知道 (っ*´Д`)っ 已经没有更多文章了 -----</span>
-    </div>
-</div>
-<% } %>
--->
-
 <div class="pure-u-1 pure-u-md-3-4 content">       
 
     <div class="user-info">
@@ -72,28 +41,13 @@
         <%- include('components/limit-posts', { posts: posts }) %>
     </div>
    
-    <!--
-    <% if(posts.length==5){ %>
-        <div class="menu-load">
-            <div class="item-load center" id="loadmore_posts">
-                <span class="text-load">----- 点击获取人生经验 ヾ(≧O≦)〃吼不吼啊~ -----</span>
-            </div>
-        </div>
-    <% } else { %>
-        <div class="menu-load">
-            <div class="item-load center" id="no_posts">
-                <span class="text-load">----- 没有文章了/(ㄒoㄒ)/~~ -----</span>
-            </div>
-        </div>
-    <% } %>
-    -->
     <% if(posts.length == 0 && page == 1) { %>
         <div class="eight wide column">
             <div class="ui segment">
                 该用户毛都没写/(ㄒoㄒ)/~~
             </div>
         </div>
-    <% } else if (posts.length == 5){ %>
+    <% } else if (posts.length === 6){ %>
         <div class="menu-load">
             <div class="item-load center" id="loadmore_user">
                 <span class="text-load">----- 你觉得再看几篇吼不吼啊o(￣ε￣*) -----</span>

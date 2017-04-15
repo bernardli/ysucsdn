@@ -117,8 +117,8 @@ module.exports = {
     }
     return Post
       .find(query)
-      .skip((page - 1) * 5)
-      .limit(5)
+      .skip((page - 1) * 6)
+      .limit(6)
       .populate({
         path: 'author',
         model: 'User',
