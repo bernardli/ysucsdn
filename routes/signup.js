@@ -86,6 +86,7 @@ router.post('/', checkNotLogin, (req, res, next) => {
         user: user._id,
         ysuNotice: 'y',
         replyNotice: 'y',
+        pushNotice: 'y',
       };
       return Promise.all([
         user,
