@@ -2,6 +2,7 @@ const User = require('../lib/mongo').User;
 const Forgot = require('../lib/mongo').Forgot;
 const PostModel = require('../models/posts');
 const NoticeModel = require('../models/emailNotice');
+const CommentModel = require('../models/comments');
 
 module.exports = {
   // 注册一个用户
@@ -72,11 +73,16 @@ module.exports = {
       .exec()
       .then((res) => {
         if (res.result.ok && res.result.n > 0) {
-          return Promise.all([
-            PostModel.delPostByAuthorId(userId),
-            NoticeModel.delNotice(userId),
-          ]);
+          return PostModel.getPosts(userId, null, null, null)
+            .then((posts) => {
+              posts.forEach(post => PostModel.delPostById(post._id, userId));
+            });
         }
-      });
+        throw new Error('删除文章出错');
+      })
+      .then(() => Promise.all([
+        NoticeModel.delNotice(userId),
+        CommentModel.delCommentsByAuthorId(userId),
+      ]));
   },
 };
