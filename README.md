@@ -6,7 +6,7 @@
 
 ## 使用
 安装这一堆依赖项
-`npm i config-lite nodemailer  connect-flash connect-mongo ejs express express-formidable express-session marked moment mongolass objectid-to-timestamp bcrypt winston express-winston crawler --save`  
+`npm i config-lite nodemailer  connect-flash connect-mongo ejs express express-formidable express-session marked moment mongolass objectid-to-timestamp bcrypt winston express-winston request-promise cheerio request --save`  
 
 `npm install -g supervisor node-gyp npm-check​`
 
