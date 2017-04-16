@@ -23,6 +23,7 @@ module.exports = {
     output: '', // 输出路径
   },
   LOrW: '', // W Windows环境 L linux环境 默认为linux环境
+  webhooks: '', // webhooks Secret
   adminEmail: '', // 管理员邮箱
   mongodb: 'mongodb://name:password@localhost:27017/database', //连接数据库
 };

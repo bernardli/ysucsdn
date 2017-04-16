@@ -6,6 +6,7 @@ const NoticeModel = require('../models/emailNotice');
 const config = require('config-lite');
 const EmailModel = require('../models/sendEmail');
 const marked = require('marked');
+const exec = require('child_process').exec;
 
 const router = express.Router();
 const EmailAdress = config.transporter.auth.user;
@@ -162,6 +163,19 @@ router.post('/push', checkAdmin, (req, res, next) => {
       res.redirect('back');
     })
     .catch(next);
+});
+
+// GET /manage 后台管理
+//   eg: POST /manage/webhooks
+router.post('/webhooks', (req, res, next) => {
+  console.log(req);
+  const {
+    'X-Hub-Signature': secret,
+    'X-GitHub-Event': event,
+  } = req.headers;
+  if (secret === config.webhooks && event === 'push') {
+    exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
+  }
 });
 
 module.exports = router;
