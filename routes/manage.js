@@ -168,7 +168,6 @@ router.post('/push', checkAdmin, (req, res, next) => {
 // GET /manage 后台管理
 //   eg: POST /manage/webhooks
 router.post('/webhooks', (req, res, next) => {
-  console.log(req);
   const {
     'X-Hub-Signature': secret,
     'X-GitHub-Event': event,
