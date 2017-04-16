@@ -8,7 +8,8 @@ const routes = require('./routes');
 const pkg = require('./package');
 const winston = require('winston');
 const expressWinston = require('express-winston');
-const spider = require('./spider/notice');
+const notice = require('./tools/notice');
+const backup = require('./tools/backup');
 
 const app = express();
 
@@ -92,4 +93,5 @@ app.listen(config.port, () => {
   console.log(`${pkg.name} listening on port ${config.port}`);
 });
 
-spider.spiderNotice();
+notice.spiderNotice();
+backup.autoBackup();
