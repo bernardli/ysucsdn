@@ -30,9 +30,6 @@ exports.autoBackup = () => {
       }
     });
   };
-
-
-  // backup();  // test
-
+  backup();
   setInterval(backup, 14400000); // 4小时备份一次
 };

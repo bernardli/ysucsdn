@@ -185,7 +185,7 @@ exports.spiderNotice = () => {
       });
   };
 
-  // Notice(); // 测试用
+  Notice();
 
   const flag = setInterval(Notice, 600000);
 
