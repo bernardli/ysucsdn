@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=production pm2 start index.js --node-args='--harmony' --name 'ysucsdn'",
+    "start": "NODE_ENV=production pm2 start index.js --node-args='--harmony' --name 'index'",
     "run": "node index.js"
   },
   "author": "bernardli,puresox",

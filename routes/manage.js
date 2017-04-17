@@ -173,7 +173,7 @@ router.post('/webhooks', (req, res, next) => {
     'X-GitHub-Event': event,
   } = req.headers;
   if (secret === config.webhooks && event === 'push') {
-    exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
+    exec('sh /root/ysucsdn/tools/restart.sh');
   }
 });
 
