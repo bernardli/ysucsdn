@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const config = require('config-lite');
+const config = require('config-lite')(__dirname);
 const express = require('express');
 
 const router = express.Router();

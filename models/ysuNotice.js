@@ -1,7 +1,7 @@
 const YsuNotice = require('../lib/mongo').YsuNotice;
 const cheerio = require('cheerio');
 const request = require('request-promise');
-const config = require('config-lite');
+const config = require('config-lite')(__dirname);
 const EmailModel = require('../models/sendEmail');
 const moment = require('moment');
 

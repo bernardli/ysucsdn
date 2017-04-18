@@ -1,6 +1,6 @@
 const exec = require('child_process').exec;
 const moment = require('moment');
-const config = require('config-lite');
+const config = require('config-lite')(__dirname);
 
 exports.autoBackup = () => {
   const backup = () => {

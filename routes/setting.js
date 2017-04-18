@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const EmailModel = require('../models/sendEmail');
-const config = require('config-lite');
+const config = require('config-lite')(__dirname);
 
 const saltRounds = 10;
 const router = express.Router();

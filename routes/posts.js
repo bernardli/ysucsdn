@@ -1,5 +1,5 @@
 const express = require('express');
-const config = require('config-lite');
+const config = require('config-lite')(__dirname);
 const PostModel = require('../models/posts');
 const EmailModel = require('../models/sendEmail');
 const UserModel = require('../models/users');

@@ -1,4 +1,4 @@
-const config = require('config-lite');
+const config = require('config-lite')(__dirname);
 const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport(config.transporter);

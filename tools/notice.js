@@ -1,4 +1,4 @@
-const config = require('config-lite');
+const config = require('config-lite')(__dirname);
 const EmailNoticeModel = require('../models/emailNotice');
 const EmailModel = require('../models/sendEmail');
 const NoticeModel = require('../models/ysuNotice');
