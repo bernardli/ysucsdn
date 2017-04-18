@@ -169,13 +169,17 @@ router.post('/push', checkAdmin, (req, res, next) => {
 //   eg: POST /manage/webhooks
 router.post('/webhooks', (req, res, next) => {
   const {
-    'X-Hub-Signature': secret,
-    'X-GitHub-Event': event,
+    'x-hub-signature': secret,
+    'x-github-event': event,
   } = req.headers;
+  console.log(req.headers);
+  console.log(secret);
+  console.log(event);
   if (secret === config.webhooks && event === 'push') {
     exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
-    // exec('sh /root/ysucsdn/tools/restart.sh');
   }
+  // exec('sh /root/ysucsdn/tools/restart.sh');
+  // exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
 });
 
 module.exports = router;
