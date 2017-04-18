@@ -8,8 +8,6 @@ const EmailModel = require('../models/sendEmail');
 const marked = require('marked');
 const exec = require('child_process').exec;
 const crypto = require('crypto');
-const bl = require('bl');
-const bufferEq = require('buffer-equal-constant-time');
 
 const router = express.Router();
 const EmailAdress = config.transporter.auth.user;
@@ -175,18 +173,15 @@ router.post('/webhooks', (req, res, next) => {
     'x-hub-signature': secret,
     'x-github-event': event,
   } = req.headers;
-  req.pipe(bl((err, data) => {
-    const computedSig = new Buffer(`sha1=${crypto.createHmac('sha1', config.webhooks).update(data).digest('hex')}`);
-    if (bufferEq(new Buffer(secret), computedSig) && event === 'push') {
-      res.writeHead(200, {
-        'content-type': 'application/json',
-      });
-      res.end('{"ok":true}');
-      console.log('secret');
-      exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
-      // exec('sh /root/ysucsdn/tools/restart.sh');
-    }
-  }));
+  // const computedSig = `sha1=${crypto.createHmac('sha1', config.webhooks).update(req.fields).digest('hex')}`;
+  if (event === 'push') {
+    res.writeHead(200, {
+      'content-type': 'application/json',
+    });
+    res.end('{"ok":true}');
+    exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
+    // exec('sh /root/ysucsdn/tools/restart.sh');
+  }
 });
 
 module.exports = router;
