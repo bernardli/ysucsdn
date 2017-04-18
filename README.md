@@ -11,3 +11,4 @@
 `npm install -g supervisor node-gyp npm-check​`
 
 然后需要配置一份设置文件，在 /config 目录下添加 default.js 文件，具体内容参考目录中的 "example.js",根据你的实际使用环境来写
+test
