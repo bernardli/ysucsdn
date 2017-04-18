@@ -7,6 +7,9 @@ const config = require('config-lite');
 const EmailModel = require('../models/sendEmail');
 const marked = require('marked');
 const exec = require('child_process').exec;
+const crypto = require('crypto');
+const bl = require('bl');
+const bufferEq = require('buffer-equal-constant-time');
 
 const router = express.Router();
 const EmailAdress = config.transporter.auth.user;
@@ -168,18 +171,22 @@ router.post('/push', checkAdmin, (req, res, next) => {
 // GET /manage 后台管理
 //   eg: POST /manage/webhooks
 router.post('/webhooks', (req, res, next) => {
-  /*const {
+  const {
     'x-hub-signature': secret,
     'x-github-event': event,
   } = req.headers;
-  console.log(req.headers);
-  console.log(secret);
-  console.log(event);
-  if (secret === config.webhooks && event === 'push') {
-    exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
-  }*/
-  // exec('sh /root/ysucsdn/tools/restart.sh');
-  exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
+  req.pipe(bl((err, data) => {
+    const computedSig = new Buffer(`sha1=${crypto.createHmac('sha1', config.webhooks).update(data).digest('hex')}`);
+    if (bufferEq(new Buffer(secret), computedSig) && event === 'push') {
+      res.writeHead(200, {
+        'content-type': 'application/json',
+      });
+      res.end('{"ok":true}');
+      console.log('secret');
+      exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
+      // exec('sh /root/ysucsdn/tools/restart.sh');
+    }
+  }));
 });
 
 module.exports = router;
