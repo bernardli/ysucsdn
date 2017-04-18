@@ -168,7 +168,7 @@ router.post('/push', checkAdmin, (req, res, next) => {
 // GET /manage 后台管理
 //   eg: POST /manage/webhooks
 router.post('/webhooks', (req, res, next) => {
-  const {
+  /*const {
     'x-hub-signature': secret,
     'x-github-event': event,
   } = req.headers;
@@ -177,9 +177,9 @@ router.post('/webhooks', (req, res, next) => {
   console.log(event);
   if (secret === config.webhooks && event === 'push') {
     exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
-  }
+  }*/
   // exec('sh /root/ysucsdn/tools/restart.sh');
-  // exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
+  exec('cd /root/ysucsdn/&&git pull&&pm2 restart index --update-env');
 });
 
 module.exports = router;
