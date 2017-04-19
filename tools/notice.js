@@ -23,25 +23,34 @@ exports.spiderNotice = () => {
       .then(href => Promise.all([
         NoticeModel.requestOne(href),
         href,
+        $$('.list-txt-1', `#lineu12_${i}`).text().trim(),
       ]))
       .then(([
         [, {
           'last-modified': time,
           etag,
-        }], href,
+        }], href, title,
       ]) => {
+        // 校验参数
+        if (!time) {
+          time = moment().format('YYYY-MM-DD，H:mm:ss');
+        } else {
+          time = moment(time).format('YYYY-MM-DD，H:mm:ss');
+        }
+        if (!title) {
+          title = '获取标题出错';
+        }
         if (!etag) {
-          etag = moment().format();
+          etag = title;
+        } else if (etag === '"652-4b6b48ffe0340"' || etag === '"18c8-508d2d594b3c0"') {
+          etag = title;
+          title += '（这篇通知需要权限）';
+          time = moment().format('YYYY-MM-DD，H:mm:ss');
         }
         if (i === 6) {
           NoticeFuncModel.updateNoticeByHtml();
           stopNotice();
         } else if (notice.firstETag !== etag) {
-          time = moment(time).format('YYYY-MM-DD，H:mm:ss');
-          let title = $$('.list-txt-1', `#lineu12_${i}`).text().trim();
-          if (!title) {
-            title = '获取标题出错';
-          }
           EmailNoticeModel.getNotice({
             ysuNotice: 'y',
           })
@@ -96,8 +105,9 @@ exports.spiderNotice = () => {
       .then(([, {
         etag,
       }]) => {
-        if (!etag) {
-          etag = moment().format();
+        // 校验参数
+        if (!etag || etag === '"652-4b6b48ffe0340"' || etag === '"18c8-508d2d594b3c0"') {
+          etag = $$('.list-txt-1', `#lineu12_${i}`).text().trim();
         }
         if (i === 6) {
           NoticeFuncModel.updateNoticeByHtml();
@@ -142,17 +152,26 @@ exports.spiderNotice = () => {
                 etag,
               }], href, title,
             ]) => {
-              if (!etag) {
-                etag = moment().format();
+              // 校验参数
+              if (!time) {
+                time = moment().format('YYYY-MM-DD，H:mm:ss');
+              } else {
+                time = moment(time).format('YYYY-MM-DD，H:mm:ss');
               }
-              time = moment(time).format('YYYY-MM-DD，H:mm:ss');
+              if (!title) {
+                title = '获取标题出错';
+              }
+              if (!etag) {
+                etag = title;
+              } else if (etag === '"652-4b6b48ffe0340"' || etag === '"18c8-508d2d594b3c0"') {
+                etag = title;
+                title += '（这篇通知需要权限）';
+                time = moment().format('YYYY-MM-DD，H:mm:ss');
+              }
               const data = {
                 name: 'notice',
                 firstETag: etag,
               };
-              if (!title) {
-                title = '获取标题出错';
-              }
               return Promise.all([
                 href,
                 time,

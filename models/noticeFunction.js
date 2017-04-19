@@ -22,12 +22,21 @@ module.exports = {
           etag,
         }], title,
       ]) => {
-        if (!etag) {
-          etag = moment().format();
+        // 校验参数
+        if (!time) {
+          time = moment().format('YYYY-MM-DD，H:mm:ss');
+        } else {
+          time = moment(time).format('YYYY-MM-DD，H:mm:ss');
         }
-        time = moment(time).format('YYYY-MM-DD，H:mm:ss');
         if (!title) {
-          title = '权限不足，无法访问';
+          title = '获取标题出错';
+        }
+        if (!etag) {
+          etag = title;
+        } else if (etag === '"652-4b6b48ffe0340"' || etag === '"18c8-508d2d594b3c0"') {
+          etag = title;
+          title += '（这篇通知需要权限）';
+          time = moment().format('YYYY-MM-DD，H:mm:ss');
         }
         const data = {
           firstETag: etag,
