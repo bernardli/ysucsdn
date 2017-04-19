@@ -171,10 +171,9 @@ router.post('/push', checkAdmin, (req, res, next) => {
 router.post('/webhooks', (req, res, next) => {
   const {
     'x-hub-signature': secret,
-    'x-github-event': event,
   } = req.headers;
-  // const computedSig = `sha1=${crypto.createHmac('sha1', config.webhooks).update(req.fields).digest('hex')}`;
-  if (event === 'push') {
+  const computedSig = `sha1=${crypto.createHmac('sha1', config.webhooks).update(JSON.stringify(req.fields)).digest('hex')}`;
+  if (computedSig === secret) {
     res.writeHead(200, {
       'content-type': 'application/json',
     });
