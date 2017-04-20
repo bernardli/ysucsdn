@@ -19,11 +19,10 @@ module.exports = {
       .then(([
         [, {
           'last-modified': time,
-          etag,
         }], title,
       ]) => {
         // 校验参数
-        if (!time) {
+        if (!time || moment().format('YYYY-MM-DD') !== moment(time).format('YYYY-MM-DD')) {
           time = moment().format('YYYY-MM-DD，H:mm:ss');
         } else {
           time = moment(time).format('YYYY-MM-DD，H:mm:ss');
@@ -31,18 +30,11 @@ module.exports = {
         if (!title) {
           title = '获取标题出错';
         }
-        if (!etag) {
-          etag = title;
-        } else if (etag === '"652-4b6b48ffe0340"' || etag === '"18c8-508d2d594b3c0"') {
-          etag = title;
-          title += '（这篇通知需要权限）';
-          time = moment().format('YYYY-MM-DD，H:mm:ss');
-        }
         const data = {
-          firstETag: etag,
+          newTitle: title,
         };
         NoticeModel.updateNoticeByName('notice', data);
-        NoticeModel.sendMeRes(`<p>发生错误，已自动更新数据库为最新记录：${time}发表的《${title}》。错误可能有：1.可能有通知被删除。2.可能短时间发表大量文章。3.连接超时。4.其他异常。</p>`);
+        NoticeModel.sendMeRes(`<p>发生错误，已自动更新数据库为最新记录：${time}发表的《${title}》。错误可能有：1.可能有通知被删除或被修改。2.可能短时间发表大量文章。3.连接超时。4.其他异常。</p>`);
       })
       .catch((err) => {
         NoticeModel.sendMeRes(`<p>${err}</p>`);

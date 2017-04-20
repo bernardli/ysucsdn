@@ -15,24 +15,22 @@ exports.spiderNotice = () => {
     ])
       .then(([href]) => {
         const patt = new RegExp('http://');
-        if (patt.test(href)) {
-          return href;
+        if (!patt.test(href)) {
+          href = `http://notice.ysu.edu.cn/${href}`;
         }
-        return `http://notice.ysu.edu.cn/${href}`;
+        return Promise.all([
+          NoticeModel.requestOne(href),
+          href,
+          $$('.list-txt-1', `#lineu12_${i}`).text().trim(),
+        ]);
       })
-      .then(href => Promise.all([
-        NoticeModel.requestOne(href),
-        href,
-        $$('.list-txt-1', `#lineu12_${i}`).text().trim(),
-      ]))
       .then(([
         [, {
           'last-modified': time,
-          etag,
         }], href, title,
       ]) => {
         // 校验参数
-        if (!time) {
+        if (!time || moment().format('YYYY-MM-DD') !== moment(time).format('YYYY-MM-DD')) {
           time = moment().format('YYYY-MM-DD，H:mm:ss');
         } else {
           time = moment(time).format('YYYY-MM-DD，H:mm:ss');
@@ -40,47 +38,43 @@ exports.spiderNotice = () => {
         if (!title) {
           title = '获取标题出错';
         }
-        if (!etag) {
-          etag = title;
-        } else if (etag === '"652-4b6b48ffe0340"' || etag === '"18c8-508d2d594b3c0"') {
-          etag = title;
-          title += '（这篇通知需要权限）';
-          time = moment().format('YYYY-MM-DD，H:mm:ss');
+        const patt = new RegExp('http://notice.ysu.edu.cn/info/');
+        if (i === 0) {
+          const data = {
+            newTitle: title,
+          };
+          NoticeModel.updateNoticeByName('notice', data);
         }
         if (i === 6) {
           NoticeFuncModel.updateNoticeByHtml();
           stopNotice();
-        } else if (notice.firstETag !== etag) {
-          EmailNoticeModel.getNotice({
-            ysuNotice: 'y',
-          })
-            .then((users) => {
-              users.forEach((user) => {
-                const mailOptions = {
-                  from: {
-                    name: 'YSUCSDN',
-                    address: EmailAdress,
-                  }, // 发件人
-                  to: [user.user.email], // 收件人
-                  subject: '燕山大学通知监控服务发现新通知!', // 标题
-                  text: '', // 内容
-                  html: `<p>通知监控系统发现新通知！</p><p>${time}发表了《${title}》</p><p>如果你对这个通知不感兴趣，请无视，如果感兴趣，请点击下方链接：</p><a href='${href}'>${href}</a>`, // html
-                };
-                EmailModel.email(mailOptions);
-              });
-              // console.log(`通知监控系统发现新通知，${time}发表了《${title}》${href}`);
-              newNotice(notice, $$, i + 1);
+        } else if (notice.newTitle !== title) {
+          if (patt.test(href)) {
+            EmailNoticeModel.getNotice({
+              ysuNotice: 'y',
             })
-            .catch((err) => {
-              NoticeModel.sendMeRes(`<p>${err}</p>`);
-              // console.log(err);
-            });
-          if (i === 0) {
-            const data = {
-              firstETag: etag,
-            };
-            NoticeModel.updateNoticeByName('notice', data);
+              .then((users) => {
+                users.forEach((user) => {
+                  const mailOptions = {
+                    from: {
+                      name: 'YSUCSDN',
+                      address: EmailAdress,
+                    }, // 发件人
+                    to: [user.user.email], // 收件人
+                    subject: '燕山大学通知监控服务发现新通知!', // 标题
+                    text: '', // 内容
+                    html: `<p>通知监控系统发现新通知！</p><p>${time}发表了《${title}》</p><p>如果你对这个通知不感兴趣，请无视，如果感兴趣，请点击下方链接：</p><a href='${href}'>${href}</a>`, // html
+                  };
+                  EmailModel.email(mailOptions);
+                });
+                // console.log(`通知监控系统发现新通知，${time}发表了《${title}》${href}`);
+              })
+              .catch((err) => {
+                NoticeModel.sendMeRes(`<p>${err}</p>`);
+                // console.log(err);
+              });
           }
+          newNotice(notice, $$, i + 1);
         }
       })
       .catch((err) => {
@@ -92,28 +86,17 @@ exports.spiderNotice = () => {
   // 防止通知被删除导致逻辑错误，先检索一遍
   const preNotice = (notice, $$, i) => {
     Promise.all([
-      $$('a', `#lineu12_${i}`).attr('href'),
+      $$('.list-txt-1', `#lineu12_${i}`).text().trim(),
     ])
-      .then(([href]) => {
-        const patt = new RegExp('http://');
-        if (patt.test(href)) {
-          return href;
-        }
-        return `http://notice.ysu.edu.cn/${href}`;
-      })
-      .then(href => NoticeModel.requestOne(href))
-      .then(([, {
-        etag,
-      }]) => {
-        // 校验参数
-        if (!etag || etag === '"652-4b6b48ffe0340"' || etag === '"18c8-508d2d594b3c0"') {
-          etag = $$('.list-txt-1', `#lineu12_${i}`).text().trim();
+      .then(([title]) => {
+        if (!title) {
+          title = '获取标题出错';
         }
         if (i === 6) {
           NoticeFuncModel.updateNoticeByHtml();
-        } else if (notice.firstETag !== etag) {
+        } else if (notice.newTitle !== title) {
           preNotice(notice, $$, i + 1);
-        } else if (notice.firstETag === etag && i !== 0) {
+        } else if (notice.newTitle === title && i !== 0) {
           newNotice(notice, $$, 0);
         }
       })
@@ -139,21 +122,24 @@ exports.spiderNotice = () => {
               if (!patt.test(href)) {
                 href = `http://notice.ysu.edu.cn/${href}`;
               }
-              return [href, title];
+              const data = {
+                name: 'notice',
+                newTitle: title,
+              };
+              return Promise.all([
+                NoticeModel.requestOne(href),
+                href,
+                title,
+                NoticeModel.create(data),
+              ]);
             })
-            .then(([href, title]) => Promise.all([
-              NoticeModel.requestOne(href),
-              href,
-              title,
-            ]))
             .then(([
               [, {
                 'last-modified': time,
-                etag,
               }], href, title,
             ]) => {
               // 校验参数
-              if (!time) {
+              if (!time || moment().format('YYYY-MM-DD') !== moment(time).format('YYYY-MM-DD')) {
                 time = moment().format('YYYY-MM-DD，H:mm:ss');
               } else {
                 time = moment(time).format('YYYY-MM-DD，H:mm:ss');
@@ -161,25 +147,6 @@ exports.spiderNotice = () => {
               if (!title) {
                 title = '获取标题出错';
               }
-              if (!etag) {
-                etag = title;
-              } else if (etag === '"652-4b6b48ffe0340"' || etag === '"18c8-508d2d594b3c0"') {
-                etag = title;
-                title += '（这篇通知需要权限）';
-                time = moment().format('YYYY-MM-DD，H:mm:ss');
-              }
-              const data = {
-                name: 'notice',
-                firstETag: etag,
-              };
-              return Promise.all([
-                href,
-                time,
-                title,
-                NoticeModel.create(data),
-              ]);
-            })
-            .then(([href, time, title]) => {
               NoticeModel.sendMeRes(`<p>数据库初始化成功，最新文章为 ${time} 发表的《${title}》</p><a href='${href}'>${href}</a>`);
               // console.log(`数据库初始化成功，最新文章为${time}发表的《${title}》 ${href}`);
             })
