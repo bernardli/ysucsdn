@@ -7,6 +7,7 @@ module.exports = {
       .then(([$]) => {
         let href = $('a', '#lineu12_0').attr('href');
         const title = $('.list-txt-1', '#lineu12_0').text().trim();
+        const day = $('.list-date', '#lineu12_0').text().trim();
         const patt = new RegExp('http://');
         if (!patt.test(href)) {
           href = `http://notice.ysu.edu.cn/${href}`;
@@ -14,18 +15,22 @@ module.exports = {
         return Promise.all([
           NoticeModel.requestOne(href),
           title,
+          day,
         ]);
       })
       .then(([
         [, {
-          'last-modified': time,
-        }], title,
+          'last-modified': lastTime,
+        }], title, day,
       ]) => {
+        let time;
         // 校验参数
-        if (!time || moment().format('YYYY-MM-DD') !== moment(time).format('YYYY-MM-DD')) {
-          time = moment().format('YYYY-MM-DD，H:mm:ss');
+        if (!lastTime) {
+          time = `${day}${moment().format('，H:mm:ss')}`;
+        } else if (day !== moment(lastTime).format('YYYY-MM-DD')) {
+          time = `${day}${moment().format('，H:mm:ss')}`;
         } else {
-          time = moment(time).format('YYYY-MM-DD，H:mm:ss');
+          time = moment(lastTime).format('YYYY-MM-DD，H:mm:ss');
         }
         if (!title) {
           title = '获取标题出错';
